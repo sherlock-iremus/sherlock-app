@@ -1,0 +1,1 @@
+export const CIDOC_CRM = 'http://www.cidoc-crm.org/cidoc-crm/'
