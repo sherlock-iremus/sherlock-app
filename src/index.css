@@ -13,3 +13,7 @@ body {
   display: flex;
   place-items: center;
 }
+
+#root {
+  width: 100%;
+}

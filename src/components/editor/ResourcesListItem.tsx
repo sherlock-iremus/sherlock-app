@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -11,12 +12,12 @@ import { Ontology, OntologyClass, OntologyProperty, OntologyStuff } from '../../
 
 type Props = {
   filter: string;
-  onOntologyItemClicked: (item: OntologyStuff) => void;
+  // onOntologyItemClicked: (item: OntologyStuff) => void;
   ontology: Ontology;
   ontologyStuffType: Function;
 }
 
-export default function ({ filter, onOntologyItemClicked, ontology, ontologyStuffType }: Props) {
+export default function ({ filter, /*onOntologyItemClicked,*/ ontology, ontologyStuffType }: Props) {
 
   const [open, setOpen] = useState(false)
 
@@ -33,27 +34,30 @@ export default function ({ filter, onOntologyItemClicked, ontology, ontologyStuf
       break
     case OntologyProperty:
       data = ontology.properties
-      label += ` properties (${ontology.properties.length})`
+      label += ` propriétés (${ontology.properties.length})`
       break
     default:
       data = []
   }
 
-  return <>
-    <ListItemButton onClick={handleClick} dense={true} sx={{ margin: 0, padding: 0.5 }}>
-      <ListItemText primary={label} />
+  return <Box>
+    <ListItemButton onClick={handleClick} dense={true} sx={{
+      margin: 0,
+      padding: 0.5
+    }}>
+      <ListItemText primary={label} sx={{ color: 'primary.dark', }} />
       {open ? <ExpandLess /> : <ExpandMore />}
     </ListItemButton>
     <Collapse in={open} timeout="auto" unmountOnExit>
       <List component="div">
         {data
-          .filter(_ => _._name.toLowerCase().includes(filter.toLowerCase()))
+          .filter(_ => _.name.toLowerCase().includes(filter.toLowerCase()))
           .map(_ =>
-            <ListItemButton key={_._name} dense={true} onClick={() => { onOntologyItemClicked(_) }} sx={{ margin: 0, padding: 0.5 }}>
-              <ListItemText primary={_._name} sx={{ margin: 0, padding: 0 }} />
+            <ListItemButton key={_.name} dense={true} onClick={() => { /*onOntologyItemClicked(_)*/ }} sx={{ margin: 0, padding: 0.5 }}>
+              <ListItemText primary={_.name} sx={{ margin: 0, padding: 0 }} />
             </ListItemButton>
           )}
       </List>
     </Collapse>
-  </>
+  </Box >
 }

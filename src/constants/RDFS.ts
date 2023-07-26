@@ -1,4 +1,4 @@
-import { Languages } from "./RDF"
+import { Languages } from '../model/Resource'
 
 export const RDFS_CLASS = 'http://www.w3.org/2000/01/rdf-schema#Class'
 export const RDFS_COMMENT = 'http://www.w3.org/2000/01/rdf-schema#comment'
