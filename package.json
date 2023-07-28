@@ -12,27 +12,28 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.2",
     "@reduxjs/toolkit": "^1.9.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
-    "react-router-dom": "^6.14.1",
+    "react-router-dom": "^6.14.2",
+    "sherlock-sparql-queries": "file:../sherlock-sparql-queries",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.61.0",
-    "@typescript-eslint/parser": "^5.61.0",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
-    "eslint": "^8.44.0",
+    "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.1",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.0"
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.7"
   }
 }

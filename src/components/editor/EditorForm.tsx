@@ -1,31 +1,27 @@
-import React, { useState } from 'react'
-import { alpha, styled } from '@mui/material/styles';
-
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Paper from '@mui/material/Paper'
-import Typography, { TypographyProps } from '@mui/material/Typography'
+import Typography from '@mui/material/Typography'
 
-import { OntologyClass, OntologyProperty } from '../../model/Ontology'
-import Property from './Property'
-import { Graph, OG, Resource } from '../../model/Resource'
+import { OntologyClass } from '../../model/Ontology'
+import { OG, Resource } from '../../model/Resource'
 import { RDF_TYPE } from '../../data/ontologies/RDF'
+import { PH } from './PH'
+import Values from './Values'
+import React from 'react'
 
 type Props = {
   resource: Resource
+  edit: boolean
 }
 
-const PH = styled(Typography)<TypographyProps>(({ theme }) => ({
-  color: theme.palette.action.disabled
-}))
-
-export default function ({ resource }: Props) {
+export default function ({ resource, edit }: Props) {
   const handleTypeDelete = (_: OG | undefined) => {
 
   }
 
-  console.log(resource.pog.entries().next().value[0].name)
+  let i = 0
 
   return <Box sx={{
     alignItems: 'flex-start',
@@ -75,13 +71,16 @@ export default function ({ resource }: Props) {
           variant='outlined'
         />)}
       </Paper>
+      <br />
       {
         [...resource.pog.entries()]
-          .filter(([p, og]) => p !== RDF_TYPE)
-          .sort(([p1, og1], [p2, og2]) => p1.name.localeCompare(p2.name))
-          .map(([p, og]) => <Box key={p.name} sx={{ mt: 2 }}>
+          .filter(([p]) => p !== RDF_TYPE)
+          .sort(([p1], [p2]) => p1.name.localeCompare(p2.name))
+          .map(([p, og_list]) => <React.Fragment key={i++}>
             <PH>{p.name}</PH>
-          </Box>)
+            <Values edit={edit} p={p} og_list={og_list} ></Values>
+            <br />
+          </React.Fragment>)
       }
     </Box>
   </Box>

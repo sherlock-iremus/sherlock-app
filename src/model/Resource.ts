@@ -13,29 +13,29 @@ export enum Languages {
 }
 
 export enum XSDTypes {
-  anyURI,
-  base64Binary,
-  boolean,
-  date,
-  dateTime,
-  decimal,
-  double,
-  duration,
-  float,
-  hexBinary,
-  gDay,
-  gMonth,
-  gMonthDay,
-  gYear,
-  gYearMonth,
-  NOTATION,
-  QName,
-  string,
-  time
+  anyURI = 'anyURI',
+  base64Binary = 'base64Binary',
+  boolean = 'boolean',
+  date = 'date',
+  dateTime = 'dateTime',
+  decimal = 'decimal',
+  double = 'double',
+  duration = 'duration',
+  float = 'float',
+  hexBinary = 'hexBinary',
+  gDay = 'gDay',
+  gMonth = 'gMonth',
+  gMonthDay = 'gMonthDay',
+  gYear = 'gYear',
+  gYearMonth = 'gYearMonth',
+  NOTATION = 'NOTATION',
+  QName = 'QName',
+  string = 'string',
+  time = 'time'
 }
 
 export class Resource {
-  private _pog: Map<OntologyProperty, Array<OG | undefined>>
+  private _pog: Map<OntologyProperty, Array<OG>>
   private _uri: string
 
   constructor(uri: string = '') {
@@ -43,11 +43,11 @@ export class Resource {
     this._pog = new Map()
   }
 
-  getValues(p: OntologyProperty): Array<OG | undefined> | undefined {
+  getValues(p: OntologyProperty): Array<OG> | undefined {
     return this._pog.get(p)
   }
 
-  addPOG(p: OntologyProperty, og: OG | undefined) {
+  addPOG(p: OntologyProperty, og: OG) {
     if (this._pog.has(p)) {
       this._pog.get(p)?.push(og)
     }

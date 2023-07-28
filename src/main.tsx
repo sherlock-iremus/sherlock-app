@@ -3,22 +3,26 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { createBrowserRouter, RouterProvider, } from 'react-router-dom'
+import { createBrowserRouter, Link, RouterProvider, } from 'react-router-dom'
 
 import './index.css'
 import theme from './theme'
 import { store } from './app/store'
 import Editor from './components/editor/Editor'
-import Explorer from './components/explorer/Explorer'
+import Root from './components/root/Root'
+import ErrorPage from './components/root/ErrorPage'
 
 const router = createBrowserRouter([
   {
-    path: '/explorer',
-    element: <Explorer />
-  },
-  {
-    path: '/editor',
-    element: <Editor />
+    path: '/',
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/describe/:uri',
+        element: <Editor />
+      }
+    ]
   }
 ])
 
