@@ -6,8 +6,8 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { Ontology, OntologyClass, OntologyProperty, OntologyStuff } from '../../model/Ontology'
 
 type Props = {
@@ -43,17 +43,27 @@ export default function ({ filter, /*onOntologyItemClicked,*/ ontology, ontology
   return <Box>
     <ListItemButton onClick={handleClick} dense={true} sx={{
       margin: 0,
-      padding: 0.5
-    }}>
+      padding: 0
+    }}
+      style={{ cursor: 'default', }}>
+      {open
+        ? <KeyboardArrowDownIcon sx={{ fontSize: 'medium' }} />
+        : <KeyboardArrowRightIcon sx={{ fontSize: 'medium' }} />
+      }
       <ListItemText primary={label} sx={{ color: 'primary.dark', }} />
-      {open ? <ExpandLess /> : <ExpandMore />}
     </ListItemButton>
-    <Collapse in={open} timeout="auto" unmountOnExit>
-      <List component="div">
+    <Collapse in={open} timeout="auto" unmountOnExit >
+      <List component="div" sx={{ m: 0, p: 0 }}>
         {data
           .filter(_ => _.name.toLowerCase().includes(filter.toLowerCase()))
           .map(_ =>
-            <ListItemButton key={_.name} dense={true} onClick={() => { /*onOntologyItemClicked(_)*/ }} sx={{ margin: 0, padding: 0.5 }}>
+            <ListItemButton
+              key={_.name}
+              dense={true}
+              onClick={() => { /*onOntologyItemClicked(_)*/ }}
+              sx={{ borderRadius: 1, margin: 0, padding: 0.5 }}
+              style={{ cursor: 'default', }}
+            >
               <ListItemText primary={_.name} sx={{ margin: 0, padding: 0 }} />
             </ListItemButton>
           )}

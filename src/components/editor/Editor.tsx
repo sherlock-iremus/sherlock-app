@@ -1,9 +1,23 @@
+import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
+import { useParams, useSearchParams } from 'react-router-dom'
+
 import EditorOntologyBrowser from './EditorOntologyBrowser'
 import EditorForm from './EditorForm'
 import { sample_resource } from '../../data/sample'
 
-export default function () {
+export interface IEditorProps { }
+
+const C: React.FunctionComponent<IEditorProps> = () => {
+  const [searchParams] = useSearchParams()
+  const id = searchParams.get('id')
+
+  // useEffect(() => {
+  //   const paramsAsObject = Object.fromEntries([...searchParams]);
+
+  //   console.log(paramsAsObject);
+  // }, [searchParams]);
+
   // const onClassClicked = (item: OntologyClass) => {
   //   switch (focused) {
   //     case Focused.RDFTYPES:
@@ -32,7 +46,9 @@ export default function () {
         borderRight: '1px solid',
         borderColor: 'divider',
       }} />
-      <EditorForm resource={sample_resource} />
+      <EditorForm resource={sample_resource} edit={false} />
     </Box >
   )
 }
+
+export default C

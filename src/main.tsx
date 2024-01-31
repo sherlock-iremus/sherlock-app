@@ -3,7 +3,7 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { createBrowserRouter, Link, RouterProvider, } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, } from 'react-router-dom'
 
 import './index.css'
 import theme from './theme'
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/describe/:uri',
+        path: '/describe/',
         element: <Editor />
       }
     ]

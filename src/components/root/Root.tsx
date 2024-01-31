@@ -1,4 +1,5 @@
-import { AccountCircle } from '@mui/icons-material'
+import { useState } from 'react'
+import { useDebounce } from '@uidotdev/usehooks'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -8,12 +9,20 @@ import { TextField, Toolbar } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Outlet } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
+import SearchResults from '../search/SearchResults'
+
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { useGetSearchResultsQuery } from '../../features/search/searchApiSlice'
+import { Resource } from '../../model/Resource'
+import { useGetSparqlResultsQuery } from '../../features/sparql/sparqlSlice'
 
 export const AB = styled(AppBar)(({ theme }) => ({
   background: theme.palette.background.default,
   borderBottom: '1px solid',
   borderColor: theme.palette.divider,
   boxShadow: 'none',
+  height: '77px',
+  position: 'sticky',
 }))
 
 export const TB = styled(Toolbar)(({ theme }) => ({
@@ -22,9 +31,20 @@ export const TB = styled(Toolbar)(({ theme }) => ({
 }))
 
 export default function Root() {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  const {
+    data: searchResults,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetSparqlResultsQuery(debouncedSearchQuery, { skip: debouncedSearchQuery === '' })
+
   return (
     <Box>
-      <AB position='static'>
+      <AB>
         <TB>
           <Box
             component='form'
@@ -43,15 +63,25 @@ export default function Root() {
                   </InputAdornment>
                 )
               }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchQuery(event.target.value)
+              }}
             />
           </Box>
-          <Box sx={{ ml: 1 }}>
+          {/* <Box sx={{ ml: 1 }}>
             <IconButton size='large' style={{ cursor: 'default' }}>🧺</IconButton>
             <IconButton size='large' style={{ cursor: 'default' }}>🍤</IconButton>
-          </Box>
+          </Box> */}
         </TB>
       </AB>
-      <Outlet />
+      <Box>
+        {
+          searchQuery.length
+            ? <SearchResults results={searchResults} />
+            : <Outlet />
+        }
+      </Box>
+
     </Box >
   )
 }

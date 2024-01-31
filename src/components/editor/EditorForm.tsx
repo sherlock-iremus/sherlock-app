@@ -10,6 +10,7 @@ import { RDF_TYPE } from '../../data/ontologies/RDF'
 import { PH } from './PH'
 import Values from './Values'
 import React from 'react'
+import { getPrefix } from '../../constants/RDF_PREFIXES'
 
 type Props = {
   resource: Resource
@@ -23,13 +24,17 @@ export default function ({ resource, edit }: Props) {
 
   let i = 0
 
-  return <Box sx={{
-    alignItems: 'flex-start',
-    display: 'flex',
-    flexDirection: 'column',
-    p: 1,
-    width: '100%'
-  }}>
+  return <Box
+    sx={{
+      alignItems: 'flex-start',
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'calc(100vh - 78px) !important',
+      overflow: 'auto',
+      p: 1,
+      width: '100%'
+    }}
+  >
     <Box sx={{
       alignItems: 'flex-end',
       display: 'flex',
@@ -38,8 +43,8 @@ export default function ({ resource, edit }: Props) {
       gap: 1,
       width: '100%',
     }}>
-      <Button variant='outlined' sx={{ height: 42 }}>ANNULER</Button>
-      <Button variant='outlined' sx={{ height: 42 }}>ENREGISTRER</Button>
+      <Button variant='outlined' sx={{ cursor: 'default', height: 42 }}>ANNULER</Button>
+      <Button variant='outlined' sx={{ cursor: 'default', height: 42 }}>ENREGISTRER</Button>
     </Box>
     <Box sx={{ mt: 0, p: 1, width: '100%' }}>
       <PH>URI</PH>
@@ -69,6 +74,7 @@ export default function ({ resource, edit }: Props) {
           label={(_?.resource as OntologyClass).name}
           onDelete={() => handleTypeDelete(_)}
           variant='outlined'
+          sx={{ cursor: 'default' }}
         />)}
       </Paper>
       <br />
@@ -77,7 +83,7 @@ export default function ({ resource, edit }: Props) {
           .filter(([p]) => p !== RDF_TYPE)
           .sort(([p1], [p2]) => p1.name.localeCompare(p2.name))
           .map(([p, og_list]) => <React.Fragment key={i++}>
-            <PH>{p.name}</PH>
+            <PH>{getPrefix(p.uri)}</PH>
             <Values edit={edit} p={p} og_list={og_list} ></Values>
             <br />
           </React.Fragment>)

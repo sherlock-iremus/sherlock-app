@@ -20,7 +20,7 @@ import { Typography } from '@mui/material'
 
 type Props = {
   edit: boolean,
-  og_list: Array<OG>,
+  og_list: Array<OG | undefined>,
   p: OntologyProperty
 }
 
