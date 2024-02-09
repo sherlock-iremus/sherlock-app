@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import { Ontology, OntologyClass, OntologyProperty, OntologyStuff } from '../../model/Ontology'
+import { Ontology, OntologyClass, OntologyProperty, OntologyStuff } from 'sherlock-rdf/lib/ontology'
 
 type Props = {
   filter: string;

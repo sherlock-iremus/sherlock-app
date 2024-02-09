@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+// import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState, AppThunk } from '../../app/store'
-import { Ontology } from '../../model/Ontology'
+// import { RootState, AppThunk } from '../../app/store'
+import { Ontology } from 'sherlock-rdf/lib/ontology'
 import { CIDOC_CRM_ONTOLOGY } from '../../data/ontologies/CIDOC-CRM'
 
 interface OntologiesState {

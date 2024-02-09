@@ -1,4 +1,4 @@
-import { Languages } from '../model/Resource'
+import { Languages } from 'sherlock-rdf/lib/rdf-literal'
 
 export const RDFS_CLASS = 'http://www.w3.org/2000/01/rdf-schema#Class'
 export const RDFS_COMMENT = 'http://www.w3.org/2000/01/rdf-schema#comment'
@@ -9,13 +9,13 @@ export const RDFS_RANGE = 'http://www.w3.org/2000/01/rdf-schema#range'
 export const RDFS_SUBCLASSOF = 'http://www.w3.org/2000/01/rdf-schema#subClassOf'
 export const RDFS_SUBPROPRETYOF = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 
-export function jsonldLabelsToMap(labels: Array<object>) {
+export function jsonldLabelsToMap(labels: Array<{ [key: string]: string; }>) {
     const res = new Map<Languages, string>
     if (!labels) return res
 
     for (const label of labels) {
-        const lang_str: string = label["@language"]
-        const lang: Languages = Languages[lang_str.toUpperCase()]
+        const lang_str: string = Object(label)["@language"]
+        const lang: Languages = Languages[lang_str as keyof typeof Languages]
         res.set(lang, label["@value"])
     }
 

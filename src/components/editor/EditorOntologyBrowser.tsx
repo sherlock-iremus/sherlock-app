@@ -8,7 +8,7 @@ import List from '@mui/material/List'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { ontologiesSlice } from '../../features/ontologies/ontologiesSlice'
-import { OntologyClass, OntologyProperty } from '../../model/Ontology'
+import { OntologyClass, OntologyProperty } from 'sherlock-rdf/lib/ontology'
 import ResourceListItem from './ResourcesListItem'
 
 type Props = {

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
-import { useParams, useSearchParams } from 'react-router-dom'
+// import { useParams, useSearchParams } from 'react-router-dom'
 
 import EditorOntologyBrowser from './EditorOntologyBrowser'
 import EditorForm from './EditorForm'
@@ -9,8 +9,8 @@ import { sample_resource } from '../../data/sample'
 export interface IEditorProps { }
 
 const C: React.FunctionComponent<IEditorProps> = () => {
-  const [searchParams] = useSearchParams()
-  const id = searchParams.get('id')
+  // const [searchParams] = useSearchParams()
+  // const id = searchParams.get('id')
 
   // useEffect(() => {
   //   const paramsAsObject = Object.fromEntries([...searchParams]);

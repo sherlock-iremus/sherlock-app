@@ -14,17 +14,18 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import Tooltip from '@mui/material/Tooltip'
 
-import { OG } from '../../model/Resource'
-import { OntologyProperty } from '../../model/Ontology'
+import { OG } from 'sherlock-rdf/lib/resource'
+import { OntologyProperty } from 'sherlock-rdf/lib/ontology'
 import { Typography } from '@mui/material'
 
 type Props = {
   edit: boolean,
-  og_list: Array<OG | undefined>,
+  og_list: Array<OG>,
   p: OntologyProperty
 }
 
 export default function ({ edit, p, og_list }: Props) {
+  console.log(edit)
   let i = 0
 
   return <Box key={p.name} sx={{ mt: 2 }}>
@@ -34,7 +35,7 @@ export default function ({ edit, p, og_list }: Props) {
           {og_list.map(og => {
             let c: ReactElement
 
-            if (og.resource) {
+            if (og?.resource) {
               c = <TableRow key={i++}>
                 <TableCell><Typography>{og.resource.uri}</Typography></TableCell>
                 <TableCell></TableCell>

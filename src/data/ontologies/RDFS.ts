@@ -1,4 +1,4 @@
-import { Ontology, OntologyProperty } from '../../model/Ontology'
+import { Ontology, OntologyProperty } from 'sherlock-rdf/lib/ontology'
 
 const RDFS_ONTOLOGY: Ontology = new Ontology('RDF')
 export const RDFS_LABEL = new OntologyProperty(

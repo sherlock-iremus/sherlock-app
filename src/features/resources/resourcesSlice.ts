@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-import { RootState, AppThunk } from '../../app/store'
-import { Resource } from '../../model/Resource'
+// import { createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+// import { RootState, AppThunk } from '../../app/store'
+import { Resource } from 'sherlock-rdf/lib/resource'
 
 export interface ResourcesState {
   primaryEditedResource: Resource,
