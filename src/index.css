@@ -1,6 +1,49 @@
-:root {
-  /* color-scheme: light dark; */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
 
+/* ALBERTUS */
+
+@font-face {
+  font-family: 'Albertus';
+  src: url('/fonts/AlbertusMTStd.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'Albertus';
+  src: url('/fonts/AlbertusMTStd-Light.otf') format('opentype');
+  font-weight: light;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: 'Albertus';
+  src: url('/fonts/AlbertusMTStd-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* FUTURA */
+
+/* @font-face {
+  font-family: 'fpc';
+  src: url('/fonts/FuturaPTCondMedium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -8,12 +51,55 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+html {
+  cursor: default;
 }
 
-#root {
-  width: 100%;
+html * {
+  font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
+}
+
+a {
+  cursor: default !important;
+  transition: all 0.5s ease 0s !important;
+}
+
+a:hover {
+  transition: all 0s ease 0s !important;
+}
+
+.accordion * {
+  cursor: default !important;
+}
+
+@layer base {
+  a {
+    @apply text-link hover:text-deeppink
+  }
+
+  table {
+    @apply text-base
+  }
+}
+
+@layer components {
+  .divider {
+    @apply h-[1px] w-full bg-gradient-to-r from-stone-700 to-stone-100
+  }
+
+  .section {
+    @apply tracking-[0.1em] font-bold font-[350] mb-2
+  }
+
+  .resource_icon {
+    @apply mt-[3px] text-stone-500
+  }
+
+  .linked_entity_icon {
+    @apply text-stone-400
+  }
+
+  .table-header {
+    @apply text-stone-600 font-normal font-mono !important
+  }
 }
