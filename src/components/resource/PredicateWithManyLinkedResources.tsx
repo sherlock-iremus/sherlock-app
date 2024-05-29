@@ -6,6 +6,7 @@ import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
 import { makeSectionTitleFragment } from './Resource'
 import { sparqlApi } from '../../services/sparqlApi'
+import { makeClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 type PredicateWithManyLinkedResourcesProps = {
     n: number,
@@ -187,7 +188,12 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
                     <TableBody items={items}>
                         {(item) => (
                             <TableRow key={item.linked_resource.value}>
-                                {(columnKey) => <TableCell>{getKeyValue(item, columnKey).value}</TableCell>}
+                                {/* {(columnKey) => <TableCell>{getKeyValue(item, columnKey).value}</TableCell>} */}
+                                {(columnKey) => <TableCell className="p-0">{
+                                    columnKey === "linked_resource"
+                                        ? makeClickablePrefixedUri(getKeyValue(item, columnKey).value, getPrefixedUri(getKeyValue(item, columnKey).value))
+                                        : getKeyValue(item, columnKey).value}</TableCell>
+                                }
                             </TableRow>
                         )}
                     </TableBody>
