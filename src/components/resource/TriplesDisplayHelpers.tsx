@@ -8,7 +8,7 @@ export function displayLabel(label: string) {
         return <Link className='font-mono text-base text-link' to={'/?resource=' + label}>{label}</Link>
     }
 
-    return <span className='font-serif italic text-lg'>{label}</span>
+    return <span className='font-serif text-lg'>{label}</span>
 }
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {

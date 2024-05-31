@@ -6,13 +6,14 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md"
 import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { displayLabel, makeClickablePrefixedUri, makeLinkedResourceTypesFragment, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
-type ResourceIdentityProps = {
+type Props = {
     data: SparqlQueryResultObject
 }
 
-export default function ({ data }: ResourceIdentityProps) {
+export default function ({ data }: Props) {
+
     return <Table
-        aria-label="Identity"
+        aria-label="potable"
         classNames={{
             th: "bg-transparent border-b border-b-data-table-border px-0",
             td: "align-text-top pl-0 pr-4 text-base",
@@ -34,6 +35,7 @@ export default function ({ data }: ResourceIdentityProps) {
                 return <TableRow className="border-b border-b-data-table-border" key={i}>
 
                     {/* PRÉDICAT */}
+
                     <TableCell className='align-middle'>
                         {makeNonClickablePrefixedUri(p)}
                     </TableCell>
@@ -42,7 +44,6 @@ export default function ({ data }: ResourceIdentityProps) {
                     {
                         b["r"] && b["r_type"]
                             ? <TableCell className='align-middle p-0'>
-                                {/* Identité de la ressource liée */}
                                 <table>
                                     <tbody>
                                         <tr>
@@ -66,7 +67,6 @@ export default function ({ data }: ResourceIdentityProps) {
                                         </tbody>
                                     </table>
                                 </div>
-                                {/* </div> */}
                             </TableCell>
                             : <TableCell className='align-middle'>
                                 <table>
@@ -85,6 +85,7 @@ export default function ({ data }: ResourceIdentityProps) {
                     }
 
                     {/* GRAPHE */}
+
                     <TableCell className='align-middle'>
                         <Link to={'/?resource=' + b["g"].value}>{getGraphName(b["g"].value)}</Link>
                     </TableCell>

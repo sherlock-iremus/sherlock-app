@@ -112,17 +112,18 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
 
     const topContent = useMemo(() => {
         return (
-            <div className="flex flex-col gap-4">
-                <div className="flex justify-between gap-3 items-end">
-                    <Input
-                        isClearable
-                        className="w-full sm:max-w-[%]"
-                        placeholder="Chercher par label..."
-                        startContent={<CiSearch />}
-                        value={filterValue}
-                        onClear={() => onClear()}
-                        onValueChange={onSearchChange}
-                    />
+            <div className="flex items-center">
+                <Input
+                    className="flex-1"
+                    isClearable
+                    onClear={() => onClear()}
+                    onValueChange={onSearchChange}
+                    placeholder="Chercher par label..."
+                    startContent={<CiSearch />}
+                    value={filterValue}
+                />
+                <div className='ml-3 table-header'>
+                    ({filteredItems.length} items)
                 </div>
             </div>
         );
@@ -135,7 +136,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
 
     const bottomContent = useMemo(() => {
         return (
-            <div className="py-2 px-2 flex justify-between items-center">
+            <div className="flex justify-between items-center">
                 <Pagination
                     isCompact
                     showControls
@@ -169,14 +170,14 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
                 ? <Table
                     aria-label={predicateUri}
                     bottomContent={bottomContent}
-                    bottomContentPlacement="outside"
+                    bottomContentPlacement="inside"
                     classNames={{
 
                     }}
                     onSortChange={setSortDescriptor}
                     sortDescriptor={sortDescriptor}
                     topContent={topContent}
-                    topContentPlacement="outside"
+                    topContentPlacement="inside"
                 >
                     <TableHeader columns={headerColumns}>
                         {(column) => (
