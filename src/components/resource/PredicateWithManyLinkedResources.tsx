@@ -1,23 +1,20 @@
 import { useCallback, useMemo, useState } from 'react'
 import { CiSearch } from "react-icons/ci"
 import { identity } from 'sherlock-sparql-queries/lib/identityLight'
-import { PrefixedUri, getPrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import PredicateSectionTitle from './PredicateSectionTitle'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
-import { makeSectionTitleFragment } from './Resource'
 import { sparqlApi } from '../../services/sparqlApi'
 import { makeClickablePrefixedUri } from './TriplesDisplayHelpers'
 
-type PredicateWithManyLinkedResourcesProps = {
+export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri }: {
     n: number,
     predicateUri: string,
     resourceUri: string,
-}
-
-export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri }: PredicateWithManyLinkedResourcesProps) {
+}) {
     const identitySparqlQuery = useMemo(() => identity(resourceUri, predicateUri), [resourceUri])
     const { data } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(identitySparqlQuery)
-    const prefixedUri: PrefixedUri = getPrefixedUri(predicateUri)
 
     ////////////////////////////////////////////////////////////////////////////////
     // COLUMNS
@@ -163,43 +160,44 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
     ////////////////////////////////////////////////////////////////////////////////
 
     return <>
-        {makeSectionTitleFragment(prefixedUri, identitySparqlQuery, n)}
+        <PredicateSectionTitle title={makePrefixedUri(predicateUri)} sparqlQuery={identitySparqlQuery} n={n} />
         <br />
-        {
-            data
-                ? <Table
-                    aria-label={predicateUri}
-                    bottomContent={bottomContent}
-                    bottomContentPlacement="inside"
-                    classNames={{
-
-                    }}
-                    onSortChange={setSortDescriptor}
-                    sortDescriptor={sortDescriptor}
-                    topContent={topContent}
-                    topContentPlacement="inside"
-                >
-                    <TableHeader columns={headerColumns}>
-                        {(column) => (
-                            <TableColumn key={column.uid} allowsSorting={true}>
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody items={items}>
-                        {(item) => (
-                            <TableRow key={item.linked_resource.value}>
-                                {/* {(columnKey) => <TableCell>{getKeyValue(item, columnKey).value}</TableCell>} */}
-                                {(columnKey) => <TableCell className="p-0">{
-                                    columnKey === "linked_resource"
-                                        ? makeClickablePrefixedUri(getKeyValue(item, columnKey).value, getPrefixedUri(getKeyValue(item, columnKey).value))
-                                        : getKeyValue(item, columnKey).value}</TableCell>
-                                }
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                : '⏳'
-        }
+        <div className="px-6">
+            {
+                data
+                    ?
+                    <Table
+                        aria-label={predicateUri}
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="inside"
+                        onSortChange={setSortDescriptor}
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="inside"
+                    >
+                        <TableHeader columns={headerColumns}>
+                            {(column) => (
+                                <TableColumn key={column.uid} allowsSorting={true}>
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody items={items}>
+                            {(item) => (
+                                <TableRow key={item.linked_resource.value}>
+                                    {/* {(columnKey) => <TableCell>{getKeyValue(item, columnKey).value}</TableCell>} */}
+                                    {(columnKey) => <TableCell className="p-0">{
+                                        columnKey === "linked_resource"
+                                            ? makeClickablePrefixedUri(getKeyValue(item, columnKey).value, makePrefixedUri(getKeyValue(item, columnKey).value))
+                                            : getKeyValue(item, columnKey).value}</TableCell>
+                                    }
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                    : '⏳'
+            }
+        </div>
+        <div className='divider' />
     </>
 }

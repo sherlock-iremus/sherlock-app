@@ -16,7 +16,7 @@ export default function Root() {
             className='font-mono text-xs text-gray-500 tracking-wide'
             style={{ fontVariantLigatures: 'discretionary-ligatures' }}
           >
-            explorateur de données cidoc-crm
+            explorateur de données cidoc crm
           </h2>
         </div>
       </header>

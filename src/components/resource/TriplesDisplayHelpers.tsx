@@ -1,32 +1,44 @@
 import { Link } from 'react-router-dom'
-import { PrefixedUri, getPrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
+import { PrefixedUri, makePrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
 
-import { SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
+import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from "sherlock-rdf/lib/sparql-result"
 
-export function displayLabel(label: string) {
-    if (label.startsWith('http://') || label.startsWith('https://')) {
-        return <Link className='font-mono text-base text-link' to={'/?resource=' + label}>{label}</Link>
+export function displayLabel(v: SparqlQueryResultObject_Variable) {
+    const lang = v['xml:lang'] ? <span className='lang'>{' @' + v['xml:lang']}</span> : ''
+    if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
+        return <Link className='font-mono text-base text-link' to={'/?resource=' + v.value}>{v.value}</Link>
     }
 
-    return <span className='font-serif text-lg'>{label}</span>
+    return <span className='font-serif text-lg'>{v.value}{lang}</span>
 }
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {
-    return <Link to={'/?resource=' + uri}>
-        <span className='font-mono' key={key}>
-            <span>{pu.prefix}</span>
-            <span>:</span>
-            <span>{pu.localPart}</span>
-        </span>
-    </Link>
+    return pu.prefix
+        ? <Link to={'/?resource=' + uri}>
+            <span className='font-mono' key={key}>
+                <span>{pu.prefix}</span>
+                <span>:</span>
+                <span>{pu.localPart}</span>
+            </span>
+        </Link>
+        :
+        <Link to={'/?resource=' + uri}>
+            <span className='font-mono' key={key}>
+                <span>{pu.localPart}</span>
+            </span>
+        </Link>
 }
 
-export function makeNonClickablePrefixedUri(pu: PrefixedUri, key: string = '') {
-    return <span className='font-mono' key={key}>
-        <span className='text-prefixed_uri_prefix'>{pu.prefix}</span>
-        <span className='text-prefixed_uri_prefix'>:</span>
-        <span className='text-prefixed_uri_local_name'>{pu.localPart}</span>
-    </span>
+export function makeNonClickablePrefixedUri(pu: PrefixedUri, colors: string[], key: string = '') {
+    return pu.prefix
+        ? <span className='font-mono' key={key}>
+            <span className={colors[0]}>{pu.prefix}</span>
+            <span className={colors[1]}>:</span>
+            <span className={colors[2]}>{pu.localPart}</span>
+        </span>
+        : <span className='font-mono' key={key}>
+            <span className={colors[2]}>{pu.localPart}</span>
+        </span>
 }
 
 export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Binding) {
@@ -41,7 +53,7 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     }
     if (b["r_type"]) {
         addDivider()
-        types.push(makeNonClickablePrefixedUri(getPrefixedUri(b["r_type"].value), getKey()))
+        types.push(makeNonClickablePrefixedUri(makePrefixedUri(b["r_type"].value), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'], getKey()))
     }
 
     return types
