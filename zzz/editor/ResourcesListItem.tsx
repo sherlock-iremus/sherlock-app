@@ -41,7 +41,7 @@ export default function ({ filter, /*onOntologyItemClicked,*/ ontology, ontology
   }
 
   return <Box>
-    <ListItemButton onClick={handleClick} dense={true} sx={{
+    <ListItemButton onPress={handleClick} dense={true} sx={{
       margin: 0,
       padding: 0
     }}

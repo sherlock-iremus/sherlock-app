@@ -1,6 +1,6 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react'
 import { SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
-import { getGraphName, makePrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
+import { PrefixedUri, getGraphName, makePrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
 import { Link } from 'react-router-dom'
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md"
 import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
@@ -37,7 +37,7 @@ export default function ({ bindings, linkedResources }: {
         </TableHeader>
         <TableBody>
             {bindings.map((b: SparqlQueryResultObject_Binding, i: number) => {
-                const p = b.hasOwnProperty('p') ? makePrefixedUri(b["p"].value) : ''
+                const p = b.hasOwnProperty('p') ? makePrefixedUri(b["p"].value) : new PrefixedUri('', '')
                 const cells = []
 
                 // PRÉDICAT

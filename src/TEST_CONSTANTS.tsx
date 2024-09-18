@@ -1,2 +1,0 @@
-export const E32_RFAR_PERSONNES = 'http://data-iremus.huma-num.fr/id/81366968-0fc8-43f6-9a32-9609c19a33c0'
-export const MG_TEI_ARTICLE_CORPUS = 'http://data-iremus.huma-num.fr/id/7dd7cb84-ad41-44e6-8044-155827d9ff76'

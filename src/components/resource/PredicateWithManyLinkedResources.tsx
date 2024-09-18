@@ -1,19 +1,21 @@
 import { useCallback, useMemo, useState } from 'react'
 import { CiSearch } from "react-icons/ci"
-import { identity } from 'sherlock-sparql-queries/lib/identityLight'
+import { identity, identityIncoming } from 'sherlock-sparql-queries/lib/identityLight'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
 import { sparqlApi } from '../../services/sparqlApi'
 import { makeClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 
-export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri }: {
+export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri, direction }: {
     n: number,
     predicateUri: string,
     resourceUri: string,
+    direction: LinkedResourcesDirectionEnum
 }) {
-    const identitySparqlQuery = useMemo(() => identity(resourceUri, predicateUri), [resourceUri])
+    const identitySparqlQuery = direction === LinkedResourcesDirectionEnum.INCOMING ? identityIncoming(resourceUri, predicateUri) : identity(resourceUri, predicateUri)
     const { data } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(identitySparqlQuery)
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +162,13 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
     ////////////////////////////////////////////////////////////////////////////////
 
     return <>
-        <PredicateSectionTitle title={makePrefixedUri(predicateUri)} sparqlQuery={identitySparqlQuery} n={n} />
+        <PredicateSectionTitle
+            direction={direction}
+            icon={undefined}
+            title=''
+            prefixedUri={makePrefixedUri(predicateUri)}
+            sparqlQuery={identitySparqlQuery}
+            n={n} />
         <br />
         <div className="px-6">
             {

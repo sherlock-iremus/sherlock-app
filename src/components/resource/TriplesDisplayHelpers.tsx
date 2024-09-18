@@ -4,11 +4,11 @@ import { PrefixedUri, makePrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from "sherlock-rdf/lib/sparql-result"
 
 export function displayLabel(v: SparqlQueryResultObject_Variable) {
-    const lang = v['xml:lang'] ? <span className='lang'>{' @' + v['xml:lang']}</span> : ''
     if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
         return <Link className='font-mono text-base text-link' to={'/?resource=' + v.value}>{v.value}</Link>
     }
 
+    const lang = v['xml:lang'] ? <span className='lang'>{' @' + v['xml:lang']}</span> : ''
     return <span className='font-serif text-lg'>{v.value}{lang}</span>
 }
 

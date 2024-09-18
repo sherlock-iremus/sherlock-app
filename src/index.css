@@ -114,4 +114,13 @@ a:hover {
   .lang {
     @apply text-stone-400 font-normal font-mono text-small
   }
+
+  .icon {
+    @apply text-deeppink
+  }
+}
+
+.sectionTitleIcon svg {
+  fill: aquamarine;
+  stroke: aquamarine;
 }
