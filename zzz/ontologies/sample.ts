@@ -2,7 +2,7 @@ import { Literal, Resource, OG, Graph } from 'sherlock-rdf/lib/resource'
 import { Languages, XSDTypes } from 'sherlock-rdf/lib/rdf-literal'
 import { RDF_TYPE } from './ontologies/RDF'
 import { RDFS_LABEL } from './ontologies/RDFS'
-import { CIDOC_CRM_ONTOLOGY } from '../data/ontologies/CIDOC-CRM'
+import { CIDOC_CRM_ONTOLOGY } from '../features/ontologies/CIDOC-CRM'
 
 const g = new Graph('http://data-iremus.huma-num.fr/graph/coucou')
 

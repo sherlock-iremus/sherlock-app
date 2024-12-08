@@ -1,6 +1,5 @@
 import { nextui } from "@nextui-org/react"
 import colors from "tailwindcss/colors"
-import plugin from "tailwindcss/plugin"
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -32,6 +31,7 @@ export default {
             "prefixed_uri_local_name_darkbg": colors.violet['300'],
             "section_bg_gradient_from": colors.stone['950'],
             "section_bg_gradient_to": colors.stone['500'],
+            "row_hover": colors.gray[100]
           }
         }
       }

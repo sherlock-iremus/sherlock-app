@@ -49,6 +49,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  font-size: 87%;
 }
 
 html {
@@ -74,49 +75,49 @@ a:hover {
 
 @layer base {
   a {
-    @apply text-link hover:text-deeppink
+    @apply text-link hover:text-deeppink;
   }
 
   table {
-    @apply text-base
+    @apply text-base;
   }
 }
 
 @layer components {
   .section-bg {
-    @apply bg-black text-white
+    @apply bg-black text-white;
   }
 
   .section-font {
-    @apply font-['Albertus'] font-[350] font-bold uppercase
+    @apply font-['Albertus'] font-[350] font-bold uppercase;
   }
 
   .section-font-predicate {
-    @apply font-mono lowercase
+    @apply font-mono lowercase;
   }
 
   .resource_icon {
-    @apply mt-[3px] text-stone-500
+    @apply mt-[3px] text-stone-500;
   }
 
   .linked_entity_icon {
-    @apply text-stone-400
+    @apply text-stone-400;
   }
 
   .table-header {
-    @apply text-stone-600 font-normal font-mono !important
+    @apply font-mono font-normal text-stone-600 !important;
   }
 
   .section-divider {
-    @apply h-[2px] w-full bg-gradient-to-r from-purple-900 to-rose-600
+    @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[2px];
   }
 
   .lang {
-    @apply text-stone-400 font-normal font-mono text-small
+    @apply font-mono font-normal text-small text-stone-400;
   }
 
   .icon {
-    @apply text-deeppink
+    @apply text-deeppink;
   }
 }
 

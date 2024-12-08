@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // import { RootState, AppThunk } from '../../app/store'
 import { Ontology } from 'sherlock-rdf/lib/ontology'
-import { CIDOC_CRM_ONTOLOGY } from '../../data/ontologies/CIDOC-CRM'
+import { CIDOC_CRM_ONTOLOGY } from './CIDOC-CRM'
 
 interface OntologiesState {
   ontologies: Map<string, Ontology>
