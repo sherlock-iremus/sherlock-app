@@ -5,9 +5,8 @@ import Root from './Root'
 import Resource from '../features/resource/Resource'
 import Id from '../features/resource/Id'
 import RouteProcessor from '../features/resource/RouteProcessor'
-import Test from './Test'
 
-export default function App () {
+export default function App() {
   const navigate = useNavigate()
 
   return (
