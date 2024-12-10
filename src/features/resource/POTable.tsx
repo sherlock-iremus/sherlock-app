@@ -56,14 +56,14 @@ export default function ({ bindings }: {
                                 <MdOutlineSubdirectoryArrowRight className='ml-1 linked_entity_icon' />
                                 <table className="border-[1px] bg-stone-50 mb-1 border-l-data_table_border border-l-solid">
                                     <tbody>
-                                        <tr>
-                                            <td className="pl-2 align-text-top"><PiTagSimpleDuotone className='resource_icon' /></td>
-                                            <td className="pr-2">{makeLinkedResourceTypesFragment(b)}</td>
-                                        </tr>
                                         {b["label"] && <tr>
                                             <td className="pr-2 pl-2 align-text-top"><PiChatTextDuotone className='resource_icon' /></td>
                                             <td className="pr-2">{displayLabel(b["label"])}</td>
                                         </tr>}
+                                        <tr>
+                                            <td className="pl-2 align-text-top"><PiTagSimpleDuotone className='resource_icon' /></td>
+                                            <td className="pr-2">{makeLinkedResourceTypesFragment(b)}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -73,20 +73,20 @@ export default function ({ bindings }: {
                         <TableCell key='cell_r' className='align-middle'>
                             <table>
                                 <tbody>
-                                    {b["r"] && <tr>
-                                        <td className="pr-2 align-text-top"><PiLinkSimpleHorizontalBreakDuotone className='resource_icon' /></td>
-                                        <td>{makeClickablePrefixedUri(b["r"].value, makePrefixedUri(b["r"].value))}</td>
-                                    </tr>}
                                     {b["label"] && <tr>
                                         <td className="pr-2 align-text-top"><PiChatTextDuotone className='resource_icon' /></td>
                                         <td>{displayLabel(b["label"])}</td>
+                                    </tr>}
+                                    {b["r"] && <tr>
+                                        <td className="pr-2 align-text-top"><PiLinkSimpleHorizontalBreakDuotone className='resource_icon' /></td>
+                                        <td>{makeClickablePrefixedUri(b["r"].value, makePrefixedUri(b["r"].value))}</td>
                                     </tr>}
                                 </tbody>
                             </table>
                         </TableCell>
                     )
 
-                return <TableRow className="border-b border-b-data_table_border" key={i}>
+                return <TableRow className="border-b border-b-data_table_border last:border-none" key={i}>
                     {cells}
                 </TableRow>
             })}

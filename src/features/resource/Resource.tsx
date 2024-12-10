@@ -3,18 +3,22 @@
 
 import { useMemo } from 'react'
 import { PiGlobeFill } from 'react-icons/pi'
-import { data, Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { HiMiniIdentification } from 'react-icons/hi2'
 import { PiTreeViewDuotone } from 'react-icons/pi'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { sparqlApi } from '../../services/sparqlApi'
+import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { makeNegativeButton, makeYasguiButton } from '../../components/buttons'
 import POTable from './POTable'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesBindings, groupByLPLR } from '../../utils/bindings_helpers'
+import { makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 
 function Resource() {
   const [searchParams] = useSearchParams()
@@ -184,10 +188,18 @@ function Resource() {
           <div className='px-6 py-6'>
             {Object.entries(otherOutgoingBindingsGroupedByLPLR).map(([lp, v1]) => {
               return Object.entries(v1).map(([lr, v2]) => {
-                return <div key={lp + lr}>
-                  <div>{lp} — {lr}</div>
-                  <POTable bindings={v2} />
-                </div>
+                return (
+                  <div key={lp + lr} className='mt-9 first:mt-0'>
+                    <div className='box-border flex items-center mb-2'>
+                      <div className='p-1 bg-data_table_border border border-teal-500'>{makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}</div>
+                      <span className='text-teal-500 whitespace-nowrap'> ———> </span>
+                      <div className='p-1 bg-data_table_border border border-teal-500'>{makeClickablePrefixedUri(lr, makePrefixedUri(lr))}</div>
+                    </div>
+                    <div className='ml-14'>
+                      <POTable bindings={v2} />
+                    </div>
+                  </div>
+                )
               })
             })}
           </div>
@@ -236,6 +248,34 @@ function Resource() {
         } */}
 
       <div className='divider' />
+      <footer className='flex bg-stone-50 py-11 border-t-1 text-sm text-stone-400'>
+        <div className='flex-1 mx-11'>
+          <div>LÉGENDE</div>
+          <table>
+            <thead>
+              <tr><th></th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className='w-6'><PiLinkSimpleHorizontalBreakDuotone /></td>
+                <td>uri navigable</td>
+              </tr>
+              <tr>
+                <td className='w-6'><PiTagSimpleDuotone /></td>
+                <td>type</td>
+              </tr>
+              <tr>
+                <td className='w-6'><PiChatTextDuotone /></td>
+                <td>label litéral</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {/* <div className='bg-stone-200 w-[1px]'></div> */}
+        {/* <div className='flex-1 mx-11'></div> */}
+        {/* <div className='bg-stone-200 w-[1px]'></div> */}
+        {/* <div className='flex-1 mx-11'></div> */}
+      </footer>
     </>
   )
 }

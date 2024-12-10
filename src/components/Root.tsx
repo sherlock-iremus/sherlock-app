@@ -38,10 +38,6 @@ export default function Root() {
       <main>
         <Outlet />
       </main>
-
-      {/* <div className='divider' /> */}
-
-      <footer className='p-6'></footer>
     </div>
   )
 }
