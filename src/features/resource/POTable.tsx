@@ -5,31 +5,27 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md"
 import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { displayLabel, makeClickablePrefixedUri, makeLinkedResourceTypesFragment, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
-export default function ({ bindings, linkedResources }: {
-    bindings: SparqlQueryResultObject_Binding[],
-    linkedResources: boolean
+export default function ({ bindings }: {
+    bindings: SparqlQueryResultObject_Binding[]
 }) {
     const headerColumns = [
         <TableColumn key='header_p' className="table-header">prédicat</TableColumn>,
         <TableColumn key='header_o' className="table-header">valeur ou ressource liée</TableColumn>
     ]
-    if (linkedResources) {
-        headerColumns.unshift(<TableColumn key='header_lr' className="table-header">{linkedResources ? 'ressource liée' : ''}</TableColumn>)
-        headerColumns.unshift(<TableColumn key='header_lp' className="table-header">{linkedResources ? 'prédicat liant' : ''}</TableColumn>)
-    }
 
     return <Table
         aria-label="potable"
         classNames={{
+            thead: "hidden ",
             th: "bg-transparent border-b border-b-data_table_border px-0",
-            td: "align-text-top pl-0 pr-4 text-base",
+            td: "align-text-top pl-0 pr-4",
         }}
         isCompact={true}
         radius='none'
         removeWrapper={true}
         shadow='none'
     >
-        <TableHeader>
+        <TableHeader className='hidden'>
             {headerColumns}
         </TableHeader>
         <TableBody>
@@ -89,28 +85,6 @@ export default function ({ bindings, linkedResources }: {
                             </table>
                         </TableCell>
                     )
-
-                if (linkedResources) {
-                    // RESSOURCE LIÉE
-                    cells.unshift(
-                        <TableCell key='cell_lr' className='align-middle'>
-                            {
-                                linkedResources
-                                    ? makeClickablePrefixedUri(b["lr"].value, makePrefixedUri(b["lr"].value))
-                                    : ''
-                            }
-                        </TableCell>
-                    )
-                    // PRÉDICAT LIANT
-                    cells.unshift(
-                        <TableCell key='cell_lp' className='align-middle'>
-                            {
-                                linkedResources
-                                    ? makeNonClickablePrefixedUri(makePrefixedUri(b["lp"].value), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])
-                                    : ''
-                            }
-                        </TableCell>)
-                }
 
                 return <TableRow className="border-b border-b-data_table_border" key={i}>
                     {cells}

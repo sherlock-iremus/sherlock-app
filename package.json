@@ -12,10 +12,10 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.6.4",
+    "@nextui-org/react": "^2.6.5",
     "@reduxjs/toolkit": "^2.4.0",
     "eslint-plugin-react": "^7.37.2",
-    "framer-motion": "^11.13.1",
+    "framer-motion": "^11.13.4",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^8.0.0",
@@ -31,9 +31,9 @@
   },
   "devDependencies": {
     "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.17.0",
-    "@typescript-eslint/parser": "^8.17.0",
+    "@types/react-dom": "^19.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
     "@vitejs/plugin-react-swc": "^3.7.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.16.0",

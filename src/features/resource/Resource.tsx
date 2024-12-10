@@ -1,10 +1,9 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
 // TODO : virer les prédicats identités des autres prédicats sortants
 
-import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { useMemo } from 'react'
 import { PiGlobeFill } from 'react-icons/pi'
-import { Link, useSearchParams } from 'react-router-dom'
+import { data, Link, useSearchParams } from 'react-router-dom'
 import { HiMiniIdentification } from 'react-icons/hi2'
 import { PiTreeViewDuotone } from 'react-icons/pi'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
@@ -15,7 +14,7 @@ import POTable from './POTable'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
-import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesBindings } from '../../utils/bindings_helpers'
+import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesBindings, groupByLPLR } from '../../utils/bindings_helpers'
 
 function Resource() {
   const [searchParams] = useSearchParams()
@@ -39,12 +38,20 @@ function Resource() {
   //
   ////////////////////////////////////////////////////////////////////////////////
 
+  // OUT :: count
   const query_countoutgoing = useMemo(() => countOutgoingPredicates(resourceUri), [resourceUri])
   const { data: sparqlresults_countoutoutgoing } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(query_countoutgoing)
   const data_outgoing = extractDataFromOutgoingPredicatesBindings(sparqlresults_countoutoutgoing)
 
+  // OUT :: other
   const out_q = identity(resourceUri, true, data_outgoing.otherOutgoingPredicates, LinkedResourcesDirectionEnum.OUTGOING)
-  const { data: oOPData } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(out_q, { skip: data_outgoing.otherOutgoingPredicates.length === 0 })
+  const { data: otherOutgoingBindings } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(out_q, { skip: data_outgoing.otherOutgoingPredicates.length === 0 })
+  let otherOutgoingBindingsGroupedByLPLR = {}
+  if (otherOutgoingBindings?.results.bindings) {
+    otherOutgoingBindingsGroupedByLPLR = groupByLPLR(otherOutgoingBindings.results.bindings)
+  }
+
+  // OUT :: big
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -80,6 +87,11 @@ function Resource() {
 
   return (
     <>
+      {/* <pre className='text-xs'>
+        {JSON.stringify(data_outgoing, null, 4)}
+        <br />{'-'.repeat(120)}<br />
+        {JSON.stringify(otherOutgoingBindings, null, 4)}
+      </pre> */}
       {resourceUri && (
         <div>
           {/* <div className='section-divider' /> */}
@@ -128,10 +140,7 @@ function Resource() {
       />
 
       <div className='px-6 py-6'>
-        <POTable
-          bindings={data_id.identityBindings.toSorted(sortBindings)}
-          linkedResources={false}
-        />
+        <POTable bindings={data_id.identityBindings.toSorted(sortBindings)} />
       </div>
 
       {data_id.authdocBindings.length > 0 && (
@@ -162,7 +171,7 @@ function Resource() {
 
       <div className='divider' />
 
-      {oOPData && (
+      {otherOutgoingBindings && (
         <>
           <PredicateSectionTitle
             direction={LinkedResourcesDirectionEnum.OUTGOING}
@@ -173,12 +182,14 @@ function Resource() {
             n={0}
           />
           <div className='px-6 py-6'>
-            <POTable
-              bindings={oOPData.results.bindings.filter(
-                b => !data_id.identityPredicates.includes(b.lp.value)
-              )}
-              linkedResources={true}
-            />
+            {Object.entries(otherOutgoingBindingsGroupedByLPLR).map(([lp, v1]) => {
+              return Object.entries(v1).map(([lr, v2]) => {
+                return <div key={lp + lr}>
+                  <div>{lp} — {lr}</div>
+                  <POTable bindings={v2} />
+                </div>
+              })
+            })}
           </div>
         </>
       )}
