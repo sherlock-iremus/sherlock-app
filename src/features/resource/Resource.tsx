@@ -9,7 +9,7 @@ import { PiTreeViewDuotone } from 'react-icons/pi'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { sparqlApi } from '../../services/sparqlApi'
-import { PiChatTextDuotone, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
+import { PiTextAaLight, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { makeNegativeButton, makeYasguiButton } from '../../components/buttons'
 import POTable from './POTable'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
@@ -190,12 +190,12 @@ function Resource() {
               return Object.entries(v1).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className='mt-9 first:mt-0'>
-                    <div className='box-border flex items-center mb-2'>
+                    <div className='box-border flex items-center mb-3'>
                       <div className='p-1 bg-data_table_border border border-teal-500'>{makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}</div>
-                      <span className='text-teal-500 whitespace-nowrap'> ———> </span>
+                      <span className='text-teal-500 whitespace-nowrap'>———></span>
                       <div className='p-1 bg-data_table_border border border-teal-500'>{makeClickablePrefixedUri(lr, makePrefixedUri(lr))}</div>
                     </div>
-                    <div className='ml-14'>
+                    <div className=''>
                       <POTable bindings={v2} />
                     </div>
                   </div>
@@ -265,7 +265,7 @@ function Resource() {
                 <td>type</td>
               </tr>
               <tr>
-                <td className='w-6'><PiChatTextDuotone /></td>
+                <td className='w-6'><PiTextAaLight /></td>
                 <td>label litéral</td>
               </tr>
             </tbody>
