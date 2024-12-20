@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import { getResourceByUrlFragment } from 'sherlock-sparql-queries/lib/urlFragment'
 import { sparqlApi } from '../../services/sparqlApi'
 
-export default function Resource () {
+export default function Resource() {
   const urlFragment = '/' + useParams()['*']
 
   const getResourceSparqlQuery = useMemo(

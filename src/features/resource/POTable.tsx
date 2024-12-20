@@ -1,59 +1,86 @@
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react'
-import { SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
+import { Link } from 'react-router-dom'
+import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
 import { PrefixedUri, makePrefixedUri } from "sherlock-rdf/lib/rdf-prefixes"
-import { MdOutlineSubdirectoryArrowRight } from "react-icons/md"
-import { PiTextAaLight, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
-import { displayLabel, makeClickablePrefixedUri, makeLinkedResourceTypesFragment, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { PiGlobeDuotone } from 'react-icons/pi'
 
-export default function ({ bindings }: {
-    bindings: SparqlQueryResultObject_Binding[]
-}) {
-    return <Table
-        aria-label="potable"
-        classNames={{
-            thead: "hidden ",
-            th: "bg-transparent border-b border-b-data_table_border px-0",
-            td: "align-text-top pl-0 pr-4",
-        }}
-        isCompact={true}
-        radius='none'
-        removeWrapper={true}
-        shadow='none'
-    >
-        <TableHeader className='hidden'>
-            <TableColumn key='header_p' className="table-header">prédicat</TableColumn>
-            <TableColumn key='header_o' className="table-header">valeur ou ressource liée</TableColumn>
-        </TableHeader>
-        <TableBody>
+export function displayLabel(v: SparqlQueryResultObject_Variable) {
+    if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
+        return (
+            <Link className='text-link' to={'/?resource=' + v.value}      >
+                {v.value}
+            </Link>
+        )
+    }
+
+    return (
+        <span className='font-serif'>
+            {v.value}
+            {v['xml:lang'] && <span className='lang'>{' @' + v['xml:lang']}</span>}
+        </span>
+    )
+}
+
+export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Binding) {
+    let types_key = 0
+    const getKey = () => 'types_key_' + types_key++
+
+    return <div className='font-serif isa'>
+        {b['r_type'] && <>
+            <span>est un </span>
+            {makeNonClickablePrefixedUri(
+                makePrefixedUri(b['r_type'].value),
+                [
+                    'text-prefixed_uri_prefix_lightbg',
+                    'text-prefixed_uri_prefix_lightbg',
+                    'text-prefixed_uri_local_name_lightbg'
+                ],
+                getKey()
+            )
+            }
+        </>}
+
+        {b['r_type_type'] && <>
+            <span> : </span>
+            « <Link key={getKey()} to={'/?resource=' + b['r_type_type'].value}>
+                {b['r_type_type_label'].value}
+            </Link> »
+        </>}
+    </div>
+}
+
+
+export default function ({ bindings }: { bindings: SparqlQueryResultObject_Binding[] }) {
+    return <table>
+        <tbody>
             {bindings.map((b: SparqlQueryResultObject_Binding, i: number) => {
                 const p = b.hasOwnProperty('p') ? makePrefixedUri(b["p"].value) : new PrefixedUri('', '')
-
-                return <TableRow className="border-b border-b-data_table_border last:border-none" key={i}>
+                return <tr className="border-b border-b-data_table_border last:border-none" key={i}>
                     {/* PRÉDICAT */}
-                    <TableCell key='cell_p' className='align-top'>
+                    <td key='cell_p' className='align-top pr-11 pl-0 w-auto'>
                         {makeNonClickablePrefixedUri(p, ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}
-                    </TableCell>
+                    </td>
                     {/* OBJET */}
-                    <TableCell key='cell_r' className='p-0 align-middle'>
-                        <table>
-                            <tbody>
-                                {b['label'] && <tr>
-                                    <td className="pr-2"><PiTextAaLight className='resource_icon' /></td>
-                                    <td>{displayLabel(b["label"])}</td>
-                                </tr>}
-                                {b["r_type"] && <tr>
-                                    <td className=""><PiTagSimpleDuotone className='resource_icon' /></td>
-                                    <td className="pr-2">{makeLinkedResourceTypesFragment(b)}</td>
-                                </tr>}
-                                {b['r'] && <tr>
-                                    <td className="pr-2 align-text-top"><PiLinkSimpleHorizontalBreakDuotone className='resource_icon' /></td>
-                                    <td>{makeClickablePrefixedUri(b["r"].value, makePrefixedUri(b["r"].value))}</td>
-                                </tr>}
-                            </tbody>
-                        </table>
-                    </TableCell>
-                </TableRow>
+                    <td key='cell_r' className='align-top p-0 w-auto'>
+                        {b['label'] && <span>
+                            {displayLabel(b["label"])}
+                            {b['r'] && <Link to={'/?resource=' + b["r"].value}>
+                                <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
+                            </Link>}
+                        </span>}
+                        {!b['label'] && b['r'] && makeNonClickablePrefixedUri(
+                            makePrefixedUri(b['r'].value),
+                            [
+                                'text-prefixed_uri_prefix_lightbg',
+                                'text-prefixed_uri_prefix_lightbg',
+                                'text-prefixed_uri_local_name_lightbg'
+                            ]
+                        )
+                        }
+                        {b["r_type"] && makeLinkedResourceTypesFragment(b)}
+                    </td>
+                </tr>
             })}
-        </TableBody>
-    </Table >
+        </tbody>
+    </table>
 }

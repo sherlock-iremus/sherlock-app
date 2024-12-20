@@ -1,7 +1,8 @@
 import { IoEnterOutline, IoExitOutline } from 'react-icons/io5'
 
+import { PiGlobeFill } from 'react-icons/pi'
 import { PrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { makeYasguiButton } from '../../components/buttons'
+import { makeNegativeButton, makeYasguiButton } from '../../components/buttons'
 import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { ReactNode } from 'react'
@@ -10,16 +11,18 @@ export default function ({
   direction,
   icon,
   title,
+  link,
   prefixedUri,
   sparqlQuery,
   n
 }: {
-  direction: LinkedResourcesDirectionEnum | undefined
-  icon: ReactNode
+  direction: LinkedResourcesDirectionEnum | null
+  link: string | null,
+  icon: ReactNode | null
   title: string
-  prefixedUri: PrefixedUri | undefined
-  sparqlQuery: string
-  n: number
+  prefixedUri: PrefixedUri | null
+  sparqlQuery: string | null
+  n: number | null
 }) {
   return (
     <div>
@@ -38,7 +41,7 @@ export default function ({
             ))}
           <span className='sectionTitleIcon'>{icon && icon}</span>
           {(icon || direction) && <span>&nbsp;</span>}
-          <span className='text-prefixed_uri_local_name_darkbg text-prefixed_uri_prefix_darkbg text-prefixed_uri_prefix_darkbg font-mono'>
+          <span className='text-prefixed_uri_local_name_darkbg text-prefixed_uri_prefix_darkbg font-mono'>
             {title}
           </span>
           {prefixedUri &&
@@ -47,7 +50,7 @@ export default function ({
               'text-prefixed_uri_prefix_darkbg',
               'text-prefixed_uri_local_name_darkbg'
             ])}
-          {n > 0 && (
+          {n && (
             <span className='font-medium font-serif text-large text-stone-200 italic'>
               &nbsp;&nbsp;({n})
             </span>
@@ -57,6 +60,15 @@ export default function ({
               {makeYasguiButton(
                 sparqlQuery,
                 'Ouvrir la requête SPARQL dans Yasgui'
+              )}
+            </div>
+          )}
+          {link && (
+            <div className='flex gap-[3px] ml-3'>
+              {makeNegativeButton(
+                <PiGlobeFill className='text-lg' />,
+                link,
+                "Ouvrir le lien"
               )}
             </div>
           )}

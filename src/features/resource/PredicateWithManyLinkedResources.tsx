@@ -180,8 +180,9 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
     <>
       <PredicateSectionTitle
         direction={direction}
-        icon={undefined}
+        icon={null}
         title=''
+        link={null}
         prefixedUri={makePrefixedUri(predicateUri)}
         sparqlQuery={identitySparqlQuery}
         n={n}

@@ -28,10 +28,10 @@
 //     >
 //         {queries.map(q => {
 //             const MyCode = ({ code }: MyCodeProps) => {
-//                 return <pre className="p-3 w-full bg-gradient-to-r from-blue-600 via-pink-500 to-orange-500 text-transparent bg-clip-text select-none">
-//                     <Button className="h-8 float-right"
+//                 return <pre className="bg-clip-text bg-gradient-to-r from-blue-600 via-pink-500 to-orange-500 p-3 w-full text-transparent select-none">
+//                     <Button className="float-right h-8"
 //                         isIconOnly
-//                         onClick={async () => {
+//                         onPress={async () => {
 //                             await navigator.clipboard.writeText(q.code)
 //                         }}><FaRegPaste /></Button>
 //                     {code}
@@ -42,9 +42,9 @@
 //                 key={key++}
 //                 textValue={q.title}
 //                 title={
-//                     <div className="px-3 flex flex-row items-center w-full">
+//                     <div className="flex flex-row items-center px-3 w-full">
 //                         <div className="flex flex-row items-center">{q.icon}</div>
-//                         <div className="flex flex-row items-center ml-2 flex-1">{q.title}</div>
+//                         <div className="flex flex-row flex-1 items-center ml-2">{q.title}</div>
 //                     </div>
 //                 }
 //             >

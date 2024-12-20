@@ -60,7 +60,7 @@ export default function ({ filter, /*onOntologyItemClicked,*/ ontology, ontology
             <ListItemButton
               key={_.name}
               dense={true}
-              onClick={() => { /*onOntologyItemClicked(_)*/ }}
+              onPress={() => { /*onOntologyItemClicked(_)*/ }}
               sx={{ borderRadius: 1, margin: 0, padding: 0.5 }}
               style={{ cursor: 'default', }}
             >

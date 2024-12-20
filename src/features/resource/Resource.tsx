@@ -1,24 +1,21 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
-// TODO : virer les prédicats identités des autres prédicats sortants
 
 import { useMemo } from 'react'
 import { PiGlobeFill } from 'react-icons/pi'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { HiMiniIdentification } from 'react-icons/hi2'
-import { PiTreeViewDuotone } from 'react-icons/pi'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { sparqlApi } from '../../services/sparqlApi'
-import { PiTextAaLight, PiLinkSimpleHorizontalBreakDuotone, PiTagSimpleDuotone } from "react-icons/pi"
 import { makeNegativeButton, makeYasguiButton } from '../../components/buttons'
 import POTable from './POTable'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import PredicateSectionTitle from './PredicateSectionTitle'
-import { sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesBindings, groupByLPLR } from '../../utils/bindings_helpers'
 import { makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
+import { guessMediaRepresentation } from './helpers'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 
 function Resource() {
   const [searchParams] = useSearchParams()
@@ -55,8 +52,6 @@ function Resource() {
     otherOutgoingBindingsGroupedByLPLR = groupByLPLR(otherOutgoingBindings.results.bindings)
   }
 
-  // OUT :: big
-
   ////////////////////////////////////////////////////////////////////////////////
   //
   // INCOMING PREDICATES
@@ -85,17 +80,20 @@ function Resource() {
 
   ////////////////////////////////////////////////////////////////////////////////
   //
+  // MEDIA REPRESENTATION
+  //
+  ////////////////////////////////////////////////////////////////////////////////
+
+  const mediaRepresentation = guessMediaRepresentation(data_id)
+
+  ////////////////////////////////////////////////////////////////////////////////
+  //
   // <>
   //
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
     <>
-      {/* <pre className='text-xs'>
-        {JSON.stringify(data_outgoing, null, 4)}
-        <br />{'-'.repeat(120)}<br />
-        {JSON.stringify(otherOutgoingBindings, null, 4)}
-      </pre> */}
       {resourceUri && (
         <div>
           {/* <div className='section-divider' /> */}
@@ -135,19 +133,20 @@ function Resource() {
       )}
 
       <PredicateSectionTitle
-        direction={undefined}
+        direction={null}
+        link={null}
         icon={<HiMiniIdentification />}
-        title='Triplets identité'
-        prefixedUri={undefined}
+        title='identité de la ressource'
+        prefixedUri={null}
         sparqlQuery={query_id}
-        n={0}
+        n={null}
       />
 
       <div className='px-6 py-6'>
-        <POTable bindings={data_id.identityBindings.toSorted(sortBindings)} />
+        <POTable bindings={data_id.identityBindings} />
       </div>
 
-      {data_id.authdocBindings.length > 0 && (
+      {/* {data_id.authdocBindings.length > 0 && (
         <>
           <div className='flex px-6'>
             <span className='mt-1 icon'>
@@ -157,7 +156,7 @@ function Resource() {
               &nbsp;Cette ressource est un concept défini dans le document de
               référence intitulé :&nbsp;
             </span>
-            <span className='font-serif text-lg italic'>
+            <span className='font-serif'>
               «
               <Link
                 to={'/?resource=' + data_id.authdocBindings[0].authdoc.value}
@@ -171,32 +170,47 @@ function Resource() {
           </div>
           <br />
         </>
-      )}
+      )} */}
 
-      <div className='divider' />
+      {mediaRepresentation && <>
+        <PredicateSectionTitle
+          direction={null}
+          icon={mediaRepresentation[1]}
+          title={mediaRepresentation[0]}
+          prefixedUri={null}
+          sparqlQuery={null}
+          link={mediaRepresentation[2]}
+          n={null}
+        />
+        <div className='flex justify-center p-11 w-full text-center'>
+          {mediaRepresentation[3]}
+        </div>
+      </>
+      }
 
       {otherOutgoingBindings && (
         <>
           <PredicateSectionTitle
             direction={LinkedResourcesDirectionEnum.OUTGOING}
-            icon={undefined}
-            title='Autres triplets sortants'
-            prefixedUri={undefined}
+            icon={null}
+            link={null}
+            title='Ressources pointées'
+            prefixedUri={null}
             sparqlQuery={out_q}
-            n={0}
+            n={null}
           />
           <div className='px-6 py-6'>
             {Object.entries(otherOutgoingBindingsGroupedByLPLR).map(([lp, v1]) => {
-              return Object.entries(v1).map(([lr, v2]) => {
+              return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className='mt-9 first:mt-0'>
                     <div className='box-border flex items-center mb-3'>
-                      <div className='p-1 bg-data_table_border border border-teal-500'>{makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}</div>
-                      <span className='text-teal-500 whitespace-nowrap'>———></span>
-                      <div className='p-1 bg-data_table_border border border-teal-500'>{makeClickablePrefixedUri(lr, makePrefixedUri(lr))}</div>
+                      <div className='bg-data_table_bg px-2 py-1 border border-teal-500'>{makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}</div>
+                      <span className='text-teal-500 whitespace-nowrap'>{'———>'}</span>
+                      <div className='bg-data_table_bg px-2 py-1 border border-teal-500'>{makeClickablePrefixedUri(lr, makePrefixedUri(lr))}</div>
                     </div>
                     <div className=''>
-                      <POTable bindings={v2} />
+                      <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} />
                     </div>
                   </div>
                 )
@@ -250,31 +264,16 @@ function Resource() {
       <div className='divider' />
       <footer className='flex bg-stone-50 py-11 border-t-1 text-sm text-stone-400'>
         <div className='flex-1 mx-11'>
-          <div>LÉGENDE</div>
-          <table>
-            <thead>
-              <tr><th></th><th></th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className='w-6'><PiLinkSimpleHorizontalBreakDuotone /></td>
-                <td>uri navigable</td>
-              </tr>
-              <tr>
-                <td className='w-6'><PiTagSimpleDuotone /></td>
-                <td>type</td>
-              </tr>
-              <tr>
-                <td className='w-6'><PiTextAaLight /></td>
-                <td>label litéral</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
-        {/* <div className='bg-stone-200 w-[1px]'></div> */}
-        {/* <div className='flex-1 mx-11'></div> */}
-        {/* <div className='bg-stone-200 w-[1px]'></div> */}
-        {/* <div className='flex-1 mx-11'></div> */}
+        <div className='bg-stone-200 w-[1px]'></div>
+        <div className='flex-1 mx-11'></div>
+        <div className='bg-stone-200 w-[1px]'></div>
+        <div className='flex-1 mx-11'>
+          <a href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</a>
+          <br />
+          <br />
+          UMR 8223 CNRS
+        </div>
       </footer>
     </>
   )

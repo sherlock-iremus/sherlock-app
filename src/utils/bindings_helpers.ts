@@ -1,5 +1,4 @@
-import { current } from '@reduxjs/toolkit'
-import { RDF_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
+import { RDF_BASE, sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject, SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
 import { IDENTITY_PREDICATES } from 'sherlock-sparql-queries/lib/identity'
 
@@ -42,6 +41,8 @@ export function extractDataFromIdentityBindings(sqro: SparqlQueryResultObject | 
         }
     }
 
+    x.identityBindings = x.identityBindings.toSorted(sortBindings)
+
     return x
 }
 
@@ -72,12 +73,19 @@ export function extractDataFromOutgoingPredicatesBindings(sqro: SparqlQueryResul
 }
 
 export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]) {
-    const x = {}
+    const x: Record<string, any> = {}
 
     for (const b of bindings) {
         if (!x[b.lp.value]) x[b.lp.value] = {}
         if (!x[b.lp.value][b.lr.value]) x[b.lp.value][b.lr.value] = []
         x[b.lp.value][b.lr.value].push(b)
+    }
+
+    // et on trie tous les bindings
+    for (const lp in x) {
+        for (const lr in x[lp]) {
+            x[lp][lr] = x[lp][lr].toSorted(sortBindings)
+        }
     }
 
     return x
