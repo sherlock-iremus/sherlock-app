@@ -42,7 +42,7 @@ export function getReadablePredicate(pu: PrefixedUri): string {
   switch (pu.prefix) {
     case RDF_PREFIXES.get(CRM_BASE):
       switch (pu.localPart) {
-        case 'P1_is_identified_by': return 'est identifiée par'
+        case 'P1_is_identified_by': return 'a pour identifiant'
         case 'P2_has_type': return 'a pour type'
         case 'P102_has_title': return 'a pour titre'
       }

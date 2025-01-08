@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 
 export default function Root() {
   // const [tangela, setTangela] = useState(null)
-
   // useEffect(() => {
   //   fetch('https://pokeapi.co/api/v2/pokemon/tangela')
   //     .then(r => r.json())
@@ -13,7 +12,7 @@ export default function Root() {
   // })
 
   return (
-    <div className='bg-background text-foreground sherlock-light'>
+    <div className='flex flex-col bg-background min-h-screen text-foreground sherlock-light'>
       <header className='flex flex-row justify-between items-center bg-background_negative p-6 h-32 select-none'>
         <div className='flex-1'></div>
         <div className='text-center'>
@@ -35,9 +34,24 @@ export default function Root() {
 
       {/* <div className='divider' /> */}
 
-      <main>
+      <main className='flex-1'>
         <Outlet />
       </main>
+
+      <div className='divider' />
+      <footer className='flex bg-stone-50 py-11 border-t-1 text-sm text-stone-400'>
+        <div className='flex-1 mx-11'>
+        </div>
+        <div className='bg-stone-200 w-[1px]'></div>
+        <div className='flex-1 mx-11'></div>
+        <div className='bg-stone-200 w-[1px]'></div>
+        <div className='flex-1 mx-11'>
+          <a href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</a>
+          <br />
+          <br />
+          UMR 8223 CNRS
+        </div>
+      </footer>
     </div>
   )
 }
