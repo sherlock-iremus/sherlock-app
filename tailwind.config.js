@@ -34,7 +34,8 @@ export default {
             "prefixed_uri_local_name_darkbg": colors.violet['300'],
             "section_bg_gradient_from": colors.stone['950'],
             "section_bg_gradient_to": colors.stone['500'],
-            "row_hover": colors.gray[100]
+            "row_hover": colors.gray[100],
+            "light_text": colors.stone['400'],
           }
         }
       }
@@ -46,7 +47,6 @@ export default {
         'sans': 'Fira Code',
         'serif': 'Alegreya',
         'mono': 'Fira Code',
-        'section': 'Jost'
       }
     }
   }
