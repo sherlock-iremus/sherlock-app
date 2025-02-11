@@ -1,4 +1,4 @@
-// import { Accordion, AccordionItem, Button } from "@nextui-org/react"
+// import { Accordion, AccordionItem, Button } from "@heroui/react"
 // import { FaRegPaste } from "react-icons/fa6"
 // import { SparqlQuery } from "./SparqlQuery"
 

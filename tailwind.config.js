@@ -1,14 +1,16 @@
-import { nextui } from "@nextui-org/react"
+import { heroui } from "@heroui/theme"
 import colors from "tailwindcss/colors"
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
+  // darkMode: "class",
   plugins: [
-    nextui({
+    heroui({
       // DOC https://tailwindcss.com/docs/customizing-colors
       // DOC https://nextui.org/docs/customization/create-theme
       themes: {

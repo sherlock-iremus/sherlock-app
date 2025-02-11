@@ -1,6 +1,6 @@
-import { Button, Link } from "@nextui-org/react"
+import { Button, Link } from "@heroui/react"
 import { ReactNode } from "react"
-import { Tooltip } from "@nextui-org/tooltip"
+import { Tooltip } from "@heroui/tooltip"
 import { TbHexagonLetterY } from 'react-icons/tb'
 
 export function makeYasguiButton(sparqlQuery: string, content: string) {

@@ -1,6 +1,6 @@
 @layer components {
   .tei {
-    @apply font-["IM_Fell_English"] max-w-xl
+    @reference font-["IM_Fell_English"] max-w-xl /* amleth @apply */
   }
 
   .tei h1 {

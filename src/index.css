@@ -41,41 +41,41 @@ a:hover {
 
 @layer base {
   a {
-    @apply text-link hover:text-deeppink;
+    @reference text-link hover:text-deeppink; /* amleth @apply */
   }
 }
 
 @layer components {
   .section-bg {
-    @apply bg-black text-white;
+    @reference bg-black text-white; /* amleth @apply */
   }
 
   .section-font {
-    @apply font-['Albertus'] font-[350] font-bold uppercase;
+    @reference font-['Albertus'] font-[350] font-bold uppercase; /* amleth @apply */
   }
 
   .section-font-predicate {
-    @apply font-mono lowercase;
+    @reference font-mono lowercase; /* amleth @apply */
   }
 
   .linked_entity_icon {
-    @apply text-stone-400;
+    @reference text-stone-400; /* amleth @apply */
   }
 
   .section-divider {
-    @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px];
+    @reference bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px]; /* amleth @apply */
   }
 
   .lang {
-    @apply text-stone-400;
+    @reference text-stone-400; /* amleth @apply */
   }
 
   .isa {
-    @apply font-serif text-light_text;
+    @reference font-serif text-light_text; /* amleth @apply */
   }
 
   .icon {
-    @apply text-deeppink;
+    @reference text-deeppink; /* amleth @apply */
   }
 }
 

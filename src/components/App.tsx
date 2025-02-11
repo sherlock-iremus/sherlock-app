@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import { NextUIProvider } from '@nextui-org/react'
+import { HeroUIProvider } from '@heroui/react'
 import ErrorPage from './ErrorPage'
 import Root from './Root'
 import Resource from '../features/resource/Resource'
@@ -11,7 +11,7 @@ export default function App() {
   const navigate = useNavigate()
 
   return (
-    <NextUIProvider navigate={navigate}>
+    <HeroUIProvider navigate={navigate}>
       <Routes>
         <Route element={<Root />} errorElement={<ErrorPage />} path='/'>
           <Route path='/mercure-galant' element={<MercureGalant />} />
@@ -20,6 +20,6 @@ export default function App() {
           <Route path='*' element={<RouteProcessor />} />
         </Route>
       </Routes>
-    </NextUIProvider>
+    </HeroUIProvider>
   )
 }

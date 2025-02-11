@@ -4,7 +4,7 @@ import { identityLight, identityIncomingLight } from 'sherlock-sparql-queries/li
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
+import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { sparqlApi } from '../../services/sparqlApi'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { useNavigate } from 'react-router-dom'
