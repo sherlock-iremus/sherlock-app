@@ -1,5 +1,4 @@
 import { heroui } from "@heroui/theme"
-import colors from "tailwindcss/colors"
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,10 +8,6 @@ export default {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   // darkMode: "class",
-  plugins: [
-    heroui()
-  ],
-  theme: {
-    extend: {}
-  }
+  plugins: [heroui()],
+  theme: { extend: {} }
 }
