@@ -5,7 +5,7 @@ import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { sparqlApi } from '../../services/sparqlApi'
+import { sparqlApi } from '@/services/sparqlApi'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { useNavigate } from 'react-router-dom'
 
@@ -128,7 +128,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
           startContent={<CiSearch />}
           value={filterValue}
         />
-        <div className='ml-3 table-header'>({filteredItems.length} items)</div>
+        <div className='table-header ml-3'>({filteredItems.length} items)</div>
       </div>
     )
   }, [
@@ -150,7 +150,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
           total={pages}
           onChange={setPage}
         />
-        <div className='sm:flex justify-end gap-2 hidden w-[30%]'>
+        <div className='hidden sm:flex justify-end gap-2 w-[30%]'>
           <Button
             isDisabled={pages === 1}
             size='sm'
@@ -210,7 +210,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
                 className="hover:bg-row_hover"
               >
                 <TableCell>{item.internal_id?.value}</TableCell>
-                <TableCell className='align-top py-0 font-serif'>
+                <TableCell className='py-0 font-serif align-top'>
                   {item.label.value}
                 </TableCell>
               </TableRow>}

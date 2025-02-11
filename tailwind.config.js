@@ -10,46 +10,9 @@ export default {
   ],
   // darkMode: "class",
   plugins: [
-    heroui({
-      // DOC https://tailwindcss.com/docs/customizing-colors
-      // DOC https://nextui.org/docs/customization/create-theme
-      themes: {
-        "sherlock-light": {
-          colors: {
-            "background": "#FFFFFF",
-            "background_negative": "#000000",
-            "button": colors.fuchsia['500'],
-            "soft_bg": colors.stone['50'],
-            "data_table_border": colors.stone['200'],
-            "data_table_bg": colors.stone['50'],
-            "dark_border": colors.stone['300'],
-            "deeppink": "#FF1493",
-            "focus": colors.amber['300'],
-            "foreground": "#000000",
-            "foreground_negative": "#FFFFFF",
-            "link": "#14B8A6",
-            "link_negative": "#00FFFF",
-            "primary": colors.teal,
-            "prefixed_uri_prefix_lightbg": colors.violet['700'],
-            "prefixed_uri_local_name_lightbg": colors.violet['400'],
-            "prefixed_uri_prefix_darkbg": colors.violet['500'],
-            "prefixed_uri_local_name_darkbg": colors.violet['300'],
-            "section_bg_gradient_from": colors.stone['950'],
-            "section_bg_gradient_to": colors.stone['500'],
-            "row_hover": colors.gray[100],
-            "light_text": colors.stone['400'],
-          }
-        }
-      }
-    })
+    heroui()
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        'sans': 'Fira Code',
-        'serif': 'Alegreya',
-        'mono': 'Fira Code',
-      }
-    }
+    extend: {}
   }
 }

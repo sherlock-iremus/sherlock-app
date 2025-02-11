@@ -2,7 +2,7 @@ import { IoEnterOutline, IoExitOutline } from 'react-icons/io5'
 
 import { PiGlobeFill } from 'react-icons/pi'
 import { PrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { makeNegativeButton, makeYasguiButton } from '../../components/buttons'
+import { makeNegativeButton, makeYasguiButton } from '@/components/buttons'
 import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { ReactNode } from 'react'
@@ -51,7 +51,7 @@ export default function ({
               'text-prefixed_uri_local_name_darkbg'
             ])}
           {n && (
-            <span className='font-medium font-serif text-large text-stone-200 italic'>
+            <span className='font-serif font-medium text-large text-stone-200 italic'>
               &nbsp;&nbsp;({n})
             </span>
           )}
