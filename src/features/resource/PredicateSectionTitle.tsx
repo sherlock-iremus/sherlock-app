@@ -41,7 +41,7 @@ export default function ({
             ))}
           <span className='sectionTitleIcon'>{icon && icon}</span>
           {(icon || direction) && <span>&nbsp;</span>}
-          <span className='text-prefixed_uri_local_name_darkbg text-prefixed_uri_prefix_darkbg font-mono'>
+          <span className='text-prefixed_uri_prefix_darkbg font-mono'>
             {title}
           </span>
           {prefixedUri &&

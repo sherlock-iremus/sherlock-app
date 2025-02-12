@@ -7,32 +7,34 @@
 @import "tailwindcss";
 
 @theme {
+  /* --*: initial; */
+
   --font-sans: "Fira Code";
   --font-serif: "Alegreya";
   --font-mono: "Fira Code";
 
-  --background: "#FFFFFF";
-  --background_negative: "#000000";
-  --button: colors.fuchsia['500'];
-  --soft_bg: colors.stone['50'];
-  --data_table_border: colors.stone['200'];
-  --data_table_bg: colors.stone['50'];
-  --dark_border: colors.stone['300'];
-  --deeppink: "#FF1493";
-  --focus: colors.amber['300'];
-  --foreground: "#000000";
-  --foreground_negative: "#FFFFFF";
-  --link: "#14B8A6";
-  --link_negative: "#00FFFF";
-  --primary: colors.teal;
-  --prefixed_uri_prefix_lightbg: colors.violet['700'];
-  --prefixed_uri_local_name_lightbg: colors.violet['400'];
-  --prefixed_uri_prefix_darkbg: colors.violet['500'];
-  --prefixed_uri_local_name_darkbg: colors.violet['300'];
-  --section_bg_gradient_from: colors.stone['950'];
-  --section_bg_gradient_to: colors.stone['500'];
-  --row_hover: colors.gray[100];
-  --light_text: colors.stone['400'];
+  --color-background: #FFFFFF;
+  --color-background_negative: #000000;
+  --color-button: var(--color-fuchsia-500);
+  --color-soft_bg: var(--color-stone-50);
+  --color-data_table_border: var(--color-stone-200);
+  --color-data_table_bg: var(--color-stone-50);
+  --color-dark_border: var(--color-stone-300);
+  --color-deeppink: var(#FF1493);
+  --color-focus: var(--color-amber-300);
+  --color-foreground: #000000;
+  --color-foreground_negative: #FFFFFF;
+  --color-link: #14B8A6;
+  --color-link_negative: #00FFFF;
+  --color-primary: var(--color-teal);
+  --color-prefixed_uri_prefix_lightbg: var(--color-violet-700);
+  --color-prefixed_uri_local_name_lightbg: var(--color-violet-400);
+  --color-prefixed_uri_prefix_darkbg: var(--color-violet-500);
+  --color-prefixed_uri_local_name_darkbg: var(--color-violet-300);
+  --color-section_bg_gradient_from: var(--color-stone-950);
+  --color-section_bg_gradient_to: var(--color-stone-500);
+  --color-row_hover: var(--color-gray-100);
+  --color-light_text: var(--color-stone-400);
 }
 
 :root {
@@ -66,41 +68,41 @@ a:hover {
 
 @layer base {
   a {
-    @reference text-link hover:text-deeppink; /* amleth @apply */
+    @apply text-link hover:text-deeppink;
   }
 }
 
 @layer components {
   .section-bg {
-    @reference bg-black text-white; /* amleth @apply */
+    @apply bg-black text-white;
   }
 
   .section-font {
-    @reference font-["Albertus"] font-[350] font-bold uppercase; /* amleth @apply */
+    @apply font-["Albertus"] font-[350] font-bold uppercase;
   }
 
   .section-font-predicate {
-    @reference font-mono lowercase; /* amleth @apply */
+    @apply font-mono lowercase;
   }
 
   .linked_entity_icon {
-    @reference text-stone-400; /* amleth @apply */
+    @apply text-stone-400;
   }
 
   .section-divider {
-    @reference bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px]; /* amleth @apply */
+    @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px];
   }
 
   .lang {
-    @reference text-stone-400; /* amleth @apply */
+    @apply text-stone-400;
   }
 
   .isa {
-    @reference font-serif text-light_text; /* amleth @apply */
+    @apply font-serif text-light_text;
   }
 
   .icon {
-    @reference text-deeppink; /* amleth @apply */
+    @apply text-deeppink;
   }
 }
 

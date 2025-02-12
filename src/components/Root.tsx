@@ -12,11 +12,11 @@ export default function Root() {
   // })
 
   return (
-    <div className='flex flex-col bg-background min-h-screen text-foreground sherlock-light'>
+    <div className='flex flex-col bg-background min-h-screen text-foreground'>
       <header className='flex flex-row justify-between items-center bg-background_negative p-6 h-32 select-none'>
         <div className='flex-1'></div>
         <div className='text-center'>
-          <h1 className="font-['Albertus'] text-3xl text-foreground_negative tracking-[0.5em] indent-3">
+          <h1 className="font-['Albertus'] text-foreground_negative text-3xl indent-3 tracking-[0.5em]">
             SHERLOCK
           </h1>
           {/* <div className='m-10'>
@@ -39,7 +39,7 @@ export default function Root() {
       </main>
 
       <div className='divider' />
-      <footer className='flex bg-stone-50 py-11 border-t-1 text-sm text-stone-400'>
+      <footer className='flex bg-stone-50 py-11 border-t-1 text-stone-400 text-sm'>
         <div className='flex-1 mx-11'>
         </div>
         <div className='bg-stone-200 w-[1px]'></div>
