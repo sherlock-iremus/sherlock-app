@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES } from 'sherlock-rdf/lib/rdf-prefixes'
+import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {
   return (
@@ -52,6 +52,17 @@ export function getReadablePredicate(pu: PrefixedUri): string {
       switch (pu.localPart) {
         case 'type': return 'a pour classe'
       }
+      break
+    case RDF_PREFIXES.get(RDFS_BASE):
+      switch (pu.localPart) {
+        case 'label': return 'a pour libellé générique'
+      }
+      break
+      case RDF_PREFIXES.get(SKOS_BASE):
+        switch (pu.localPart) {
+          case 'prefLabel': return 'a pour libellé préféré'
+        }
+        break
   }
 
   return ''

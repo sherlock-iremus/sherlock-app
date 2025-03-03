@@ -47,6 +47,7 @@ function Resource() {
   // OUT :: other
   const out_q = identity(resourceUri, true, data_outgoing.otherOutgoingPredicates, LinkedResourcesDirectionEnum.OUTGOING)
   const { data: otherOutgoingBindings } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(out_q, { skip: data_outgoing.otherOutgoingPredicates.length === 0 })
+  console.log(otherOutgoingBindings)
   let otherOutgoingBindingsGroupedByLPLR = {}
   if (otherOutgoingBindings?.results.bindings) {
     otherOutgoingBindingsGroupedByLPLR = groupByLPLR(otherOutgoingBindings.results.bindings)

@@ -39,7 +39,7 @@ export default function Root() {
       </main>
 
       <div className='divider' />
-      <footer className='flex bg-stone-50 py-11 border-t-1 text-stone-400 text-sm'>
+      <footer className='flex bg-stone-50 py-11 border-stone-200 border-t-1 text-stone-400 text-sm'>
         <div className='flex-1 mx-11'>
         </div>
         <div className='bg-stone-200 w-[1px]'></div>

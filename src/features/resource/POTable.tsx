@@ -72,7 +72,7 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
                         <span className='isa'>)</span>
                     </td>
                     {/* OBJET */}
-                    <td className='p-0 w-auto align-baseline'>
+                    <td className='p-[1px] w-auto align-baseline'>
                         {b['label'] && <span>
                             {displayLabel(b["label"])}
                             {b['r'] && <Link to={'/?resource=' + b["r"].value}>
