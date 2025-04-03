@@ -25,26 +25,24 @@ function Resource() {
 
   ////////////////////////////////////////////////////////////////////////////////
   //
-  // IDENTITY BINDINGS
+  // SPARQL
   //
   ////////////////////////////////////////////////////////////////////////////////
 
+  // Identity bindings
   const query_id = useMemo(() => identity(resourceUri, false), [resourceUri])
   const { data: sparqlresults_id } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(query_id)
   const data_id: IdentityData = extractDataFromIdentityBindings(sparqlresults_id)
 
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  // OUTGOING PREDICATES
-  //
-  ////////////////////////////////////////////////////////////////////////////////
+  // Media representation
+  const mediaRepresentation = guessMediaRepresentation(data_id)
 
-  // OUT :: count
+  // Outgoing predicates :: count
   const query_countoutgoing = useMemo(() => countOutgoingPredicates(resourceUri), [resourceUri])
   const { data: sparqlresults_countoutoutgoing } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(query_countoutgoing)
   const data_outgoing = extractDataFromOutgoingPredicatesBindings(sparqlresults_countoutoutgoing)
 
-  // OUT :: other
+  // Outgoing predicates :: other
   const out_q = identity(resourceUri, true, data_outgoing.otherOutgoingPredicates, LinkedResourcesDirectionEnum.OUTGOING)
   const { data: otherOutgoingBindings } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(out_q)
   let otherOutgoingBindingsGroupedByLPLR = {}
@@ -52,35 +50,18 @@ function Resource() {
     otherOutgoingBindingsGroupedByLPLR = groupByLPLR(otherOutgoingBindings.results.bindings)
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
-  //
   // Properties
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-
   let properties_bindings: SparqlQueryResultObject_Binding[] = []
 
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  // .1 properties
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-
+  // .1 Properties
   const query_dotOneProperties = getDotOneProperties(resourceUri)
   const { data: sparqlresults_dotOneProperties } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(query_dotOneProperties)
-  properties_bindings = properties_bindings.concat(sparqlresults_dotOneProperties?.results.bindings || [])
 
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  // INCOMING PREDICATES
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-
+  // Incoming predicates
   const n_in_q = useMemo(() => countIncomingPredicates(resourceUri), [resourceUri])
   // const { data: countIncomingPredicatesData } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(n_in_q)
   // const bigIncomingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   // const otherIncomingPredicates: string[] = []
-
   // if (countIncomingPredicatesData) {
   //     countIncomingPredicatesData.results.bindings.map(binding => {
   //         const n = parseInt(binding.c.value)
@@ -98,14 +79,6 @@ function Resource() {
 
   ////////////////////////////////////////////////////////////////////////////////
   //
-  // MEDIA REPRESENTATION
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-
-  const mediaRepresentation = guessMediaRepresentation(data_id)
-
-  ////////////////////////////////////////////////////////////////////////////////
-  //
   // <>
   //
   ////////////////////////////////////////////////////////////////////////////////
@@ -114,9 +87,7 @@ function Resource() {
     <>
       {resourceUri && (
         <div>
-          {/* <div className='section-divider' /> */}
           <div className='bg-background_negative px-6 py-6'>
-            {/* text-shadow: darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px; */}
             <h2 className='font-mono text-stone-300 text-xs lowercase'>
               Ressource consultée
             </h2>
@@ -150,16 +121,7 @@ function Resource() {
         </div>
       )}
 
-      <PredicateSectionTitle
-        direction={null}
-        link={null}
-        icon={<HiMiniIdentification />}
-        title='identité de la ressource'
-        prefixedUri={null}
-        sparqlQuery={query_id}
-        n={null}
-      />
-
+      <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='identité de la ressource' prefixedUri={null} sparqlQuery={query_id} n={null} />
       <div className='px-6 py-6'>
         <POTable bindings={data_id.identityBindings} />
       </div>
@@ -191,46 +153,21 @@ function Resource() {
       )} */}
 
       {mediaRepresentation && <>
-        <PredicateSectionTitle
-          direction={null}
-          icon={mediaRepresentation[1]}
-          title={mediaRepresentation[0]}
-          prefixedUri={null}
-          sparqlQuery={null}
-          link={mediaRepresentation[2]}
-          n={null}
-        />
+        <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
         <div className='flex justify-center p-11 w-full text-center'>
           {mediaRepresentation[3]}
         </div>
       </>
       }
 
-      <PredicateSectionTitle
-        direction={null}
-        link={null}
-        icon={<HiMiniIdentification />}
-        title='propriétés'
-        prefixedUri={null}
-        sparqlQuery={query_id}
-        n={null}
-      />
-
+      <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='propriétés .1' prefixedUri={null} sparqlQuery={query_dotOneProperties} n={null} />
       <div className='px-6 py-6'>
-        <POTable bindings={properties_bindings} />
+        <POTable bindings={sparqlresults_dotOneProperties?.results.bindings.map(x => ({ property: x.e55_label, ...x })) || []} />
       </div>
 
       {otherOutgoingBindings && (
         <>
-          <PredicateSectionTitle
-            direction={LinkedResourcesDirectionEnum.OUTGOING}
-            icon={null}
-            link={null}
-            title='Ressources pointées'
-            prefixedUri={null}
-            sparqlQuery={out_q}
-            n={null}
-          />
+          <PredicateSectionTitle direction={LinkedResourcesDirectionEnum.OUTGOING} icon={null} link={null} title='Ressources pointées' prefixedUri={null} sparqlQuery={out_q} n={null} />
           <div className='px-6 py-6'>
             {Object.entries(otherOutgoingBindingsGroupedByLPLR).map(([lp, v1]) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
@@ -257,12 +194,7 @@ function Resource() {
         const n = parseInt(binding.c.value)
         return (
           <div key={k++} className='py-6'>
-            <PredicateWithManyLinkedResources
-              resourceUri={resourceUri}
-              predicateUri={binding.lp.value}
-              n={n}
-              direction={LinkedResourcesDirectionEnum.OUTGOING}
-            />
+            <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
           </div>
         )
       })}

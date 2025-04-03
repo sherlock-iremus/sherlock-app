@@ -57,47 +57,60 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
     return <table>
         <tbody>
             {bindings.map((b: SparqlQueryResultObject_Binding, i: number) => {
-                const p = b.hasOwnProperty('p') ? makePrefixedUri(b['p'].value) : new PrefixedUri('', '')
+                const p = b['p'] ? makePrefixedUri(b['p'].value) : new PrefixedUri('', '')
                 return <tr className='border-b border-b-data_table_border last:border-none' key={i}>
-                    {/* PRÉDICAT URI */}
-                    <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
-                        <span className='font-medium'>{getReadablePredicate(p)}</span>
-                        <span className='isa'> &nbsp;(</span>
-                        <span className='font-mono text-sm'>
-                            {makeNonClickablePrefixedUri(p, [
-                                'text-prefixed_uri_prefix_lightbg',
-                                'text-prefixed_uri_prefix_lightbg',
-                                'text-prefixed_uri_local_name_lightbg'
-                            ])}
-                        </span>
-                        <span className='isa'>)</span>
-                    </td>
-                    {/* OBJET */}
-                    <td className='p-[1px] w-auto align-baseline'>
-                        {b['label'] && <span>
-                            {displayLabel(b['label'])}
-                        </span>}
-                        {b['label'] && <span>
-                            {b['r'] && <Link to={'/?resource=' + b['r'].value}>
-                                <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />
-                            </Link>}
-                        </span>}
-                        {b['label']
-                            && b['label'].value.startsWith('http')
-                            && !b['label'].value.startsWith('http://data-iremus.huma-num.fr/graph/')
-                            && <Link to={b['label'].value} target="_blank">
-                                <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
-                            </Link>}
-                        {!b['label'] && b['r'] && <span className='text-sm'>{makeNonClickablePrefixedUri(
-                            makePrefixedUri(b['r'].value),
-                            [
-                                'text-prefixed_uri_prefix_lightbg',
-                                'text-prefixed_uri_prefix_lightbg',
-                                'text-prefixed_uri_local_name_lightbg'
-                            ]
-                        )}</span>}
-                        {b['r_type'] && makeLinkedResourceTypesFragment(b)}
-                    </td>
+                    {b['property'] ?
+                        <>
+                            <td className='pr-11 pl-0 w-auto font-serif font-medium align-baseline'>
+                                {b['property'].value}
+                            </td>
+                            <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
+                                {b['value'].value}
+                            </td>
+                        </>
+                        :
+                        <>
+                            {/* PRÉDICAT URI */}
+                            <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
+                                <span className='font-medium'>{getReadablePredicate(p)}</span>
+                                <span className='isa'> &nbsp;(</span>
+                                <span className='font-mono text-sm'>
+                                    {makeNonClickablePrefixedUri(p, [
+                                        'text-prefixed_uri_prefix_lightbg',
+                                        'text-prefixed_uri_prefix_lightbg',
+                                        'text-prefixed_uri_local_name_lightbg'
+                                    ])}
+                                </span>
+                                <span className='isa'>)</span>
+                            </td>
+                            {/* OBJET */}
+                            <td className='p-[1px] w-auto align-baseline'>
+                                {b['label'] && <span>
+                                    {displayLabel(b['label'])}
+                                </span>}
+                                {b['label'] && <span>
+                                    {b['r'] && <Link to={'/?resource=' + b['r'].value}>
+                                        <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />
+                                    </Link>}
+                                </span>}
+                                {b['label']
+                                    && b['label'].value.startsWith('http')
+                                    && !b['label'].value.startsWith('http://data-iremus.huma-num.fr/graph/')
+                                    && <Link to={b['label'].value} target="_blank">
+                                        <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
+                                    </Link>}
+                                {!b['label'] && b['r'] && <span className='text-sm'>{makeNonClickablePrefixedUri(
+                                    makePrefixedUri(b['r'].value),
+                                    [
+                                        'text-prefixed_uri_prefix_lightbg',
+                                        'text-prefixed_uri_prefix_lightbg',
+                                        'text-prefixed_uri_local_name_lightbg'
+                                    ]
+                                )}</span>}
+                                {b['r_type'] && makeLinkedResourceTypesFragment(b)}
+                            </td>
+                        </>
+                    }
                 </tr>
             })}
         </tbody>
