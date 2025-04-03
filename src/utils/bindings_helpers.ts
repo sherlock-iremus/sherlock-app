@@ -51,7 +51,7 @@ export type OutgoingPredicatesData = {
     otherOutgoingPredicates: string[]
 }
 
-export function extractDataFromOutgoingPredicatesBindings(sqro: SparqlQueryResultObject | undefined): OutgoingPredicatesData {
+export function extractDataFromOutgoingPredicatesCountSparqlQueryResult(sqro: SparqlQueryResultObject | undefined): OutgoingPredicatesData {
     const x: OutgoingPredicatesData = {
         bigOutgoingPredicatesBindings: [],
         otherOutgoingPredicates: []
@@ -72,7 +72,7 @@ export function extractDataFromOutgoingPredicatesBindings(sqro: SparqlQueryResul
     return x
 }
 
-export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]) {
+export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]): Record<string, any> {
     const x: Record<string, any> = {}
 
     for (const b of bindings) {

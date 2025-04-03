@@ -72,8 +72,8 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
                         <>
                             {/* PRÉDICAT URI */}
                             <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
-                                <span className='font-medium'>{getReadablePredicate(p)}</span>
-                                <span className='isa'> &nbsp;(</span>
+                                {getReadablePredicate(p) && <span className='font-medium'>{getReadablePredicate(p)}</span>}
+                                {getReadablePredicate(p) && <span className='isa'> &nbsp;(</span>}
                                 <span className='font-mono text-sm'>
                                     {makeNonClickablePrefixedUri(p, [
                                         'text-prefixed_uri_prefix_lightbg',
@@ -81,7 +81,7 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
                                         'text-prefixed_uri_local_name_lightbg'
                                     ])}
                                 </span>
-                                <span className='isa'>)</span>
+                                {getReadablePredicate(p) && <span className='isa'>)</span>}
                             </td>
                             {/* OBJET */}
                             <td className='p-[1px] w-auto align-baseline'>

@@ -53,8 +53,8 @@ export default function ({
               ])})
             </>}
           {n && (
-            <span className='font-serif font-medium text-large text-stone-200 italic'>
-              &nbsp;&nbsp;({n})
+            <span className='font-medium text-stone-400'>
+              &nbsp;[{n} items]
             </span>
           )}
           {sparqlQuery && (
