@@ -54,11 +54,12 @@ function Resource() {
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralOtherOutgoingPredicatesBindings)
 
   // Properties
-  let properties_bindings: SparqlQueryResultObject_Binding[] = []
+  // let properties_bindings: SparqlQueryResultObject_Binding[] = []
 
   // .1 Properties
-  const query_dotOneProperties = getDotOneProperties(resourceUri)
-  const { data: sparqlresults_dotOneProperties } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(query_dotOneProperties)
+  const dotOnePropertiesSparqlQuery = getDotOneProperties(resourceUri)
+  const { data: dotOnePropertiesSparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(dotOnePropertiesSparqlQuery)
+  const dotOnePropertiesBindings = dotOnePropertiesSparqlQueryResults?.results.bindings || []
 
   // Incoming predicates
   const n_in_q = useMemo(() => countIncomingPredicates(resourceUri), [resourceUri])
@@ -171,10 +172,10 @@ function Resource() {
       </>
       }
 
-      {sparqlresults_dotOneProperties?.results.bindings.length > 0 && <>
-        <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='propriétés .1' prefixedUri={null} sparqlQuery={query_dotOneProperties} n={null} />
+      {dotOnePropertiesBindings.length > 0 && <>
+        <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='propriétés .1' prefixedUri={null} sparqlQuery={dotOnePropertiesSparqlQuery} n={null} />
         <div className='px-6 py-6'>
-          <POTable bindings={sparqlresults_dotOneProperties?.results.bindings.map(x => ({ property: x.e55_label, ...x })) || []} />
+          <POTable bindings={dotOnePropertiesSparqlQueryResults?.results.bindings.map(x => ({ property: x.e55_label, ...x })) || []} />
         </div>
       </>
       }
