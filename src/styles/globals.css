@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+@import "./tei.css";
+@import "./fonts.css";
+
+@import "tailwindcss";
+@config '../../tailwind.config.js';
+
+@theme {
+    --font-sans: "Fira Code";
+    --font-serif: "Alegreya";
+    --font-mono: "Fira Code";
+
+    --color-background: #FFFFFF;
+    --color-background_negative: #000000;
+    --color-button: var(--color-fuchsia-500);
+    --color-soft_bg: var(--color-stone-50);
+    --color-data_table_border: var(--color-stone-200);
+    --color-data_table_bg: var(--color-stone-50);
+    --color-dark_border: var(--color-stone-300);
+    --color-focus: var(--color-amber-300);
+    --color-foreground: #000000;
+    --color-foreground_negative: #FFFFFF;
+    --color-link: #14B8A6;
+    --color-link_negative: #00FFFF;
+    --color-primary: var(--color-teal);
+    --color-prefixed_uri_prefix_lightbg: var(--color-violet-700);
+    --color-prefixed_uri_local_name_lightbg: var(--color-violet-400);
+    --color-prefixed_uri_prefix_darkbg: var(--color-violet-500);
+    --color-prefixed_uri_local_name_darkbg: var(--color-violet-300);
+    --color-section_bg_gradient_from: var(--color-stone-950);
+    --color-section_bg_gradient_to: var(--color-stone-500);
+    --color-row_hover: var(--color-gray-100);
+    --color-light_text: var(--color-stone-400);
+}
+
+/* BASE */
+
+:root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+html {
+    cursor: default;
+}
+
+html * {
+    font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
+}
+
+/* LINKS */
+
+a {
+    cursor: default !important;
+    transition: all 0.5s ease 0s !important;
+}
+
+a:hover {
+    color: deeppink;
+    transition: all 0s ease 0s !important;
+}
+
+@layer base {
+    a {
+        @apply text-link hover:text-pink-500;
+    }
+}
+
+/* DECO */
+
+.sectionTitleIcon svg {
+    fill: aquamarine;
+    stroke: aquamarine;
+}
+
+@layer components {
+    .section-bg {
+        @apply bg-black text-white;
+    }
+
+    .section-font {
+        @apply font-["Albertus"] font-[350] font-bold uppercase;
+    }
+
+    .section-font-predicate {
+        @apply font-mono lowercase;
+    }
+
+    .linked_entity_icon {
+        @apply text-stone-400;
+    }
+
+    .section-divider {
+        @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px];
+    }
+
+    .lang {
+        @apply text-stone-400;
+    }
+
+    .isa {
+        @apply font-serif text-light_text;
+    }
+
+    .icon {
+        @apply text-pink-500;
+    }
+}

@@ -1,0 +1,1 @@
+export const BASE = 'http://data-iremus.huma-num.fr/id/'

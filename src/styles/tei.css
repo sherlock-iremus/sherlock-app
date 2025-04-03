@@ -1,0 +1,24 @@
+@layer components {
+  .tei {
+    @apply max-w-[666px] font-["Alegreya"]
+  }
+}
+
+.tei h1 {
+  font-weight: bolder !important;
+  font-size: x-large;
+  margin-bottom: 1em;
+}
+
+.tei p {
+  text-align: justify;
+}
+
+.tei hi,
+.tei emph {
+  font-style: italic;
+}
+
+.tei div.quote {
+  margin: 1em 4em;
+}
