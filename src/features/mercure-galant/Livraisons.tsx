@@ -21,7 +21,7 @@ export default function () {
                     <Table aria-label="Livraisons du Mercure Galant">
                         <TableHeader>
                             <TableColumn>Date</TableColumn>
-                            <TableColumn>Titre de la livraison</TableColumn>
+                            <TableColumn align='left'>Titre de la livraison</TableColumn>
                             <TableColumn>Nb d'articles</TableColumn>
                             <TableColumn>Lien</TableColumn>
                         </TableHeader>
