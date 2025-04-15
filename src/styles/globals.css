@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: 'Fira Code', sans-serif;
+    --font-serif: 'Alegreya', serif;
+    --font-mono: 'Fira Code', monospace;
+
+    --color-button: #d946ef;
+    --color-soft_bg: #fafaf9;
+    --color-data_table_border: #e7e5e4;
+    --color-data_table_bg: #fafaf9;
+    --color-dark_border: #d6d3d1;
+    --color-focus: #fcd34d;
+    --color-foreground: #000;
+    --color-foreground_negative: #fff;
+    --color-link: #14b8a6;
+    --color-link_negative: #00ffff;
+    --color-primary: #0f766e;
+    --color-prefixed_uri_prefix_lightbg: #6d28d9;
+    --color-prefixed_uri_local_name_lightbg: #a78bfa;
+    --color-prefixed_uri_prefix_darkbg: #8b5cf6;
+    --color-prefixed_uri_local_name_darkbg: #c4b5fd;
+    --color-section_bg_gradient_from: #0c0a09;
+    --color-section_bg_gradient_to: #78716c;
+    --color-row_hover: #f3f4f6;
+    --color-light_text: #a8a29e;
+}
+
+@font-face {
+    font-family: 'Albertus';
+    src: url('/fonts/AlbertusMTStd.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    cursor: default;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+html * {
+    font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
+}
+
+@layer base {
+    a {
+        @apply text-link hover:text-pink-500;
+        cursor: default !important;
+        transition: all 0.5s ease 0s !important;
+    }
+
+    a:hover {
+        color: deeppink;
+        transition: all 0s ease 0s !important;
+    }
+}
+
+@layer components {
+    header.textSection {
+        margin-bottom: 2em;
+    }
+
+    header.textSection>h2 {
+        @apply font-serif font-bold text-2xl;
+    }
+
+    .sectionTitleIcon svg {
+        fill: aquamarine;
+        stroke: aquamarine;
+    }
+
+    .tei {
+        font-family: 'Lato';
+        max-width: 666px;
+    }
+
+    .tei h1 {
+        font-weight: bolder !important;
+        font-size: x-large;
+        margin-bottom: 1em;
+    }
+
+    .tei p {
+        text-align: justify;
+    }
+
+    .tei hi,
+    .tei emph {
+        font-style: italic;
+    }
+
+    .tei div.quote {
+        margin: 1em 4em;
+    }
+
+    .section-bg {
+        @apply bg-black text-white;
+    }
+
+    .section-font {
+        @apply font-["Albertus"] font-[350] font-bold uppercase;
+    }
+
+    .section-font-predicate {
+        @apply font-mono lowercase;
+    }
+
+    .linked_entity_icon {
+        @apply text-stone-400;
+    }
+
+    .section-divider {
+        @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px];
+    }
+
+    .lang {
+        @apply text-stone-400;
+    }
+
+    .isa {
+        @apply font-serif text-light_text;
+    }
+
+    .icon {
+        @apply text-pink-500;
+    }
+}
