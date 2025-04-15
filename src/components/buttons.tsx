@@ -13,7 +13,7 @@ export function makeYasguiButton(sparqlQuery: string, content: string) {
 }
 
 export function makeNegativeButton(icon: ReactNode, uri: string, content: string) {
-    return <Tooltip className="text-xs" content={content} delay={500}>
+    return <Tooltip className="text-xs" content={content} delay={500} color="secondary">
         <Button
             className="flex bg-black hover:bg-teal-950 border-1 hover:border-cyan-300 border-teal-900 rounded-full w-8 h-8 text-teal-500 hover:text-teal-300 transition-all"
             isIconOnly
