@@ -1,0 +1,42 @@
+.tei {
+    display: grid;
+    font-family: 'Lato';
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tei-head {
+    font-weight: bolder !important;
+    font-size: x-large;
+    margin-bottom: 1em;
+}
+
+.tei-p {
+    text-align: justify;
+}
+
+.tei-hi,
+.tei-emph {
+    font-style: italic;
+}
+
+.tei-quote {
+    margin: 1em 4em;
+}
+
+.tei-bibl {
+    background-color: deeppink;
+    width: 20%;
+    float: right;
+    clear: right;
+    margin-right: -33%;
+}
+
+.tei-note {
+    background-color: aquamarine;
+    width: 20%;
+    float: right;
+    clear: right;
+    margin-right: -33%;
+}

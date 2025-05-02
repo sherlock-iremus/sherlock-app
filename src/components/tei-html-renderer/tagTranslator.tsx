@@ -18,44 +18,43 @@ function computeNode(node: ParsedNode, setNote: any) {
 export function tagTranslate(tag: any, node: ParsedNode, setNote: any) {
     const N = computeNode(node, setNote)
     switch (tag) {
-        case 'ab': return <span>{N}</span>
-        case 'bibl': return <div>{N}</div>
-        case 'biblScope': return <span>{N}</span>
-        case 'date': return <span>{N}</span>
-        case 'div': return <div>{N}</div>
-        case 'figure': return <div>{N}</div>
+        case 'ab': return <span className={'tei-' + tag}>{N}</span>
+        case 'bibl': return <div className={'tei-' + tag}>{N}</div>
+        case 'biblScope': return <span className={'tei-' + tag}>{N}</span>
+        case 'date': return <span className={'tei-' + tag}>{N}</span>
+        case 'div': return <div className={'tei-' + tag}>{N}</div>
+        case 'figure': return <div className={'tei-' + tag}>{N}</div>
         case 'graphic':
-            return <img style={{ width: '100%' }}
+            return <img className={'tei-' + tag} style={{ width: '100%' }}
                 src={'https://github.com/OBVIL/mercure-galant/blob/gh-pages/' + (node.attributes as any).url + '?raw=true'}
             />
-        case 'head': return <h1>{N}</h1>
-        case 'hi': return <span>{N}</span>
-        case 'l': return <div>{N}</div>
+        case 'head': return <h1 className={'tei-' + tag}>{N}</h1>
+        case 'hi': return <span className={'tei-' + tag}>{N}</span>
+        case 'l': return <div className={'tei-' + tag}>{N}</div>
         case 'lb': return <br />
-        case 'lg': return <div>{N}</div>
-        case 'label': return <div>{N}</div>
-        case 'note': return <span onClick={() => setNote(computeNode)}>{N}</span>
-        case 'p': return <p>{N}</p>
-        case 'quote': return <div className='quote'>{N}</div>
+        case 'lg': return <div className={'tei-' + tag}>{N}</div>
+        case 'label': return <div className={'tei-' + tag}>{N}</div>
+        case 'note': return <span className={'tei-' + tag} onClick={() => setNote(computeNode)}>{N}</span>
+        case 'p': return <p className={'tei-' + tag}>{N}</p>
+        case 'quote': return <div className={'tei-' + tag}>{N}</div>
         case 'ref':
             if ((node.attributes as any)?.target) {
-                return <a
+                return <a className={'tei-' + tag}
                     href={
                         'https://github.com/OBVIL/mercure-galant/blob/gh-pages/'
                         + (node.attributes as any).target
                         + '?raw=true'
                     }
-                    className={'ref'}
                 >
                     {N}
                 </a>
             } else {
-                return <a>
+                return <a className={'tei-' + tag}>
                     {N}
                 </a>
             }
-        case 'space': return <span>{N}</span> // mr 4
-        case 'title': return <span>{N}</span> // bold
-        default: return <div style={{ 'backgroundColor': 'red' }} id={node.tag}>{N}</div>
+        case 'space': return <span className={'tei-' + tag}>{N}</span> // mr 4
+        case 'title': return <span className={'tei-' + tag}>{N}</span> // bold
+        default: return <div className={'tei-' + tag} style={{ 'backgroundColor': 'red' }} id={node.tag}>{N}</div>
     }
 }

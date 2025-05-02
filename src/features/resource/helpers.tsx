@@ -4,7 +4,7 @@ import { E55_TEI_FILE_URI, E55_FORGE_FILE_URI } from 'sherlock-rdf/lib/rdf-prefi
 import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer'
 import { LuCodeXml } from 'react-icons/lu'
 
-export function guessMediaRepresentation(idData: IdentityData): [string, ReactElement, string, ReactElement] | null {
+export function guessMediaRepresentation(idData: IdentityData, projectId: string): [string, ReactElement, string, ReactElement] | null {
   let teiFileUri = null
   let forgeFileUri = null
 
@@ -18,7 +18,7 @@ export function guessMediaRepresentation(idData: IdentityData): [string, ReactEl
     'Rendu du contenu TEI',
     <LuCodeXml />,
     forgeFileUri,
-    <div className="tei">
+    <div className={`tei ${projectId}`}>
       <TEIHTMLRenderer
         TEIDocumentURL={teiFileUri}
         setNote={(e: any) => console.log(e)}

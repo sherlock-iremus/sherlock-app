@@ -52,6 +52,8 @@ html * {
     font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
 }
 
+@import "./tei-mercure-galant.css";
+
 @layer base {
     a {
         @apply text-link hover:text-pink-500;
@@ -77,30 +79,6 @@ html * {
     .sectionTitleIcon svg {
         fill: aquamarine;
         stroke: aquamarine;
-    }
-
-    .tei {
-        font-family: 'Lato';
-        max-width: 666px;
-    }
-
-    .tei h1 {
-        font-weight: bolder !important;
-        font-size: x-large;
-        margin-bottom: 1em;
-    }
-
-    .tei p {
-        text-align: justify;
-    }
-
-    .tei hi,
-    .tei emph {
-        font-style: italic;
-    }
-
-    .tei div.quote {
-        margin: 1em 4em;
     }
 
     .section-bg {

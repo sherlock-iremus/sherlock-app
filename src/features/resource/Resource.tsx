@@ -15,12 +15,15 @@ import { makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './Triples
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { guessMediaRepresentation } from './helpers'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
+import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 
 function Resource() {
   const [searchParams] = useSearchParams()
   const resourceUri = searchParams.get('resource') || ''
 
   if (!resourceUri) return <div className='section-divider' />
+
+  let projectId = null
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -32,9 +35,14 @@ function Resource() {
   const identitySparqlQuery = identity(resourceUri, false)
   const { data: identitySparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(identitySparqlQuery)
   const identityData: IdentityData = extractDataFromIdentityBindings(identitySparqlQueryResults)
+  for (const b of identityData.identityBindings) {
+    if (b.r_type_type?.value === E55_BUSINESS_ID) {
+      projectId = b.label.value.split('/')[1]
+    }
+  }
 
   // Media representation
-  const mediaRepresentation = guessMediaRepresentation(identityData)
+  const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
   const countOutgoingPredicatesSparqlQuery = countOutgoingPredicates(resourceUri)
@@ -42,10 +50,10 @@ function Resource() {
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(outgoingPredicatesCountSparqlQueryResults)
 
   // Outgoing predicates :: other
-  console.log({ resourceUri })
+  // console.log({ resourceUri })
   const otherOutgoingPredicatesSparqlQuery = identity(resourceUri, true, outgoingPredicatesCountData.otherOutgoingPredicates, LinkedResourcesDirectionEnum.OUTGOING)
   const { data: otherOutgoingPredicatesSparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(otherOutgoingPredicatesSparqlQuery)
-  console.log(otherOutgoingPredicatesSparqlQueryResults)
+  // console.log(otherOutgoingPredicatesSparqlQueryResults)
   let literalOtherOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   let nonLiteralOtherOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   otherOutgoingPredicatesSparqlQueryResults?.results.bindings.map(x => {
