@@ -5,6 +5,7 @@ import { HiMiniIdentification } from 'react-icons/hi2'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
+import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { sparqlApi } from '@/services/sparqlApi'
 import { makeYasguiButton } from '@/components/buttons'
 import POTable from './POTable'
@@ -50,10 +51,8 @@ function Resource() {
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(outgoingPredicatesCountSparqlQueryResults)
 
   // Outgoing predicates :: other
-  // console.log({ resourceUri })
   const otherOutgoingPredicatesSparqlQuery = identity(resourceUri, true, outgoingPredicatesCountData.otherOutgoingPredicates, LinkedResourcesDirectionEnum.OUTGOING)
-  const { data: otherOutgoingPredicatesSparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(otherOutgoingPredicatesSparqlQuery)
-  // console.log(otherOutgoingPredicatesSparqlQueryResults)
+  const { data: otherOutgoingPredicatesSparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(otherOutgoingPredicatesSparqlQuery, { skip: otherOutgoingPredicatesSparqlQuery })
   let literalOtherOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   let nonLiteralOtherOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   otherOutgoingPredicatesSparqlQueryResults?.results.bindings.map(x => {
@@ -62,9 +61,6 @@ function Resource() {
   })
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralOtherOutgoingPredicatesBindings)
 
-  // Properties
-  // let properties_bindings: SparqlQueryResultObject_Binding[] = []
-
   // .1 Properties
   const dotOnePropertiesSparqlQuery = getDotOneProperties(resourceUri)
   const { data: dotOnePropertiesSparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(dotOnePropertiesSparqlQuery)
@@ -72,23 +68,10 @@ function Resource() {
 
   // Incoming predicates
   const countIncomingPredicatesSparqlQuery = countIncomingPredicates(resourceUri)
-  // const { data: countIncomingPredicatesData } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(n_in_q)
-  // const bigIncomingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
-  // const otherIncomingPredicates: string[] = []
-  // if (countIncomingPredicatesData) {
-  //     countIncomingPredicatesData.results.bindings.map(binding => {
-  //         const n = parseInt(binding.c.value)
-  //         if (n < 20) {
-  //             otherIncomingPredicates.push(binding.lp.value)
-  //         }
-  //         else {
-  //             bigIncomingPredicatesBindings.push(binding)
-  //         }
-  //     })
-  // }
 
-  // const otherIncomingPredicatesSparqlQuery = identity(resourceUri, true, otherIncomingPredicates, LinkedResourcesDirectionEnum.INCOMING)
-  // let { data: otherIncomingPredicatesData } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(otherIncomingPredicatesSparqlQuery)
+  // E13 with literal P141
+  const e13WithLiteralP141SparqlQuery = e13WithLiteralP141(resourceUri)
+  const { data: e13WithLiteralP141SparqlQueryResults } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(e13WithLiteralP141SparqlQuery)
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -123,11 +106,6 @@ function Resource() {
                   countIncomingPredicatesSparqlQuery,
                   'Ouvrir la requête SPARQL dans Yasgui : nombres de triplets entrants par prédicats'
                 )}
-                {/* {makeNegativeButton(
-                  <PiGlobeFill className='text-lg' />,
-                  resourceUri,
-                  "Consulter la ressource à l'extérieur de SHERLOCK"
-                )} */}
               </div>
             </header>
           </div>
@@ -138,32 +116,6 @@ function Resource() {
       <div className='px-6 py-6'>
         <POTable bindings={identityData.identityBindings} />
       </div>
-
-      {/* {data_id.authdocBindings.length > 0 && (
-        <>
-          <div className='flex px-6'>
-            <span className='mt-1 icon'>
-              <PiTreeViewDuotone />
-            </span>
-            <span>
-              &nbsp;Cette ressource est un concept défini dans le document de
-              référence intitulé :&nbsp;
-            </span>
-            <span className='font-serif'>
-              «
-              <Link
-                to={'/?resource=' + data_id.authdocBindings[0].authdoc.value}
-                target='_blank'
-              >
-                {data_id.authdocBindings[0].authdoc_label.value}
-              </Link>
-              »
-            </span>
-            .
-          </div>
-          <br />
-        </>
-      )} */}
 
       {mediaRepresentation && <>
         <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
@@ -188,6 +140,13 @@ function Resource() {
         </div>
       </>
       }
+
+      {e13WithLiteralP141SparqlQueryResults?.results.bindings.length > 0 && <>
+        <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='annotations' prefixedUri={null} sparqlQuery={e13WithLiteralP141SparqlQuery} n={null} />
+        <div className='px-6 py-6'>
+          <POTable bindings={e13WithLiteralP141SparqlQueryResults?.results.bindings.map(x => ({ property: x.p177_label, value: x.p141, ...x })) || []} />
+        </div>
+      </>}
 
       {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
         <>
@@ -222,32 +181,6 @@ function Resource() {
           </div>
         )
       })}
-
-      {/* {
-            otherIncomingPredicatesData && <>
-                <PredicateSectionTitle
-                    direction={LinkedResourcesDirectionEnum.INCOMING}
-                    icon={undefined}
-                    title="triplets entrants"
-                    prefixedUri={undefined}
-                    sparqlQuery={otherIncomingPredicatesSparqlQuery}
-                    n={0}
-                />
-                <div className='px-6 py-6'>
-                    <POTable bindings={otherIncomingPredicatesData?.results.bindings} linkedResources={true} />
-                </div>
-            </>
-        }
-
-        {
-            bigIncomingPredicatesBindings.map(binding => {
-                let k = 0
-                const n = parseInt(binding.c.value)
-                return <div key={k++} className='py-6'>
-                    <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.INCOMING} />
-                </div>
-            })
-        } */}
     </>
   )
 }

@@ -4,9 +4,7 @@ import { sparqlApi } from '@/services/sparqlApi'
 
 export default function Resource() {
   const urlFragment = '/' + useParams()['*']
-  console.log('RouteProcessor', useParams())
 
-  console.log(urlFragment)
   let { data } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(getResourceByUrlFragment(urlFragment))
 
   return data ? (

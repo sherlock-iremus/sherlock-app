@@ -3,6 +3,7 @@ import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } fro
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
+import { sortBindingsFn } from './helpers'
 
 export function displayLabel(v: SparqlQueryResultObject_Variable) {
     if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
@@ -54,6 +55,7 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
 
 
 export default function ({ bindings }: { bindings: SparqlQueryResultObject_Binding[] }) {
+    bindings = bindings.sort(sortBindingsFn('p177_label'))
     return <table>
         <tbody>
             {bindings.map((b: SparqlQueryResultObject_Binding, i: number) => {

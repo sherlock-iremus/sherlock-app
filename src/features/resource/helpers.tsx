@@ -3,8 +3,9 @@ import { IdentityData } from '../../utils/bindings_helpers';
 import { E55_TEI_FILE_URI, E55_FORGE_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
 import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer'
 import { LuCodeXml } from 'react-icons/lu'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
 
-export function guessMediaRepresentation(idData: IdentityData, projectId: string): [string, ReactElement, string, ReactElement] | null {
+export function guessMediaRepresentation(idData: IdentityData, projectId: string | null): [string, ReactElement, string, ReactElement] | null {
   let teiFileUri = null
   let forgeFileUri = null
 
@@ -18,7 +19,7 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
     'Rendu du contenu TEI',
     <LuCodeXml />,
     forgeFileUri,
-    <div className={`tei ${projectId}`}>
+    <div className={'tei' + projectId ? ` ${projectId}` : ''}>
       <TEIHTMLRenderer
         TEIDocumentURL={teiFileUri}
         setNote={(e: any) => console.log(e)}
@@ -27,4 +28,12 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
   ]
 
   return null
+}
+
+export function sortBindingsFn(key: string): (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding) => number {
+  return function (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding): number {
+    if (a[key].value < b[key].value) return -1;
+    if (a[key].value > b[key].value) return 1;
+    return 0;
+  }
 }
