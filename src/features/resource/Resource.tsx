@@ -5,6 +5,7 @@ import { HiMiniIdentification } from 'react-icons/hi2'
 import { countIncomingPredicates, countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
+import { sortBindingsFn } from './helpers'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { sparqlApi } from '@/services/sparqlApi'
 import { makeYasguiButton } from '@/components/buttons'
@@ -144,7 +145,11 @@ function Resource() {
       {e13WithLiteralP141SparqlQueryResults?.results.bindings.length > 0 && <>
         <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='annotations' prefixedUri={null} sparqlQuery={e13WithLiteralP141SparqlQuery} n={null} />
         <div className='px-6 py-6'>
-          <POTable bindings={e13WithLiteralP141SparqlQueryResults?.results.bindings.map(x => ({ property: x.p177_label, value: x.p141, ...x })) || []} />
+          <POTable bindings={
+            e13WithLiteralP141SparqlQueryResults?.results.bindings
+              .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
+              .sort(sortBindingsFn('p177_label'))
+            || []} />
         </div>
       </>}
 
