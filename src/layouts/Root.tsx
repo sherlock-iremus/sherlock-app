@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function Root() {
   let pathname = useLocation().pathname.split('/').filter(x => x)
-  const projectName = { 'mercure-galant': 'Mercure Galant' }[pathname[0]]
+  const projectName = { 'mercure-galant': 'Mercure Galant', 'aam': 'Association des artistes musiciens' }[pathname[0]]
 
   return (
     <div className='flex flex-col min-h-screen'>
