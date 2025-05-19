@@ -1,6 +1,5 @@
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 import { useQuery } from '@tanstack/react-query'
-import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
@@ -23,16 +22,31 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
 }
 
 export const useIdentityQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['Identity', resourceUri], query)
+    baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
 
 export const useCountObjectsOfOutgoingPredicatesQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['CountObjectsOfOutgoingPredicates', resourceUri], query)
+    baseSherlockUseSparqlQuery(true, ['count-objects-of-outgoing-predicates', resourceUri], query)
 
 export const useObjectsOfLowFanOutgoingPredicatesQuery = (query: string, resourceUri: string, enabled: boolean) =>
-    baseSherlockUseSparqlQuery(enabled, ['ObjectsOfLowFanOutgoingPredicates', resourceUri], query)
+    baseSherlockUseSparqlQuery(enabled, ['objects-of-low-fan-outgoing-predicates', resourceUri], query)
 
 export const useDotOnePropertiesQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['DotOneProperties', resourceUri], query)
+    baseSherlockUseSparqlQuery(true, ['dot-one-properties', resourceUri], query)
 
 export const useE13WithLiteralP141Query = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['E13WithLiteralP141', resourceUri], query)
+    baseSherlockUseSparqlQuery(true, ['e13-with-literal-p141', resourceUri], query)
+
+export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
+    baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)
+
+export const useGetAllProjectDataQuery = (query: string, collectionUuid: string) =>
+    baseSherlockUseSparqlQuery(true, ['all-project-data', collectionUuid], query)
+
+export const useMGLivraisonsQuery = (query: string) =>
+    baseSherlockUseSparqlQuery(true, ['mg-livraisons'], query)
+
+export const useMGLivraisonQuery = (query: string, livraisonBusinessId: string) =>
+    baseSherlockUseSparqlQuery(true, ['mg-livraison', livraisonBusinessId], query)
+
+export const useSparqlQuery = (query: string, key: Array<string>) =>
+    baseSherlockUseSparqlQuery(true, key, query)

@@ -5,9 +5,9 @@ import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { sparqlApi } from '@/services/sparqlApi'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { useNavigate } from 'react-router-dom'
+import { useSparqlQuery } from '@/hooks/sherlockSparql'
 
 export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri, direction }: {
   n: number
@@ -25,7 +25,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   const identitySparqlQuery = direction === LinkedResourcesDirectionEnum.INCOMING
     ? identityIncomingLight(resourceUri, predicateUri)
     : identityLight(resourceUri, predicateUri)
-  const { data } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(identitySparqlQuery)
+  const { data } = useSparqlQuery(identitySparqlQuery, ['identity-light', resourceUri])
 
   ////////////////////////////////////////////////////////////////////////////////
   // SEARCH

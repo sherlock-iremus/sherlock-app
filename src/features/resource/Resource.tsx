@@ -147,7 +147,7 @@ export default function Resource() {
       </>
       }
 
-      {e13WithLiteralP141Results?.results.bindings.length > 0 && <>
+      {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
         <PredicateSectionTitle direction={null} link={null} icon={<HiMiniIdentification />} title='annotations' prefixedUri={null} sparqlQuery={queries.E13WithLiteralP141} n={null} />
         <div className='px-6 py-6'>
           <POTable bindings={

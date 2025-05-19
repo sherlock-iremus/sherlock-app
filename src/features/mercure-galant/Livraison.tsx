@@ -1,18 +1,18 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
 import { mg_livraison } from 'sherlock-sparql-queries/lib/mg_livraisons'
-import { sparqlApi } from '@/services/sparqlApi'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import Spinner from '@/components/Brent'
 import { makeYasguiButton } from '@/components/buttons'
 import { makeLink } from '@/features/business_id/helpers'
+import { useMGLivraisonQuery } from '@/hooks/sherlockSparql';
 
 export default function () {
     const { livraison } = useParams()
     const livraisonBusinessId = '/mercure-galant/' + livraison
 
     const sparqlQuery = mg_livraison(livraisonBusinessId)
-    const { data, isSuccess } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(sparqlQuery)
+    const { data, isSuccess } = useMGLivraisonQuery(sparqlQuery, livraisonBusinessId)
 
     return <div className='p-24 font-serif text-center'>
         <>

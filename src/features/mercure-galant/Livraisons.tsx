@@ -1,13 +1,13 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
 import { mg_livraisons } from 'sherlock-sparql-queries/lib/mg_livraisons'
 import { makeYasguiButton } from '@/components/buttons'
-import { sparqlApi } from '@/services/sparqlApi'
 import { Link } from 'react-router-dom'
 import Spinner from '@/components/Brent'
 import { makeLink } from '@/features/business_id/helpers'
+import { useMGLivraisonsQuery } from '@/hooks/sherlockSparql';
 
 export default function () {
-    const { data, isSuccess } = sparqlApi.endpoints.getSparqlQueryResult.useQuery(mg_livraisons())
+    const { data, isSuccess } = useMGLivraisonsQuery(mg_livraisons())
 
     return <div className='p-24 font-serif text-center'>
         <>
