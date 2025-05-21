@@ -19,7 +19,7 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
     'Rendu du contenu TEI',
     <LuCodeXml />,
     forgeFileUri,
-    <div className={'tei' + projectId ? ` ${projectId}` : ''}>
+    <div className={'tei' + (projectId ? ` ${projectId}` : '')}>
       <TEIHTMLRenderer
         TEIDocumentURL={teiFileUri}
         setNote={(e: any) => console.log(e)}
