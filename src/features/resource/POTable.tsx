@@ -52,7 +52,6 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     </span>
 }
 
-
 export default function ({ bindings }: { bindings: SparqlQueryResultObject_Binding[] }) {
     return <table>
         <tbody>
@@ -61,17 +60,17 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
                 return <tr className='border-b border-b-data_table_border last:border-none' key={i}>
                     {b['property'] ?
                         <>
-                            <td className='pr-11 pl-0 w-auto font-serif font-medium align-baseline'>
+                            <td className='pr-11 pl-0 font-serif font-medium align-baseline'>
                                 {b['property'].value}
                             </td>
-                            <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
+                            <td className='pr-11 pl-0 font-serif align-baseline'>
                                 {b['value'].value}
                             </td>
                         </>
                         :
                         <>
                             {/* PRÉDICAT URI */}
-                            <td className='pr-11 pl-0 w-auto font-serif align-baseline'>
+                            <td className='pr-11 pl-0 font-serif align-baseline whitespace-nowrap'>
                                 {getReadablePredicate(p) && <span className='font-medium'>{getReadablePredicate(p)}</span>}
                                 {getReadablePredicate(p) && <span className='isa'> &nbsp;(</span>}
                                 <span className='font-mono text-sm'>
@@ -84,7 +83,7 @@ export default function ({ bindings }: { bindings: SparqlQueryResultObject_Bindi
                                 {getReadablePredicate(p) && <span className='isa'>)</span>}
                             </td>
                             {/* OBJET */}
-                            <td className='p-[1px] w-auto align-baseline'>
+                            <td className='p-[1px] align-baseline'>
                                 {b['label'] && <span>
                                     {displayLabel(b['label'])}
                                 </span>}

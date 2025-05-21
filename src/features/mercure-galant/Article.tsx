@@ -6,7 +6,7 @@ import { useGetResourceByUrlFragmentQuery } from '@/hooks/sherlockSparql'
 export default function () {
     const { article } = useParams()
     const businessId = '/mercure-galant/' + article
-    const q = getResourceByUrlFragment(getResourceByUrlFragment(businessId))
+    const q = getResourceByUrlFragment(businessId)
     let { data } = useGetResourceByUrlFragmentQuery(q, businessId)
     return data
         ? <Navigate to={`/?resource=${data?.results.bindings[0].s.value}`} />
