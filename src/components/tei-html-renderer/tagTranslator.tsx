@@ -28,7 +28,9 @@ export function tagTranslate(tag: any, node: ParsedNode, setNote: any) {
             return <img className={'tei-' + tag} style={{ width: '100%' }}
                 src={'https://github.com/OBVIL/mercure-galant/blob/gh-pages/' + (node.attributes as any).url + '?raw=true'}
             />
-        case 'head': return <h1 className={'tei-' + tag}>{N}</h1>
+        case 'head':
+            console.log({node})
+            return <h1 className={'tei-' + tag}>{N}</h1>
         case 'hi': return <span className={'tei-' + tag}>{N}</span>
         case 'l': return <div className={'tei-' + tag}>{N}</div>
         case 'lb': return <br />
