@@ -6,13 +6,15 @@ import MercureGalantLivraison from '@/features/mercure-galant/Livraison'
 import MercureGalantArticle from '@/features/mercure-galant/Article'
 import Resource from '@/features/resource/Resource'
 import Id from '@/features/resource/Id'
-import AAM from './features/projects/AAM'
+import Project from './features/projects/Project'
 
 function App() {
   return (
     <Routes>
       <Route element={<Root />} path='/'>
-        <Route path='/aam' element={<AAM />} />
+        <Route path='/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/  />} />
+        <Route path='/euterpe' element={<Project searchEngine  />} />
+        <Route path='/mercure-galant' element={<Project  />} />
         <Route path='/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
         <Route path='/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
         <Route path='/mercure-galant/article/:article' element={<MercureGalantArticle />} />

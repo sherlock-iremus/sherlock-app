@@ -90,3 +90,19 @@ export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]): Record
 
     return x
 }
+
+export function groupByField(bindings: SparqlQueryResultObject_Binding[], field: string): Record<string, any> {
+    const grouped: Record<string, any[]> = {};
+
+    bindings.forEach(item => {
+    if (item[field]) {
+     const fieldValue = item[field] ? item[field].value : 'no-binding';
+     if (!grouped[fieldValue]) {
+       grouped[fieldValue] = [];
+     }
+     grouped[fieldValue].push(item);
+    }
+   });
+   
+   return grouped;
+}
