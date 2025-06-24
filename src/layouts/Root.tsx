@@ -38,7 +38,7 @@ export default function Root() {
           <a href="https://musica.hypotheses.org/" target='_blank'>Musica2</a>
           <br />
           <br />
-          Consortium en Musicologie Numérique
+          Consortium en musicologie numérique
           <br />
           IR* Huma-Num, CNRS
         </div>
