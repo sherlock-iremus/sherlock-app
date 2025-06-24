@@ -79,6 +79,8 @@ export default function Resource() {
   // E13 with literal P141
   const { data: e13WithLiteralP141Results } = useE13WithLiteralP141Query(queries.E13WithLiteralP141, resourceUri)
 
+  console.log(e13WithLiteralP141Results)
+
   ////////////////////////////////////////////////////////////////////////////////
   //
   // <>
