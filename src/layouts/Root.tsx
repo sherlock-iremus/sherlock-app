@@ -35,7 +35,7 @@ export default function Root() {
       <div className='divider' />
       <footer className='flex bg-stone-50 py-11 border-stone-200 border-t-1 text-stone-400 text-sm'>
         <div className="flex-1 mx-11 text-right">
-          <a href="https://musica.hypotheses.org/">Musica2</a>
+          <a href="https://musica.hypotheses.org/" target='_blank'>Musica2</a>
           <br />
           <br />
           Consortium en Musicologie Numérique
