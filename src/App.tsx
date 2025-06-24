@@ -12,9 +12,9 @@ function App() {
   return (
     <Routes>
       <Route element={<Root />} path='/'>
-        <Route path='/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/  />} />
-        <Route path='/euterpe' element={<Project searchEngine  />} />
-        <Route path='/mercure-galant' element={<Project  />} />
+        <Route path='/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/ />} />
+        <Route path='/euterpe' element={<Project searchEngine />} />
+        <Route path='/mercure-galant' element={<Project />} />
         <Route path='/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
         <Route path='/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
         <Route path='/mercure-galant/article/:article' element={<MercureGalantArticle />} />
