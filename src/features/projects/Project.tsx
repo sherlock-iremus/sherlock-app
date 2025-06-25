@@ -20,7 +20,9 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     }
 
     return <div>
-        {searchEngine && <CollectionSearchEngine collectionShortName={projectCode} collectionName={data.results.bindings[0].collection_name.value} collectionUri={data.results.bindings[0].collection.value} />}
+        {searchEngine && data.results.bindings.map((row) => 
+            <CollectionSearchEngine key={row.collection.value} collectionShortName={projectCode} collectionName={row.collection_name.value} collectionUri={row.collection.value} />
+        )}
     </div>
 }
 
