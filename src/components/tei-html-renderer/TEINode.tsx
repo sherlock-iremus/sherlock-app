@@ -10,7 +10,7 @@ function TEINode(props: any) {
     }
     // Sinon, on fait un appel récursif sur tous les noeuds enfants
     return <Fragment>
-        {tagTranslate(props.item.tag, props.item, props.setNote)}
+        {tagTranslate(props.item.tag, props.item, props.noteClickHandler)}
     </Fragment>
 }
 

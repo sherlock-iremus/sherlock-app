@@ -22,7 +22,7 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
     <div className={'tei' + (projectId ? ` ${projectId}` : '')}>
       <TEIHTMLRenderer
         TEIDocumentURL={teiFileUri}
-        setNote={(e: any) => console.log(e)}
+        noteClickHandler={(e: any) => console.log('Note : ', e)}
       />
     </div>
   ]

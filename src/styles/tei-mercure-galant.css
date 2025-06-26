@@ -25,18 +25,37 @@
     margin: 1em 4em;
 }
 
-/* .tei-bibl {
+/* div.tei-bibl {
     background-color: deeppink;
     width: 20%;
     float: right;
     clear: right;
     margin-right: -33%;
+} */
+
+.tei-bibl {
+    color: dodgerblue;
 }
 
-.tei-note {
-    background-color: aquamarine;
-    width: 20%;
-    float: right;
+.tei-note-editor::before {
+    content: '📜 ';
+}
+
+.tei-note-editor {
+    border: 1px solid lightgray;
     clear: right;
-    margin-right: -33%;
-} */
+    float: right;
+    font-size: 82%;
+    text-align: left;
+    line-height: 1.25em;
+    margin-right: -55%;
+    max-height: 1.75em;
+    overflow: hidden;
+    padding: 0.25em;
+    text-overflow: ellipsis;
+    width: 50%;
+}
+
+.tei-note-editor:hover {
+    max-height: none;
+}

@@ -18,8 +18,8 @@ export type ParsedTEIItem = ParsedLeaf | ParsedNode
 
 export const TEIHTMLRenderer: React.FC<{
   TEIDocumentURL: string,
-  setNote: (e: any) => void,
-}> = ({ TEIDocumentURL, setNote }) => {
+  noteClickHandler: (e: any) => void,
+}> = ({ TEIDocumentURL, noteClickHandler: noteClickHandler }) => {
   const [TEIRoot, setTEIRoot] = useState<ParsedTEIItem[]>([])
 
   useEffect(() => {
@@ -29,12 +29,12 @@ export const TEIHTMLRenderer: React.FC<{
         setTEIRoot([TEI])
       }).catch(e => console.warn("Error during XML JSONification :", e))
     ).catch(e => console.warn("Error during TEIDocumentURL fetching (", TEIDocumentURL, ')', e))
-  }, [TEIDocumentURL, setNote])
+  }, [TEIDocumentURL, noteClickHandler])
 
   return (
     <div>
       {TEIRoot.map((item, index) => (
-        <TEINode key={'root' + index} item={item} setNote={setNote} />
+        <TEINode key={'root' + index} item={item} noteClickHandler={noteClickHandler} />
       ))}
     </div>
   )

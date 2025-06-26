@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { ParsedLeaf, ParsedNode } from './TEIHTMLRenderer'
 
-function computeNode(node: ParsedNode, setNote: any) {
+function computeNode(node: ParsedNode, noteClickHandler: any) {
     return <Fragment>
         {node.children.map(item => {
             return ((item as ParsedLeaf).text || (item as ParsedLeaf).text === '')
@@ -9,14 +9,14 @@ function computeNode(node: ParsedNode, setNote: any) {
                     {(item as ParsedLeaf).text}
                 </Fragment>
                 : <Fragment key={item.id}>
-                    {tagTranslate((item as ParsedNode).tag, item as ParsedNode, setNote)}
+                    {tagTranslate((item as ParsedNode).tag, item as ParsedNode, noteClickHandler)}
                 </Fragment>
         })}
     </Fragment>
 }
 
-export function tagTranslate(tag: any, node: ParsedNode, setNote: any) {
-    const N = computeNode(node, setNote)
+export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) {
+    const N = computeNode(node, noteClickHandler)
     switch (tag) {
         case 'ab': return <span className={'tei-' + tag}>{N}</span>
         case 'bibl': return <div className={'tei-' + tag}>{N}</div>
@@ -29,14 +29,16 @@ export function tagTranslate(tag: any, node: ParsedNode, setNote: any) {
                 src={'https://github.com/OBVIL/mercure-galant/blob/gh-pages/' + (node.attributes as any).url + '?raw=true'}
             />
         case 'head':
-            console.log({node})
             return <h1 className={'tei-' + tag}>{N}</h1>
         case 'hi': return <span className={'tei-' + tag}>{N}</span>
         case 'l': return <div className={'tei-' + tag}>{N}</div>
         case 'lb': return <br />
         case 'lg': return <div className={'tei-' + tag}>{N}</div>
         case 'label': return <div className={'tei-' + tag}>{N}</div>
-        case 'note': return <span className={'tei-' + tag} onClick={() => setNote(computeNode)}>{N}</span>
+        case 'note':
+            let respClass = ''
+            if (node.attributes.resp === 'editor') respClass = 'editor'
+            return <span className={'tei-' + tag + '-' + respClass} onClick={() => noteClickHandler(computeNode)}>{N}</span>
         case 'p': return <p className={'tei-' + tag}>{N}</p>
         case 'quote': return <div className={'tei-' + tag}>{N}</div>
         case 'ref':
