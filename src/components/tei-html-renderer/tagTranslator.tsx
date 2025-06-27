@@ -38,6 +38,7 @@ export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) 
         case 'note':
             let respClass = ''
             if ('resp' in node.attributes && node.attributes.resp === 'editor') respClass = 'editor'
+            if ('resp' in node.attributes && node.attributes.resp === 'author') respClass = 'author'
             return <span className={'tei-' + tag + '-' + respClass} onClick={() => noteClickHandler(computeNode)}>{N}</span>
         case 'p': return <p className={'tei-' + tag}>{N}</p>
         case 'quote': return <div className={'tei-' + tag}>{N}</div>

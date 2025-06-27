@@ -22,7 +22,7 @@
 }
 
 .tei-quote {
-    margin: 1em 4em;
+    padding: 1em 0;
 }
 
 /* div.tei-bibl {
@@ -37,10 +37,12 @@
     color: dodgerblue;
 }
 
+.tei-note-author::before,
 .tei-note-editor::before {
     content: '📜 ';
 }
 
+.tei-note-author,
 .tei-note-editor {
     border: 1px solid lightgray;
     clear: right;
@@ -48,14 +50,15 @@
     font-size: 82%;
     text-align: left;
     line-height: 1.25em;
-    margin-right: -55%;
+    margin-right: -50%;
     max-height: 1.75em;
     overflow: hidden;
     padding: 0.25em;
     text-overflow: ellipsis;
-    width: 50%;
+    width: 45%;
 }
 
+.tei-note-author:hover,
 .tei-note-editor:hover {
     max-height: none;
 }
