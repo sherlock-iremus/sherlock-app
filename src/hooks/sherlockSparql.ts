@@ -39,8 +39,8 @@ export const useE13WithLiteralP141Query = (query: string, resourceUri: string) =
 export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
     baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)
 
-export const useGetAllProjectDataQuery = (query: string, collectionUri: string, search: string, includeE13: boolean, enabled: boolean, displayNotIndexedE13: boolean) =>
-    baseSherlockUseSparqlQuery(enabled, ['all-project-data', collectionUri, search, includeE13.toString(), displayNotIndexedE13.toString()], query)
+export const useGetAllProjectDataQuery = (query: string, projectGraphUri: string, search: string, enabled: boolean) =>
+    baseSherlockUseSparqlQuery(enabled, ['all-project-data', projectGraphUri, search], query)
 
 export const useGetProjectsAndCollections = (query: string, projectCode: string | undefined) =>
     baseSherlockUseSparqlQuery(true, ['projects-and-collections', projectCode ? projectCode : "all"], query)

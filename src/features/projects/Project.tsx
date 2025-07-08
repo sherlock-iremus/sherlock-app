@@ -14,15 +14,18 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     const q = f(projectCode)
     const { data } = useGetProjectsAndCollections(q, projectCode)
 
-    console.log(data)
     if (!projectCode || !data || !data.results.bindings.length) {
         return <div>Project not found</div>;
     }
 
+    const projectGraphUri = data.results.bindings[0].graph_uri.value;
+    const collections = data.results.bindings.map(row => ({
+        collectionName: row.collection_name.value,
+        collectionUri: row.collection.value,
+    }));
+
     return <div>
-        {searchEngine && data.results.bindings.map((row) => 
-            <CollectionSearchEngine key={row.collection.value} collectionShortName={projectCode} collectionName={row.collection_name.value} collectionUri={row.collection.value} />
-        )}
+        {searchEngine && <CollectionSearchEngine projectCode={projectCode} collections={collections} projectGraphUri={projectGraphUri} />}
     </div>
 }
 

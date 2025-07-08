@@ -91,18 +91,24 @@ export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]): Record
     return x
 }
 
-export function groupByField(bindings: SparqlQueryResultObject_Binding[], field: string): Record<string, any> {
-    const grouped: Record<string, any[]> = {};
+export function groupByFields(
+  bindings: SparqlQueryResultObject_Binding[],
+  fields: string | string[]
+): Record<string, SparqlQueryResultObject_Binding[]> {
+  const grouped: Record<string, SparqlQueryResultObject_Binding[]> = {};
+  const fieldList = Array.isArray(fields) ? fields : [fields];
 
-    bindings.forEach(item => {
-    if (item[field]) {
-     const fieldValue = item[field] ? item[field].value : 'no-binding';
-     if (!grouped[fieldValue]) {
-       grouped[fieldValue] = [];
-     }
-     grouped[fieldValue].push(item);
+  bindings.forEach(item => {
+    // Concatène les valeurs des champs spécifiés pour créer une clé unique
+    const key = fieldList
+      .map(field => (item[field]?.value ?? 'no-binding'))
+      .join('||');
+
+    if (!grouped[key]) {
+      grouped[key] = [];
     }
-   });
-   
-   return grouped;
+    grouped[key].push(item);
+  });
+
+  return grouped;
 }

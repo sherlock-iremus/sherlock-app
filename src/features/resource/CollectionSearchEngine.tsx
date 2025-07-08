@@ -1,5 +1,5 @@
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql';
-import { groupByField } from '@/utils/bindings_helpers';
+import { groupByFields } from '@/utils/bindings_helpers';
 import { Button, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from '@heroui/react'
 import React, { JSX } from 'react';
 import { useCallback, useMemo, useState } from 'react';
@@ -10,39 +10,47 @@ import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { makeYasguiButton } from '@/components/buttons';
 import { makeClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { PiLinkDuotone } from 'react-icons/pi';
 
 const DISPLAY_ALL_E13 = true;
 
-type CollectionSearchEngineProps = {
-  collectionShortName: string;
+// Accepts an array of collection props and a single projectGraphUri
+export type SingleCollectionProps = {
   collectionName: string;
   collectionUri: string;
 };
 
+export type CollectionSearchEngineProps = {
+  collections: SingleCollectionProps[];
+  projectCode: string;
+  projectGraphUri: string;
+};
 
 const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
-  collectionShortName,
-  collectionName,
-  collectionUri,
+  collections,
+  projectCode,
+  projectGraphUri,
 }) => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
+  const [activeSearch, setActiveSearch] = useState('');
 
+  const collectionUris = useMemo(() => collections.map(collection => collection.collectionUri), [collections]);
   const query = useMemo(
-    () => f(collectionShortName, collectionUri, searchValue, true, DISPLAY_ALL_E13),
-    [collectionShortName, collectionUri, searchValue, true]
+    () => f(projectCode, collectionUris, projectGraphUri, activeSearch, DISPLAY_ALL_E13, true),
+    [projectCode, collectionUris, projectGraphUri, activeSearch]
   );
 
-  const { data, refetch } = useGetAllProjectDataQuery(query, collectionUri, searchValue, true, false, DISPLAY_ALL_E13)
+  const shouldFetch = activeSearch.length > 2;
+  const { data } = useGetAllProjectDataQuery(query, projectGraphUri, activeSearch, shouldFetch);
   const groupedData = useMemo(
-    () => Object.values(groupByField(data?.results.bindings || [], 'item')),
+    () => Object.values(groupByFields(data?.results.bindings || [], 'item')),
     [data?.results.bindings]
   );
 
-  console.log(groupedData);
   const triggerSearch = () => {
     if (searchValue.length > 2) {
-      refetch()
+      setActiveSearch(searchValue);
     }
   }
 
@@ -61,7 +69,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
   const topContent = useMemo(() => {
     return (
       <div className='flex items-center'>
-       Collection : {collectionName} 
+        Collections : {collections.map(collection => collection.collectionName).join(', ')}
         <Input
           className='flex-1'
           isClearable
@@ -96,7 +104,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
   const tooltipContent = (item: any) => {
     return <div className="whitespace-pre-line border border-gray-300 p-2 rounded bg-gray-50">
       <strong>Propriétés associées :</strong><br />
-      {item.map((row: any) => `${row.p177_label ? row.p177_label.value : row.p177?.value} -> ${row.p141?.value}`).join('\n')}
+      {item.filter((row: SparqlQueryResultObject_Binding) => !!row.p177).map((row: SparqlQueryResultObject_Binding) => `${row.p177_label ? row.p177_label.value : row.p177.value} -> ${row.p141.value}`).join('\n')}
     </div>
   }
 
@@ -105,7 +113,6 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
       key={row.item.value}
       className="hover:bg-row_hover"
     >
-      <TableCell>{makeClickablePrefixedUri(row.item.value, makePrefixedUri(row.item.value))}</TableCell>
       <TableCell className='py-0 font-serif align-top'>
         <Tooltip
           content={tooltipContent(item)}
@@ -114,28 +121,53 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
         >
           <span>
             <Link target='_blank' to={'/?resource=' + row.p177.value} onClick={e => e.stopPropagation()}>
-            {row.p177_label ? row.p177_label.value : 'Propriété inconnue'} </Link> : {row.p141.value}
+              {row.p177_label ? row.p177_label.value : 'Propriété inconnue'} </Link> : {row.p141.value}
           </span>
         </Tooltip>
       </TableCell>
-      <TableCell>{item[0].item_label?.value}</TableCell>
+      <TableCell> {Object.values(groupByFields(item, ['item_label_p', 'item_label'])).map((row: SparqlQueryResultObject_Binding[]) =>
+          <p>
+            {makeClickablePrefixedUri(row[0].item_label_p.value, makePrefixedUri(row[0].item_label_p.value))} : {row[0].item_label.value}
+          </p>
+        )}
+      </TableCell>
+      <TableCell>
+        {collections.find(c => c.collectionUri === item[0].collection_uri?.value)?.collectionName || 'Collection inconnue'} <br />
+      </TableCell>
     </TableRow>
   }
 
-  const getDirectIndexTableRow = (item: any): JSX.Element => {
+  const displayIdentifier = (row: SparqlQueryResultObject_Binding): JSX.Element => {
+    return row.identifier ? <span className='text-xs text-gray-500'>(<Link to={row.identifier.value} target="_blank">
+                                            <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />{row.type_label.value}
+                                        </Link>)</span> : <></>;
+  }
+
+  // TODO: Refactor this to avoid code duplication with getE13TableRow
+  // TODO: use Memoization or find an alternative to groupByFields 
+  const getDirectIndexTableRow = (item: SparqlQueryResultObject_Binding[]): JSX.Element => {
     return <TableRow
       key={item[0].item.value}
       className="hover:bg-row_hover"
     >
-      <TableCell>{makeClickablePrefixedUri(item[0].item.value, makePrefixedUri(item[0].item.value))}</TableCell>
       <TableCell className='py-0 font-serif align-top'>
-          <span>
-            {makeClickablePrefixedUri(item[0].p.value, makePrefixedUri(item[0].p.value))} : {item[0].lit.value}
-          </span>
+        {Object.values(groupByFields(item, ['p', 'lit', 'type_label'])).map((row: SparqlQueryResultObject_Binding[]) =>
+          <p key={row[0].p.value + row[0].lit.value}>
+            {makeClickablePrefixedUri(row[0].p.value, makePrefixedUri(row[0].p.value))} : {row[0].lit.value} {displayIdentifier(row[0])}
+          </p>
+        )}
       </TableCell>
-      <TableCell>{item.map((row: SparqlQueryResultObject_Binding) => row.label.value).join(' ~ ')}</TableCell>
+      <TableCell> {Object.values(groupByFields(item, ['item_label_p', 'item_label'])).map((row: SparqlQueryResultObject_Binding[]) =>
+          <p key={row[0].item_label_p.value + row[0].item_label.value}>
+            {makeClickablePrefixedUri(row[0].item_label_p.value, makePrefixedUri(row[0].item_label_p.value))} : {row[0].item_label.value}
+          </p>
+        )}
+      </TableCell>
+      <TableCell>
+        {collections.find(c => c.collectionUri === item[0].collection_uri.value)?.collectionName || 'Collection inconnue'} <br />
+      </TableCell>
     </TableRow>
-  } 
+  }
 
   const getTableRow = (item: any) => {
     const row = getSignificantE13Row(item);
@@ -150,9 +182,9 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
       onRowAction={(key) => navigate('/?resource=' + key)}
     >
       <TableHeader>
-        <TableColumn key='resource' allowsSorting>URI</TableColumn>
         <TableColumn key='object' allowsSorting>Résultat de recherche</TableColumn>
-        <TableColumn key='label' allowsSorting>Libellé générique</TableColumn>
+        <TableColumn key='label' allowsSorting>Identité de la ressource</TableColumn>
+        <TableColumn key='collection' allowsSorting>Collection</TableColumn>
       </TableHeader>
       <TableBody items={groupedData}>
         {item => getTableRow(item)}
