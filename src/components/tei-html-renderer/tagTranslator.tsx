@@ -39,7 +39,7 @@ export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) 
             let respClass = ''
             if ('resp' in node.attributes && node.attributes.resp === 'editor') respClass = 'editor'
             if ('resp' in node.attributes && node.attributes.resp === 'author') respClass = 'author'
-            return <span className={'tei-' + tag + '-' + respClass} onClick={() => noteClickHandler(computeNode)}>{N}</span>
+            return <div className={'tei-' + tag + ' ' + 'tei-' + tag + '-' + respClass} onClick={() => noteClickHandler(computeNode)}>{N}</div>
         case 'p': return <p className={'tei-' + tag}>{N}</p>
         case 'quote': return <div className={'tei-' + tag}>{N}</div>
         case 'ref':
@@ -60,6 +60,7 @@ export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) 
             }
         case 'space': return <span className={'tei-' + tag}>{N}</span> // mr 4
         case 'title': return <span className={'tei-' + tag}>{N}</span> // bold
+        case 'seg': return ''
         default: return <div className={'tei-' + tag} style={{ 'backgroundColor': 'red' }} id={node.tag}>{N}</div>
     }
 }

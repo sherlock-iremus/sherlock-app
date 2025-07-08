@@ -31,7 +31,7 @@ export default function () {
                                 return <TableRow
                                     className='hover:bg-gray-100'
                                     key={item['livraison_business_id'].value}>
-                                    <TableCell className='whitespace-nowrap'>{item['date'].value.slice(0, 10)}</TableCell>
+                                    <TableCell className='whitespace-nowrap'>{item['date'].value.slice(0, 7)}</TableCell>
                                     <TableCell>{item['livraison_titre'].value}</TableCell>
                                     <TableCell className='text-center'>{item['n_articles'].value}</TableCell>
                                     <TableCell className='font-mono text-xs whitespace-nowrap'>
