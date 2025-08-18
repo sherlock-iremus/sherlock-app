@@ -97,8 +97,8 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
           <div className='table-header ml-3'>({groupedData.length} items)</div>
         </div>
         {isLoading && (
-          <div className="w-full flex justify-center items-center py-4">
-            <span className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2"></span>
+          <div className="flex justify-center items-center py-4 w-full">
+            <span className="border-t-2 border-b-2 rounded-full w-8 h-8 animate-spin"></span>
             <span className="ml-3">Recherche en cours...</span>
           </div>
         )}
