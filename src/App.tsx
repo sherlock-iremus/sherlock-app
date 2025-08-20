@@ -12,12 +12,12 @@ function App() {
   return (
     <Routes>
       <Route element={<Root />} path='/'>
-        <Route path='/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/ />} />
-        <Route path='/euterpe' element={<Project searchEngine />} />
-        <Route path='/mercure-galant' element={<Project />} />
-        <Route path='/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
-        <Route path='/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
-        <Route path='/mercure-galant/article/:article' element={<MercureGalantArticle />} />
+        <Route path='/p/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/ />} />
+        <Route path='/p/euterpe' element={<Project searchEngine />} />
+        <Route path='/p/mercure-galant' element={<Project />} />
+        <Route path='/p/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
+        <Route path='/p/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
+        <Route path='/p/mercure-galant/article/:article' element={<MercureGalantArticle />} />
         <Route path='/' element={<Resource />} />
         <Route path='/id/:resourceUUID' element={<Id />} />
       </Route>
