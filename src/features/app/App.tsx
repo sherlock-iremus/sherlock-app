@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
 
-import Root from '@/layouts/Root'
+import Root from '@/features/app/Root'
 import MercureGalantLivraisons from '@/features/mercure-galant/Livraisons'
 import MercureGalantLivraison from '@/features/mercure-galant/Livraison'
 import MercureGalantArticle from '@/features/mercure-galant/Article'
 import Resource from '@/features/resource/Resource'
 import Id from '@/features/resource/Id'
-import Project from './features/projects/Project'
+import Project from '../projects/Project'
 
 function App() {
   return (
