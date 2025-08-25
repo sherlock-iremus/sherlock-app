@@ -43,6 +43,10 @@ export default function Root() {
           IR* Huma-Num, CNRS
         </div>
         <div className='bg-stone-200 w-[1px]'></div>
+        <div className="flex flex-col px-5">
+          <span>🌲🌲📡🌲🌲</span>
+        </div>
+        <div className='bg-stone-200 w-[1px]'></div>
         <div className='flex-1 mx-11'>
           <a href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</a>
           <br />
