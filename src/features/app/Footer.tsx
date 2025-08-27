@@ -1,8 +1,8 @@
 import SherlockLogo from './SherlockLogo'
 
-const VBar = () => <div className='bg-stone-400 w-[1px]'></div>
+const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 
-export default () => <footer className='flex bg-black py-11 border-stone-200 text-stone-400 text-sm'>
+export default () => <footer className='flex flex-1 bg-black py-11 border-stone-200 text-stone-400 text-sm'>
     <div className="flex-1 mx-11 text-right">
         <a href="https://musica.hypotheses.org/" target='_blank'>Musica2</a>
         <br />
@@ -16,7 +16,7 @@ export default () => <footer className='flex bg-black py-11 border-stone-200 tex
         <SherlockLogo />
         <br />
         <br />
-        <div>🌲🌲📡🌲🌲</div>
+        <div>🌲🌲 📡 🌲🌲</div>
     </div>
     <VBar />
     <div className='flex-1 mx-11'>

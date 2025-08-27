@@ -8,13 +8,14 @@ export default function Root() {
   const projectName = { 'mercure-galant': 'Mercure Galant', 'aam': 'Association des artistes musiciens' }[pathname[0]]
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col h-full min-h-screen'>
       {projectName && <header>
         {projectName}
       </header>}
-      <main className='flex-1'>
+      {/* <main className='flex-1'> */}
+      <main>
         <Outlet />
-      </main>
+      </main >
       <div className='section-divider' />
       <Footer />
     </div>
