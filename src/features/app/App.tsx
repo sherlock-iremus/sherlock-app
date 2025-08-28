@@ -7,6 +7,7 @@ import MercureGalantArticle from '@/features/mercure-galant/Article'
 import Resource from '@/features/resource/Resource'
 import Id from '@/features/resource/Id'
 import Project from '../projects/Project'
+import ResourceRouter from '../resource/ResourceRouter'
 
 function App() {
   return (
@@ -18,8 +19,10 @@ function App() {
         <Route path='/p/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
         <Route path='/p/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
         <Route path='/p/mercure-galant/article/:article' element={<MercureGalantArticle />} />
-        <Route path='/' element={<Resource />} />
-        <Route path='/id/:resourceUUID' element={<Id />} />
+        {/* <Route path='/' element={<Resource />} /> */}
+        {/* <Route path='/id/:resourceUUID' element={<Id />} /> */}
+        <Route path='/' element={<ResourceRouter />} />
+        <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
       </Route>
     </Routes>
   )
