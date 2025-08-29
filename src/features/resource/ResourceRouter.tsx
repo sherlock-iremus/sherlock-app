@@ -1,5 +1,5 @@
-import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { useProjectQuery } from '@/hooks/sherlockSparql'
+import { useParams, useSearchParams } from 'react-router-dom'
 import ProjectHeader from './ProjectHeader'
 
 export default function () {

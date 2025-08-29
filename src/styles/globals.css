@@ -4,43 +4,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
 @import "tailwindcss";
-@config "../../tailwind.config.js";
-
-@theme {
-    --font-sans: 'Fira Code', sans-serif;
-    --font-serif: 'Alegreya', serif;
-    --font-mono: 'Fira Code', monospace;
-
-    --color-button: #d946ef;
-    --color-soft_bg: #fafaf9;
-    --color-data_table_border: #e7e5e4;
-    --color-data_table_bg: #fafaf9;
-    --color-dark_border: #d6d3d1;
-    --color-focus: #fcd34d;
-    --color-foreground: #000;
-    --color-foreground_negative: #fff;
-    --color-link: #14b8a6;
-    --color-link_negative: #00ffff;
-    --color-primary: #0f766e;
-    --color-prefixed_uri_prefix_lightbg: #6d28d9;
-    --color-prefixed_uri_local_name_lightbg: #a78bfa;
-    --color-prefixed_uri_prefix_darkbg: #8b5cf6;
-    --color-prefixed_uri_local_name_darkbg: #c4b5fd;
-    --color-section_bg_gradient_from: #0c0a09;
-    --color-section_bg_gradient_to: #78716c;
-    --color-row_hover: #f3f4f6;
-    --color-light_text: #a8a29e;
-}
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+@plugin "../hero.ts";
+@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
 
 @font-face {
-    font-family: 'Albertus';
-    src: url('/fonts/AlbertusMTStd.otf') format('opentype');
+    font-family: "Albertus";
+    src: url("/fonts/AlbertusMTStd.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
 }
 
-html {
-    cursor: default;
+@theme {
+    --font-sans: "Fira Code", sans-serif;
+    --font-serif: "Alegreya", serif;
+    --font-mono: "Fira Code", monospace;
+}
+
+@layer base {
+    a {
+        cursor: default;
+    }
+}
+
+/* html {
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -50,24 +38,11 @@ html {
 
 html * {
     font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
-}
+} */
 
 @import "./tei-mercure-galant.css";
 
-@layer base {
-    a {
-        @apply text-link hover:text-pink-500;
-        cursor: default !important;
-        transition: all 0.5s ease 0s !important;
-    }
-
-    a:hover {
-        color: deeppink;
-        transition: all 0s ease 0s !important;
-    }
-}
-
-@layer components {
+/* @layer components {
     header.textSection {
         margin-bottom: 2em;
     }
@@ -112,4 +87,4 @@ html * {
     .icon {
         @apply text-pink-500;
     }
-}
+} */

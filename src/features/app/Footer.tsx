@@ -1,11 +1,13 @@
 import SherlockLogo from './SherlockLogo'
+import { Button } from '@heroui/react'
+import { Link } from '@heroui/react'
 
 const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 
-export default () => <footer className='flex flex-col flex-1 bg-black py-11 border-stone-200 text-stone-400 text-sm'>
+export default () => <footer className='flex flex-col flex-1 bg-background py-11 text-foreground text-sm dark'>
     <div className='flex'>
         <div className="flex-1 mx-11 text-right">
-            <a href="https://musica.hypotheses.org/" target='_blank'>Musica2</a>
+            <Link href="https://musica.hypotheses.org/" target='_blank'>Musica2</Link>
             <br />
             <br />
             Consortium en musicologie numérique
@@ -21,7 +23,7 @@ export default () => <footer className='flex flex-col flex-1 bg-black py-11 bord
         </div>
         <VBar />
         <div className='flex-1 mx-11'>
-            <a href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</a>
+            <Link href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</Link>
             <br />
             <br />
             UMR 8223
@@ -30,6 +32,26 @@ export default () => <footer className='flex flex-col flex-1 bg-black py-11 bord
         </div>
     </div>
     <div className='flex flex-1 justify-center mt-11'>
-
+        <Button color="primary" variant="solid">
+            Solid
+        </Button>
+        <Button color="primary" variant="faded">
+            Faded
+        </Button>
+        <Button color="primary" variant="bordered">
+            Bordered
+        </Button>
+        <Button color="primary" variant="light">
+            Light
+        </Button>
+        <Button color="primary" variant="flat">
+            Flat
+        </Button>
+        <Button color="primary" variant="ghost">
+            Ghost
+        </Button>
+        <Button color="primary" variant="shadow">
+            Shadow
+        </Button>
     </div>
 </footer>

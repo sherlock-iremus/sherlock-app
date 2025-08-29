@@ -1,5 +1,6 @@
-import { Link } from '@heroui/react';
+import { Button, Link } from '@heroui/react'
 import React from 'react'
+import { MyButton } from '@/components/Button'
 
 interface Props {
     code?: string;
@@ -8,17 +9,14 @@ interface Props {
     uuid?: string;
 }
 
-const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) => {
-    return (
-        <div className='flex gap-4 p-4 font-serif text-2xl'>
-            <img src={logo} />
-            <div className='flex flex-col justify-end'>
-                <div className='font-mono text-gray-500 text-xs lowercase'>Projet :</div>
-                <div className=''>{name}</div>
-                <Link href={'id/' + uuid}>Page de présentation du projet</Link>
-            </div>
-        </div>
-    )
-}
+const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) => <div className='flex gap-4 bg-background p-4 text-foreground light'>
+    <img className='max-h-[111px]' src={logo} />
+    <div className='flex flex-col justify-end items-start'>
+        <div className='font-mono text-gray-500 text-xs lowercase'>Projet :</div>
+        <div className='font-serif text-2xl'>{name}</div>
+        <Link href={'/id/' + uuid}>{`/p/${code}/`}</Link>
+    </div>
+</div >
+
 
 export default ProjectHeader
