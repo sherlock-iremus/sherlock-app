@@ -1,6 +1,9 @@
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 import { useQuery } from '@tanstack/react-query'
 
+//TODO: Put queries imports here
+import { getProject } from 'sherlock-sparql-queries/lib/project'
+
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
         enabled: !!somethingTruthyToEnable,
@@ -20,6 +23,9 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
         }
     })
 }
+
+export const useProjectQuery = (resourceURI: string) =>
+    baseSherlockUseSparqlQuery(true, ['project', resourceURI], getProject(resourceURI))
 
 export const useIdentityQuery = (query: string, resourceUri: string) =>
     baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
