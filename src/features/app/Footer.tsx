@@ -34,7 +34,7 @@ export default () => <footer className='flex flex-col flex-1 bg-background text-
         </div>
     </div>
     <div className='flex flex-1 justify-center mt-11'>
-        <Button color="primary" variant="solid">
+        {/* <Button color="primary" variant="solid">
             Solid
         </Button>
         <Button color="primary" variant="faded">
@@ -54,6 +54,6 @@ export default () => <footer className='flex flex-col flex-1 bg-background text-
         </Button>
         <Button color="primary" variant="shadow">
             Shadow
-        </Button>
+        </Button> */}
     </div>
 </footer>
