@@ -2,6 +2,7 @@ import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 import { useQuery } from '@tanstack/react-query'
 
 //TODO: Put queries imports here
+import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { getProject } from 'sherlock-sparql-queries/lib/project'
 
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
@@ -27,8 +28,11 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
 export const useProjectQuery = (resourceURI: string) =>
     baseSherlockUseSparqlQuery(true, ['project', resourceURI], getProject(resourceURI))
 
-export const useIdentityQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
+export const useResourceIdentityQuery = (resourceUri: string) => {
+    const query = identity(resourceUri)
+    const x = baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
+    return { query, ...x }
+}
 
 export const useCountObjectsOfOutgoingPredicatesQuery = (query: string, resourceUri: string) =>
     baseSherlockUseSparqlQuery(true, ['count-objects-of-outgoing-predicates', resourceUri], query)

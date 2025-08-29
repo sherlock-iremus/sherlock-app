@@ -28,17 +28,21 @@
     }
 }
 
-/* html {
+/*
+html {
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 }
+*/
 
+/*
 html * {
     font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
-} */
+}
+*/
 
 @import "./tei-mercure-galant.css";
 

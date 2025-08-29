@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeYasguiButton } from '@/components/buttons'
+import SherlockBar from '@/components/SherlockBar';
 
 export type DarkPartProps = {
     resourceUri: string;
@@ -13,7 +14,8 @@ const DarkPart: React.FC<DarkPartProps> = ({
     incomingPredicatesCountQuery
 
 }) => <>
-        <div className="section-divider" /><div className="bg-black p-6 text-white">
+        <SherlockBar />
+        <div className="bg-black p-6 text-white">
             <h2 className='font-mono text-stone-300 text-xs lowercase'>
                 Ressource consultée :
             </h2>

@@ -1,15 +1,14 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
 
-import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { useSearchParams } from 'react-router-dom'
-import { HiMiniIdentification } from 'react-icons/hi2'
+// import { HiMiniIdentification } from 'react-icons/hi2'
+import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { sortBindingsFn } from './helpers'
 import POTable from './POTable'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import { Spinner } from "@heroui/react"
 import PredicateSectionTitle from './PredicateSectionTitle'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
 import { makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
@@ -17,16 +16,15 @@ import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { guessMediaRepresentation } from './helpers'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
-import { useIdentityQuery, useCountObjectsOfOutgoingPredicatesQuery, useObjectsOfLowFanOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query } from '@/hooks/sherlockSparql'
+import { useResourceIdentityQuery, useCountObjectsOfOutgoingPredicatesQuery, useObjectsOfLowFanOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query } from '@/hooks/sherlockSparql'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import DarkPart from './DarkPart'
 
-export default function Resource() {
-  const [searchParams] = useSearchParams()
-  const resourceUri = searchParams.get('resource') || ''
+interface Props {
+  resourceUri: string;
+}
 
-  if (!resourceUri) return <div className='section-divider' />
-
+const Resource: React.FC<Props> = ({ resourceUri }) => {
   let projectId = null
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -36,18 +34,17 @@ export default function Resource() {
   ////////////////////////////////////////////////////////////////////////////////
 
   const queries = {
-    identity: identity(resourceUri),
     outgoingPredicatesCount: '',
     objectsOfLowFanOutgoingPredicates: '',
     dotOneProperties: getDotOneProperties(resourceUri),
     E13WithLiteralP141: e13WithLiteralP141(resourceUri)
   }
 
-  // Identity bindings
-  const { data: identityResults } = useIdentityQuery(queries.identity, resourceUri)
+  // Resource identity
+  const { data: dataResourceIdentity, query: queryResourceIdentity } = useResourceIdentityQuery(resourceUri)
 
   // Project ID
-  const identityData: IdentityData = extractDataFromIdentityBindings(identityResults)
+  const identityData: IdentityData = extractDataFromIdentityBindings(dataResourceIdentity)
   for (const b of identityData.identityBindings) {
     if (b.r_type_type?.value === E55_BUSINESS_ID) {
       projectId = b.label.value.split('/')[1]
@@ -90,7 +87,7 @@ export default function Resource() {
 
   return (
     <div className=''>
-      <PredicateSectionTitle direction={null} link={null} icon={null} title='identité de la ressource' prefixedUri={null} sparqlQuery={queries.identity} n={null} />
+      <PredicateSectionTitle direction={null} link={null} icon={null} title='identité de la ressource' prefixedUri={null} sparqlQuery={queryResourceIdentity} n={null} />
       <div className='px-6 py-6'>
         <POTable bindings={identityData.identityBindings} />
       </div>
@@ -173,3 +170,5 @@ export default function Resource() {
     </div>
   )
 }
+
+export default Resource
