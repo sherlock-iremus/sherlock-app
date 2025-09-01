@@ -3,11 +3,16 @@ import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } fro
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
+import { tv } from 'tailwind-variants'
+
+const tr = tv({
+    base: 'border-b border-b-gray-300 last:border-none'
+})
 
 export function displayLabel(v: SparqlQueryResultObject_Variable) {
     if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
         return (
-            <span className='text-gray-400 text-xs tracking-tighter'>
+            <span className='font-mono text-gray-400 text-xs tracking-tighter'>
                 {v.value}
             </span>
         )
@@ -25,7 +30,7 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     let types_key = 0
     const getKey = () => 'types_key_' + types_key++
 
-    return <span className='font-serif isa'>
+    return <span className='font-serif text-gray-400'>
         {b['r_type'] && <>
             <span> (est un </span>
             <span className='font-mono text-sm'>
@@ -52,35 +57,47 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     </span>
 }
 
-export default function ({ bindings }: { bindings: SparqlQueryResultObject_Binding[] }) {
-    return <table>
+export default function ({ bindings, startLines }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][] }) {
+    return <table className='border border-gray-300'>
         <tbody>
+            {startLines?.map((line: string[], i: number) => {
+                return <tr className={tr()} key={i}>
+                    <td>
+                        <span className='font-serif font-medium'>{line[0]}</span>
+                    </td>
+                    <td>
+                        <span>
+                            {line[1]}
+                        </span>
+                    </td>
+                </tr>
+            })}
             {bindings.map((b: SparqlQueryResultObject_Binding, i: number) => {
                 const p = b['p'] ? makePrefixedUri(b['p'].value) : new PrefixedUri('', '')
-                return <tr className='border-b border-b-data_table_border last:border-none' key={i}>
+                return <tr className={tr()} key={i}>
                     {b['property'] ?
                         <>
-                            <td className='pr-11 pl-0 font-serif font-medium align-baseline'>
+                            <td className='pr-11 font-serif font-medium align-baseline'>
                                 {b['property'].value}
                             </td>
-                            <td className='pr-11 pl-0 font-serif align-baseline'>
+                            <td className='pr-11 align-baseline'>
                                 {b['value'].value}
                             </td>
                         </>
                         :
                         <>
                             {/* PRÉDICAT URI */}
-                            <td className='pr-11 pl-0 font-serif align-baseline whitespace-nowrap'>
-                                {getReadablePredicate(p) && <span className='font-medium'>{getReadablePredicate(p)}</span>}
-                                {getReadablePredicate(p) && <span className='isa'> &nbsp;(</span>}
-                                <span className='font-mono text-sm'>
+                            <td className='pr-11 pl-0 align-baseline whitespace-nowrap'>
+                                {getReadablePredicate(p) && <span className='font-serif font-medium'>{getReadablePredicate(p)}</span>}
+                                {getReadablePredicate(p) && <span className='text-gray-400'> &nbsp;(</span>}
+                                <span className='text-sm'>
                                     {makeNonClickablePrefixedUri(p, [
                                         'text-prefixed_uri_prefix_lightbg',
                                         'text-prefixed_uri_prefix_lightbg',
                                         'text-prefixed_uri_local_name_lightbg'
                                     ])}
                                 </span>
-                                {getReadablePredicate(p) && <span className='isa'>)</span>}
+                                {getReadablePredicate(p) && <span className='font-serif text-gray-400'>)</span>}
                             </td>
                             {/* OBJET */}
                             <td className='p-[1px] align-baseline'>

@@ -1,24 +1,22 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
 
-import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
-import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
-import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
-import { useSearchParams } from 'react-router-dom'
-// import { HiMiniIdentification } from 'react-icons/hi2'
-import { identity } from 'sherlock-sparql-queries/lib/identity'
-import { sortBindingsFn } from './helpers'
-import POTable from './POTable'
-import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import PredicateSectionTitle from './PredicateSectionTitle'
+import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
-import { makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
-import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { guessMediaRepresentation } from './helpers'
-import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
-import { useResourceIdentityQuery, useCountObjectsOfOutgoingPredicatesQuery, useObjectsOfLowFanOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query } from '@/hooks/sherlockSparql'
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { E55_BUSINESS_ID, makePrefixedUri, PrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
+import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
+import { LinkedResourcesDirectionEnum, identity } from 'sherlock-sparql-queries/lib/identity'
+import { tv } from 'tailwind-variants'
 import DarkPart from './DarkPart'
+import { guessMediaRepresentation, sortBindingsFn } from './helpers'
+import POTable from './POTable'
+import PredicateSectionTitle from './PredicateSectionTitle'
+import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
+import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+
+const h2 = tv({
+  base: 'font-light font-serif mb-6 mt-12 first:mt-6 text-2xl font-[Jost] tracking-wider uppercase '
+})
 
 interface Props {
   resourceUri: string;
@@ -36,8 +34,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   const queries = {
     outgoingPredicatesCount: '',
     objectsOfLowFanOutgoingPredicates: '',
-    dotOneProperties: getDotOneProperties(resourceUri),
-    E13WithLiteralP141: e13WithLiteralP141(resourceUri)
   }
 
   // Resource identity
@@ -71,13 +67,11 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralObjectsOfLowFanOutgoingPredicatesBindings)
 
   // .1 Properties
-  const { data: dotOnePropertiesResults } = useDotOnePropertiesQuery(queries.dotOneProperties, resourceUri)
-  const dotOnePropertiesBindings = dotOnePropertiesResults?.results.bindings || []
+  const { data: dataDotOneProperties } = useDotOnePropertiesQuery(resourceUri)
+  const dotOnePropertiesBindings = dataDotOneProperties?.results.bindings || []
 
   // E13 with literal P141
-  const { data: e13WithLiteralP141Results, isLoading: e13WithLiteralP141IsLoading } = useE13WithLiteralP141Query(queries.E13WithLiteralP141, resourceUri)
-
-  // console.log(e13WithLiteralP141Results)
+  const { data: e13WithLiteralP141Results, query: queryE13WithLiteralP141 } = useE13WithLiteralP141Query(resourceUri)
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -86,88 +80,78 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className=''>
-      <PredicateSectionTitle direction={null} link={null} icon={null} title='identité de la ressource' prefixedUri={null} sparqlQuery={queryResourceIdentity} n={null} />
-      <div className='px-6 py-6'>
+    <>
+      <div className='px-6'>
+        <h2 className={h2()}>Identité de la ressource</h2>
         <POTable bindings={identityData.identityBindings} />
-      </div>
 
-      {mediaRepresentation && <>
-        <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
-        <div className='flex justify-center p-11 w-full text-center'>
-          {mediaRepresentation[3]}
-        </div>
-      </>
-      }
+        {mediaRepresentation && <>
+          <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
+          <div className='flex justify-center p-11 w-full text-center'>
+            {mediaRepresentation[3]}
+          </div>
+        </>
+        }
 
-      {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
-        <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={""} n={null} />
-        <div className='px-6 py-6'>
-          <POTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
-        </div>
-      </>
-      }
+        {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
+          <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={""} n={null} />
+          <div className='px-6 py-6'>
+            <POTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
+          </div>
+        </>
+        }
 
-      {dotOnePropertiesBindings.length > 0 && <>
-        <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés .1' prefixedUri={null} sparqlQuery={queries.dotOneProperties} n={null} />
-        <div className='px-6 py-6'>
-          <POTable bindings={dotOnePropertiesResults?.results.bindings.map(x => ({ property: x.e55_label, ...x })) || []} />
-        </div>
-      </>
-      }
+        {dotOnePropertiesBindings.length > 0 && <>
+          {/* TODO <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés .1' prefixedUri={null} sparqlQuery={queries.dotOneProperties} n={null} /> */}
+          <div className='px-6 py-6'>
+            <POTable bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []} />
+          </div>
+        </>
+        }
 
-      {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
-        <PredicateSectionTitle direction={null} link={null} icon={null} title='annotations' prefixedUri={null} sparqlQuery={queries.E13WithLiteralP141} n={null} />
-        <div className='px-6 py-6'>
+        {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
+          <h2 className={h2()}>Annotations</h2>
           <POTable bindings={
             e13WithLiteralP141Results?.results.bindings
               .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
               .sort(sortBindingsFn('p177_label'))
             || []} />
-        </div>
-      </>}
+        </>}
 
-      {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
-        <>
-          <PredicateSectionTitle direction={LinkedResourcesDirectionEnum.OUTGOING} icon={null} link={null} title='Ressources pointées' prefixedUri={null} sparqlQuery={queries.objectsOfLowFanOutgoingPredicates} n={null} />
-          <div className='px-6 py-6'>
+        {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
+          <>
+            <h2 className={h2()}>Ressources pointées</h2>
             {Object.entries(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).map(([lp, v1]) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
-                  <div key={lp + lr} className='mt-5 first:mt-0'>
-                    <div className='box-border flex items-center text-sm'>
-                      <div className='bg-data_table_bg px-2 py-1 border border-teal-500'>{makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}</div>
-                      <span className='text-teal-500 whitespace-nowrap'>{'———>'}</span>
-                      <div className='bg-data_table_bg px-2 py-1 border border-teal-500'>{makeClickablePrefixedUri(lr, makePrefixedUri(lr))}</div>
-                    </div>
-                    <div className='ml-5'>
-                      <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} />
-                    </div>
+                  <div key={lp + lr} className=''>
+                    {makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}
+                    <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
                   </div>
                 )
               })
             })}
-          </div>
-        </>
-      )}
+          </>
+        )}
 
-      {outgoingPredicatesCountData.highFanOutPredicatesBindings.map(binding => {
-        let k = 0
-        const n = parseInt(binding.c.value)
-        return (
-          <div key={k++} className='py-6'>
-            <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
-          </div>
-        )
-      })}
-
-      <div className=''>
-        <DarkPart
-          resourceUri={resourceUri}
-          outgoingPredicatesCountQuery={queries.outgoingPredicatesCount}
-        />
+        {outgoingPredicatesCountData.highFanOutPredicatesBindings.map(binding => {
+          let k = 0
+          const n = parseInt(binding.c.value)
+          return (
+            <div key={k++} className='py-6'>
+              <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
+            </div>
+          )
+        })}
       </div>
-    </div>
+      <div className='mt-6'></div>
+      <DarkPart
+        identityQuery={queryResourceIdentity}
+        resourceUri={resourceUri}
+        outgoingPredicatesCountQuery={queries.outgoingPredicatesCount}
+        queryE13WithLiteralP141={queryE13WithLiteralP141}
+      />
+    </>
   )
 }
 

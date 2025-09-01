@@ -8,10 +8,11 @@ interface Props {
     uuid?: string;
 }
 
-const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) => <div className='flex gap-4 bg-background p-4 text-foreground light'>
+const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) => <div className='flex gap-6 bg-background p-6 text-foreground light'>
     <img className='max-h-[111px]' src={logo} />
+    <div className='text-[var(--heroui-background-foreground)]'>Caca</div>
     <div className='flex flex-col justify-end items-start'>
-        <div className='font-serif text-2xl'>{name}</div>
+        <h1 className='font-serif font-bold text-3xl'>{name}</h1>
         <div className='font-mono text-gray-500 text-xs lowercase'>
             lien vers le projet : <Link className='text-xs' href={'/id/' + uuid}>{`/p/${code}/`}</Link>
         </div>

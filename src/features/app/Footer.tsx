@@ -1,11 +1,10 @@
 import SherlockBar from '@/components/SherlockBar'
 import SherlockLogo from './SherlockLogo'
-import { Button } from '@heroui/react'
 import { Link } from '@heroui/react'
 
 const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 
-export default () => <footer className='flex flex-col flex-1 bg-background text-foreground text-sm dark'>
+export default () => <footer className='flex flex-col flex-1 bg-background font-mono text-foreground text-sm dark'>
     <SherlockBar />
     <div className='flex mt-11'>
         <div className="flex-1 mx-11 text-right">
@@ -34,26 +33,6 @@ export default () => <footer className='flex flex-col flex-1 bg-background text-
         </div>
     </div>
     <div className='flex flex-1 justify-center mt-11'>
-        {/* <Button color="primary" variant="solid">
-            Solid
-        </Button>
-        <Button color="primary" variant="faded">
-            Faded
-        </Button>
-        <Button color="primary" variant="bordered">
-            Bordered
-        </Button>
-        <Button color="primary" variant="light">
-            Light
-        </Button>
-        <Button color="primary" variant="flat">
-            Flat
-        </Button>
-        <Button color="primary" variant="ghost">
-            Ghost
-        </Button>
-        <Button color="primary" variant="shadow">
-            Shadow
-        </Button> */}
+
     </div>
 </footer>

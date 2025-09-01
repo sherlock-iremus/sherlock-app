@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 //TODO: Put queries imports here
 import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { getProject } from 'sherlock-sparql-queries/lib/project'
+import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
+import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
@@ -25,8 +27,11 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
     })
 }
 
-export const useProjectQuery = (resourceURI: string) =>
-    baseSherlockUseSparqlQuery(true, ['project', resourceURI], getProject(resourceURI))
+export const useProjectQuery = (resourceURI: string) => {
+    const query = getProject(resourceURI)
+    const x = baseSherlockUseSparqlQuery(true, ['project', resourceURI], query)
+    return { query, ...x }
+}
 
 export const useResourceIdentityQuery = (resourceUri: string) => {
     const query = identity(resourceUri)
@@ -40,11 +45,17 @@ export const useCountObjectsOfOutgoingPredicatesQuery = (query: string, resource
 export const useObjectsOfLowFanOutgoingPredicatesQuery = (query: string, resourceUri: string, enabled: boolean) =>
     baseSherlockUseSparqlQuery(enabled, ['objects-of-low-fan-outgoing-predicates', resourceUri], query)
 
-export const useDotOnePropertiesQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['dot-one-properties', resourceUri], query)
+export const useDotOnePropertiesQuery = (resourceUri: string) => {
+    const query = getDotOneProperties(resourceUri)
+    const x = baseSherlockUseSparqlQuery(true, ['dot-one-properties', resourceUri], query)
+    return { query, ...x }
+}
 
-export const useE13WithLiteralP141Query = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['e13-with-literal-p141', resourceUri], query)
+export const useE13WithLiteralP141Query = (resourceUri: string) => {
+    const query = e13WithLiteralP141(resourceUri)
+    const x = baseSherlockUseSparqlQuery(true, ['e13-with-literal-p141', resourceUri], query)
+    return { query, ...x }
+}
 
 export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
     baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)

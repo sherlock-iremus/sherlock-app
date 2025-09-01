@@ -1,46 +1,55 @@
 import React from 'react'
-import { makeYasguiButton } from '@/components/buttons'
-import SherlockBar from '@/components/SherlockBar';
+import SherlockBar from '@/components/SherlockBar'
+import YasguiButton from '@/components/YasguiButton'
 
 export type DarkPartProps = {
-    resourceUri: string;
+    identityQuery: string,
     outgoingPredicatesCountQuery: string;
-    incomingPredicatesCountQuery?: string;
+    queryE13WithLiteralP141?: string
+    resourceUri: string;
 }
 
 const DarkPart: React.FC<DarkPartProps> = ({
     resourceUri,
+    identityQuery,
     outgoingPredicatesCountQuery,
-    incomingPredicatesCountQuery
+    queryE13WithLiteralP141
 
-}) => <>
+}) => <div className='font-mono'>
         <SherlockBar />
-        <div className="bg-black p-6 text-white">
+        <div className="bg-black p-6">
             <h2 className='font-mono text-stone-300 text-xs lowercase'>
                 Ressource consultée :
             </h2>
-            <div className='flex items-center'>
+            <div className=''>
                 <h2
                     className='text-link_negative'
                     style={{
-                        textShadow:
-                            'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
+                        color: 'darkturquoise',
+                        textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
                     }}
                 >
                     {resourceUri}
                 </h2>
-                <div className='flex gap-[3px] ml-3'>
-                    {makeYasguiButton(
-                        outgoingPredicatesCountQuery,
-                        'Ouvrir la requête SPARQL dans Yasgui : nombres de triplets sortants par prédicats'
-                    )}
-                    {/* {makeYasguiButton(
-                    countIncomingPredicatesSparqlQuery,
-                    'Ouvrir la requête SPARQL dans Yasgui : nombres de triplets entrants par prédicats'
-                )} */}
+            </div>
+            <br />
+            <div>
+                <div className='mb-1 font-mono text-stone-300 text-xs lowercase'>
+                    Requêtes SPARQL (ouverture dans Yasgui) :
+                </div>
+                <div className='flex gap-1'>
+                    <YasguiButton query={identityQuery}>
+                        identité de la ressource
+                    </YasguiButton>
+                    <YasguiButton query={outgoingPredicatesCountQuery}>
+                        nombres de triplets sortants par prédicats
+                    </YasguiButton>
+                    {queryE13WithLiteralP141 && <YasguiButton query={queryE13WithLiteralP141}>
+                        annotations à valeurs litérales
+                    </YasguiButton>}
                 </div>
             </div>
         </div>
-    </>
+    </div>
 
 export default DarkPart

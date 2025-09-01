@@ -1,8 +1,19 @@
-import { extendVariants, Button } from "@heroui/react";
+import { extendVariants, Button } from '@heroui/react';
 
-export const MyButton = extendVariants(Button, {
+export default extendVariants(Button, {
+    variants: {
+        border: {
+            thin: 'border',
+        },
+        cursorstyle: {
+            default: 'cursor-default'
+        }
+    },
     defaultVariants: {
+        cursorstyle: 'default',
         radius: 'none',
-        variant: 'faded'
+        border: 'thin',
+        variant: 'ghost',
+        className: 'cursor-default'
     }
 })
