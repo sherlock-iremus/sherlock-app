@@ -22,18 +22,17 @@ export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: stri
 
 export function makeNonClickablePrefixedUri(
   pu: PrefixedUri,
-  colors: string[],
   key: string = ''
 ) {
   return pu.prefix ? (
     <span key={key}>
-      <span className={colors[0]}>{pu.prefix}</span>
-      <span className={colors[1]}>:</span>
-      <span className={colors[2]}>{pu.localPart}</span>
+      <span className='text-uri_prefix'>{pu.prefix}</span>
+      <span className='text-uri_column'>:</span>
+      <span className='text-uri_localpart'>{pu.localPart}</span>
     </span>
   ) : (
     <span key={key}>
-      <span className={colors[2]}>{pu.localPart}</span>
+      <span className='text-uri_localpart'>{pu.localPart}</span>
     </span>
   )
 }

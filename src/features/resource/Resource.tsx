@@ -15,7 +15,7 @@ import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources
 import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 const h2 = tv({
-  base: 'font-light font-serif mb-6 mt-12 first:mt-6 text-2xl font-[Jost] tracking-wider uppercase '
+  base: 'font-light font-serif mb-6 mt-12 text-2xl font-[Jost] tracking-wider uppercase '
 })
 
 interface Props {
@@ -144,7 +144,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           )
         })}
       </div>
-      <div className='mt-6'></div>
+      <div className='mt-18'></div>
       <DarkPart
         identityQuery={queryResourceIdentity}
         resourceUri={resourceUri}

@@ -17,8 +17,8 @@ const DarkPart: React.FC<DarkPartProps> = ({
 
 }) => <div className='font-mono'>
         <SherlockBar />
-        <div className="bg-black p-6">
-            <h2 className='font-mono text-stone-300 text-xs lowercase'>
+        <div className="bg-black px-12 py-18 text-center">
+            <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
                 Ressource consultée :
             </h2>
             <div className=''>
@@ -34,17 +34,17 @@ const DarkPart: React.FC<DarkPartProps> = ({
             </div>
             <br />
             <div>
-                <div className='mb-1 font-mono text-stone-300 text-xs lowercase'>
+                <div className='mb-2 font-mono text-stone-300 text-xs lowercase'>
                     Requêtes SPARQL (ouverture dans Yasgui) :
                 </div>
-                <div className='flex gap-1'>
-                    <YasguiButton query={identityQuery}>
+                <div className='flex flex-wrap gap-1'>
+                    <YasguiButton className='grow' query={identityQuery}>
                         identité de la ressource
                     </YasguiButton>
-                    <YasguiButton query={outgoingPredicatesCountQuery}>
+                    <YasguiButton className='grow' query={outgoingPredicatesCountQuery}>
                         nombres de triplets sortants par prédicats
                     </YasguiButton>
-                    {queryE13WithLiteralP141 && <YasguiButton query={queryE13WithLiteralP141}>
+                    {queryE13WithLiteralP141 && <YasguiButton className='grow' query={queryE13WithLiteralP141}>
                         annotations à valeurs litérales
                     </YasguiButton>}
                 </div>

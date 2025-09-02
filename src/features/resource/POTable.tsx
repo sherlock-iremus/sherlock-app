@@ -6,7 +6,19 @@ import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
 import { tv } from 'tailwind-variants'
 
 const tr = tv({
-    base: 'border-b border-b-gray-300 last:border-none'
+    base: 'border-b border-b-data_table_border last:border-none'
+})
+
+const predicate_td = tv({
+    base: 'align-baseline bg-stone-50 font-medium font-serif pr-6 pl-1 whitespace-nowrap'
+})
+
+const object_td = tv({
+    base: 'align-baseline bg-stone-50 font-normal font-serif pr-6 pl-1'
+})
+
+const uri = tv({
+    base: 'font-mono font-normal text-sm'
 })
 
 export function displayLabel(v: SparqlQueryResultObject_Variable) {
@@ -36,11 +48,6 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
             <span className='font-mono text-sm'>
                 {makeNonClickablePrefixedUri(
                     makePrefixedUri(b['r_type'].value),
-                    [
-                        'text-prefixed_uri_prefix_lightbg',
-                        'text-prefixed_uri_prefix_lightbg',
-                        'text-prefixed_uri_local_name_lightbg'
-                    ],
                     getKey()
                 )
                 }
@@ -58,17 +65,15 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
 }
 
 export default function ({ bindings, startLines }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][] }) {
-    return <table className='border border-gray-300'>
+    return <table className='border border-data_table_border'>
         <tbody>
             {startLines?.map((line: string[], i: number) => {
                 return <tr className={tr()} key={i}>
-                    <td>
-                        <span className='font-serif font-medium'>{line[0]}</span>
+                    <td className={`${predicate_td()}`}>
+                        {line[0]}
                     </td>
-                    <td>
-                        <span>
-                            {line[1]}
-                        </span>
+                    <td className={`${object_td()}`}>
+                        {line[1]}
                     </td>
                 </tr>
             })}
@@ -77,30 +82,28 @@ export default function ({ bindings, startLines }: { bindings: SparqlQueryResult
                 return <tr className={tr()} key={i}>
                     {b['property'] ?
                         <>
-                            <td className='pr-11 font-serif font-medium align-baseline'>
+                            <td className={`${predicate_td()}`}>
                                 {b['property'].value}
                             </td>
-                            <td className='pr-11 align-baseline'>
+                            <td className={`${object_td()}`}>
                                 {b['value'].value}
                             </td>
                         </>
                         :
                         <>
                             {/* PRÉDICAT URI */}
-                            <td className='pr-11 pl-0 align-baseline whitespace-nowrap'>
-                                {getReadablePredicate(p) && <span className='font-serif font-medium'>{getReadablePredicate(p)}</span>}
-                                {getReadablePredicate(p) && <span className='text-gray-400'> &nbsp;(</span>}
-                                <span className='text-sm'>
-                                    {makeNonClickablePrefixedUri(p, [
-                                        'text-prefixed_uri_prefix_lightbg',
-                                        'text-prefixed_uri_prefix_lightbg',
-                                        'text-prefixed_uri_local_name_lightbg'
-                                    ])}
-                                </span>
-                                {getReadablePredicate(p) && <span className='font-serif text-gray-400'>)</span>}
+                            <td className={`${predicate_td()}`}>
+                                {getReadablePredicate(p) && <>
+                                    {getReadablePredicate(p)}
+                                    <span className={`${uri()} ml-2`}>
+                                        <span className='text-data_table_parenthesis'>(</span>
+                                        {makeNonClickablePrefixedUri(p)}
+                                        <span className='text-data_table_parenthesis'>)</span>
+                                    </span>
+                                </>}
                             </td>
                             {/* OBJET */}
-                            <td className='p-[1px] align-baseline'>
+                            <td className={`${object_td()}`}>
                                 {b['label'] && <span>
                                     {displayLabel(b['label'])}
                                 </span>}
@@ -115,13 +118,8 @@ export default function ({ bindings, startLines }: { bindings: SparqlQueryResult
                                     && <Link to={b['label'].value} target="_blank">
                                         <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
                                     </Link>}
-                                {!b['label'] && b['r'] && <span className='text-sm'>{makeNonClickablePrefixedUri(
-                                    makePrefixedUri(b['r'].value),
-                                    [
-                                        'text-prefixed_uri_prefix_lightbg',
-                                        'text-prefixed_uri_prefix_lightbg',
-                                        'text-prefixed_uri_local_name_lightbg'
-                                    ]
+                                {!b['label'] && b['r'] && <span className={`${uri()}`}>{makeNonClickablePrefixedUri(
+                                    makePrefixedUri(b['r'].value)
                                 )}</span>}
                                 {b['r_type'] && makeLinkedResourceTypesFragment(b)}
                             </td>

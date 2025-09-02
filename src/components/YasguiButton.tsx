@@ -5,11 +5,13 @@ import { makeYasguiUri } from 'sherlock-sparql-queries/lib/yasgui'
 
 interface Props {
     children: ReactNode,
+    className?: string,
     query: string
 }
 
-const YasguiButton: React.FC<Props> = ({ query, children }) => <Button
+const YasguiButton: React.FC<Props> = ({ query, children, className }) => <Button
     as={Link}
+    className={className}
     color="primary"
     href={makeYasguiUri(query)}
     size='sm'

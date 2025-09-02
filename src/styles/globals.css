@@ -23,11 +23,10 @@
 }
 
 @layer base {
-    a {
+    html {
         cursor: default;
     }
 }
-
 
 html {
     font-synthesis: none;
@@ -40,7 +39,6 @@ html {
 html * {
     font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
 }
-
 
 @import "./tei-mercure-galant.css";
 
