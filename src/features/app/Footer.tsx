@@ -1,6 +1,6 @@
 import SherlockBar from '@/components/SherlockBar'
 import SherlockLogo from './SherlockLogo'
-import { Link } from '@heroui/react'
+import Link from '@/components/Link'
 
 const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 

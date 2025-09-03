@@ -1,4 +1,4 @@
-import { Link } from '@heroui/link'
+import Link from '@/components/Link'
 import Button from './Button'
 import { ReactNode } from 'react'
 import { makeYasguiUri } from 'sherlock-sparql-queries/lib/yasgui'

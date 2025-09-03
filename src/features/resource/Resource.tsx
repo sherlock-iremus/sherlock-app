@@ -81,7 +81,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   return (
     <>
-      <div className='px-6'>
+      <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}>Identité de la ressource</h2>
         <POTable bindings={identityData.identityBindings} />
 

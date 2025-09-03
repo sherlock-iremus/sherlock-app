@@ -2,7 +2,7 @@ import { groupByFields } from '@/utils/bindings_helpers';
 import { Tooltip } from '@heroui/react'
 import React, { JSX } from 'react';
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from '@/components/Link'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
 import { makeClickablePrefixedUri } from '../../features/resource/TriplesDisplayHelpers'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
@@ -18,7 +18,7 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
 }) => {
 
     const displayIdentifier = (row: SparqlQueryResultObject_Binding): JSX.Element => {
-        return row.identifier ? <span className='text-xs text-gray-500'>(<Link to={row.identifier.value} target="_blank">
+        return row.identifier ? <span className='text-gray-500 text-xs'>(<Link href={row.identifier.value} target="_blank">
             <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />{row.type_label.value}
         </Link>)</span> : <></>;
     }
@@ -28,7 +28,7 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
     }
 
     const tooltipContent = (item: SparqlQueryResultObject_Binding[]) => {
-        return <div className="whitespace-pre-line border border-gray-300 p-2 rounded bg-gray-50">
+        return <div className="bg-gray-50 p-2 border border-gray-300 rounded whitespace-pre-line">
             <strong>Propriétés associées :</strong><br />
             {item.filter((row: SparqlQueryResultObject_Binding) => !!row.p177).map((row: SparqlQueryResultObject_Binding) => `${row.p177_label ? row.p177_label.value : row.p177.value} -> ${row.p141.value}`).join('\n')}
         </div>
@@ -38,7 +38,7 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
         // If "p177" is set, then we have to get its value. Otherwise, we display "p" because it is directly readable.
         if (row.p177) {
             return <p key={row.p177_label.value + row.p141.value}>
-                <Link target='_blank' to={'/?resource=' + row.p177.value} onClick={e => e.stopPropagation()}>
+                <Link target='_blank' href={'/?resource=' + row.p177.value} onClick={e => e.stopPropagation()}>
                     {row.p177_label ? row.p177_label.value : 'Propriété inconnue'} </Link> : {row.p141.value}
             </p>
         } else {

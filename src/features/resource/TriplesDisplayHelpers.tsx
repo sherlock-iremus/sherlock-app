@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+import Link from '@/components/Link'
 import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {
   return (
-    <Link to={'/?resource=' + uri}>
+    <Link href={'/?resource=' + uri}>
       <span className='whitespace-nowrap' key={key}>
         {
           pu.prefix ?

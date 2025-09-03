@@ -1,4 +1,4 @@
-import { Link } from '@heroui/react'
+import Link from '@/components/Link'
 import React from 'react'
 
 interface Props {

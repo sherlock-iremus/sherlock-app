@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
 import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
 import { tv } from 'tailwind-variants'
+import Link from '@/components/Link'
 
 const tr = tv({
     base: 'border-b border-b-data_table_border last:border-none'
@@ -56,7 +56,7 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
 
         {b['r_type_type'] && <>
             <span> de type </span>
-            « <Link key={getKey()} to={'/?resource=' + b['r_type_type'].value}>
+            « <Link key={getKey()} href={'/?resource=' + b['r_type_type'].value}>
                 {b['r_type_type_label'].value}
             </Link> »
         </>}
@@ -108,14 +108,14 @@ export default function ({ bindings, startLines }: { bindings: SparqlQueryResult
                                     {displayLabel(b['label'])}
                                 </span>}
                                 {b['label'] && <span>
-                                    {b['r'] && <Link to={'/?resource=' + b['r'].value}>
+                                    {b['r'] && <Link href={'/?resource=' + b['r'].value}>
                                         <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />
                                     </Link>}
                                 </span>}
                                 {b['label']
                                     && b['label'].value.startsWith('http')
                                     && !b['label'].value.startsWith('http://data-iremus.huma-num.fr/graph/')
-                                    && <Link to={b['label'].value} target="_blank">
+                                    && <Link href={b['label'].value} target="_blank">
                                         <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
                                     </Link>}
                                 {!b['label'] && b['r'] && <span className={`${uri()}`}>{makeNonClickablePrefixedUri(

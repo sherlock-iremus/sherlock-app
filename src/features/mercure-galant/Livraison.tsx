@@ -1,8 +1,7 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
 import { mg_livraison } from 'sherlock-sparql-queries/lib/mg_livraisons'
-import { Link } from 'react-router-dom'
+import Link from '@/components/Link'
 import { useParams } from 'react-router-dom'
-import Spinner from '@/components/Brent'
 import { makeYasguiButton } from '@/components/buttons'
 import { makeLink } from '@/features/business_id/helpers'
 import { useMGLivraisonQuery } from '@/hooks/sherlockSparql';
@@ -16,7 +15,7 @@ export default function () {
 
     return <div className='p-24 font-serif text-center'>
         <>
-            {!isSuccess ? <Spinner /> :
+            {!isSuccess ? '⏳' :
                 <>
                     <header className='textSection'>
                         <h2>Contenu de la livraison : <em>« {data.results.bindings[0]['livraison_titre'].value} »</em></h2>
@@ -36,7 +35,7 @@ export default function () {
                                     key={item['article_business_id'].value}>
                                     <TableCell>{item['article_title'].value}</TableCell>
                                     <TableCell className='font-mono text-xs whitespace-nowrap'>
-                                        <Link to={link} target='_blank'>
+                                        <Link href={link} target='_blank'>
                                             {link}
                                         </Link>
                                     </TableCell>

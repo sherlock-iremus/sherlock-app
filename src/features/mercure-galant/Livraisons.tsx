@@ -1,8 +1,7 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react';
 import { mg_livraisons } from 'sherlock-sparql-queries/lib/mg_livraisons'
 import { makeYasguiButton } from '@/components/buttons'
-import { Link } from 'react-router-dom'
-import Spinner from '@/components/Brent'
+import Link from '@/components/Link'
 import { makeLink } from '@/features/business_id/helpers'
 import { useMGLivraisonsQuery } from '@/hooks/sherlockSparql';
 
@@ -16,7 +15,7 @@ export default function () {
                 <br />
                 <div className='flex justify-center'>{makeYasguiButton(mg_livraisons(), 'Requête SPARQL')}</div>
             </header>
-            {!isSuccess ? <Spinner /> :
+            {!isSuccess ? '⏳' :
                 <>
                     <Table aria-label="Livraisons du Mercure Galant">
                         <TableHeader>
@@ -35,7 +34,7 @@ export default function () {
                                     <TableCell>{item['livraison_titre'].value}</TableCell>
                                     <TableCell className='text-center'>{item['n_articles'].value}</TableCell>
                                     <TableCell className='font-mono text-xs whitespace-nowrap'>
-                                        <Link to={link} target='_blank'>{link}</Link>
+                                        <Link href={link} target='_blank'>{link}</Link>
                                     </TableCell>
                                 </TableRow>
                             }}

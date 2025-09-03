@@ -21,7 +21,7 @@
       <span className='font-serif'>
         «
         <Link
-          to={'/?resource=' + data_id.authdocBindings[0].authdoc.value}
+          href={'/?resource=' + data_id.authdocBindings[0].authdoc.value}
           target='_blank'
         >
           {data_id.authdocBindings[0].authdoc_label.value}

@@ -28,6 +28,12 @@
     }
 }
 
+/* @layer components {
+    a {
+        @apply hover:text-shadow-orange-500 text-amber-300 dark:hover:text-green-400 dark:text-green-700;
+    }
+} */
+
 html {
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -51,15 +57,6 @@ html * {
         @apply font-serif font-bold text-2xl;
     }
 
-    .sectionTitleIcon svg {
-        fill: aquamarine;
-        stroke: aquamarine;
-    }
-
-    .section-bg {
-        @apply bg-black text-white;
-    }
-
     .section-font {
         @apply font-["Albertus"] font-[350] font-bold uppercase;
     }
@@ -70,10 +67,6 @@ html * {
 
     .linked_entity_icon {
         @apply text-stone-400;
-    }
-
-    .section-divider {
-        @apply bg-gradient-to-r from-purple-900 to-rose-600 w-full h-[1px];
     }
 
     .lang {
