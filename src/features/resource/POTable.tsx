@@ -10,11 +10,11 @@ const tr = tv({
 })
 
 const predicate_td = tv({
-    base: 'align-baseline bg-stone-50 font-medium font-serif pr-6 pl-1 whitespace-nowrap'
+    base: 'align-baseline font-medium font-serif pr-6 pl-1 whitespace-nowrap'
 })
 
 const object_td = tv({
-    base: 'align-baseline bg-stone-50 font-normal font-serif pr-6 pl-1'
+    base: 'align-baseline font-normal font-serif pr-6 pl-1 py-0.5'
 })
 
 const uri = tv({

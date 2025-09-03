@@ -102,7 +102,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {dotOnePropertiesBindings.length > 0 && <>
-          {/* TODO <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés .1' prefixedUri={null} sparqlQuery={queries.dotOneProperties} n={null} /> */}
           <div className='px-6 py-6'>
             <POTable bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []} />
           </div>
@@ -125,7 +124,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className=''>
-                    {makeNonClickablePrefixedUri(makePrefixedUri(lp), ['text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_prefix_lightbg', 'text-prefixed_uri_local_name_lightbg'])}
+                    {makeNonClickablePrefixedUri(makePrefixedUri(lp))}
                     <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
                   </div>
                 )
