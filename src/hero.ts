@@ -25,9 +25,9 @@ export default heroui({
                 data_table_parenthesis: c(colors.gray[400]),
                 link: c(colors.cyan[600]),
                 link_hover: c(colors.cyan[400]),
-                uri_prefix: c(colors.purple[300]),
-                uri_column: c(colors.purple[400]),
-                uri_localpart: c(colors.purple[500]),
+                uri_prefix: c(colors.pink[700]),
+                uri_column: c(colors.pink[400]),
+                uri_localpart: c(colors.pink[600]),
             },
         },
         dark: {
@@ -44,9 +44,9 @@ export default heroui({
                 data_table_parenthesis: c(colors.gray[400]),
                 link: c(colors.violet[600]),
                 link_hover: c(colors.cyan[300]),
-                uri_prefix: 'orange',
-                uri_column: 'red',
-                uri_localpart: 'green',
+                uri_prefix: c(colors.pink[700]),
+                uri_column: c(colors.pink[400]),
+                uri_localpart: c(colors.pink[600]),
             }
         }
     }

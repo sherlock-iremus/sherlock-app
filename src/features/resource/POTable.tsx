@@ -73,7 +73,10 @@ export default function ({ bindings, startLines }: { bindings: SparqlQueryResult
                         {line[0]}
                     </td>
                     <td className={`${object_td()}`}>
-                        {line[1]}
+                        {
+                            line[1].startsWith('http')
+                                ? <span className={`${uri()}`}><Link href={line[1]} >{line[1]}</Link></span>
+                                : line[1]}
                     </td>
                 </tr>
             })}
@@ -128,5 +131,5 @@ export default function ({ bindings, startLines }: { bindings: SparqlQueryResult
                 </tr>
             })}
         </tbody>
-    </table>
+    </table >
 }
