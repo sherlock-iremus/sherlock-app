@@ -6,7 +6,7 @@ const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 
 export default () => <footer className='flex flex-col flex-1 bg-background font-mono text-foreground text-sm dark'>
     <SherlockBar />
-    <div className='flex mt-11'>
+    <div className='flex mt-11 text-gray-500'>
         <div className="flex-1 mx-11 text-right">
             <Link href="https://musica.hypotheses.org/" target='_blank'>Musica2</Link>
             <br />

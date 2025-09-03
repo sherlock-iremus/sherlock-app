@@ -19,13 +19,12 @@ const DarkPart: React.FC<DarkPartProps> = ({
         <SherlockBar />
         <div className="bg-black px-12 py-18 text-center">
             <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
-                Ressource consultée :
+                URI de la ressource consultée :
             </h2>
             <div className=''>
                 <h2
-                    className='text-link_negative'
+                    className='text-[aqua] text-link_negative'
                     style={{
-                        color: 'darkturquoise',
                         textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
                     }}
                 >

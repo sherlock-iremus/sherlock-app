@@ -13,7 +13,7 @@ const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) => <div clas
     <div className='flex flex-col justify-end items-start'>
         <h1 className='font-serif font-bold text-3xl'>{name}</h1>
         <div className='font-mono text-gray-500 text-xs lowercase'>
-            lien vers le projet : <Link className='text-xs' href={'/id/' + uuid}>{`/p/${code}/`}</Link>
+            lien vers le projet : <Link className='text-xs' href={'id/' + uuid} target='_blank'>{`/p/${code}/`}</Link>
         </div>
     </div>
 </div >
