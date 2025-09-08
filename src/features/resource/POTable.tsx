@@ -6,7 +6,7 @@ import { tv } from 'tailwind-variants'
 import Link from '@/components/Link'
 
 const tr = tv({
-    base: 'border-b border-b-data_table_border last:border-none'
+    base: 'border-b border-b-data_table_line last:border-none'
 })
 
 const predicate_td = tv({

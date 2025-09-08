@@ -3,9 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 
 //TODO: Put queries imports here
 import { identity } from 'sherlock-sparql-queries/lib/identity'
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { getProject } from 'sherlock-sparql-queries/lib/project'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
+import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
+// import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
@@ -39,11 +42,17 @@ export const useResourceIdentityQuery = (resourceUri: string) => {
     return { query, ...x }
 }
 
-export const useCountObjectsOfOutgoingPredicatesQuery = (query: string, resourceUri: string) =>
-    baseSherlockUseSparqlQuery(true, ['count-objects-of-outgoing-predicates', resourceUri], query)
+export const useCountObjectsOfOutgoingPredicatesQuery = (resourceUri: string) => {
+    const query = countOutgoingPredicates(resourceUri)
+    const x = baseSherlockUseSparqlQuery(true, ['count-objects-of-outgoing-predicates', resourceUri], query)
+    return { query, ...x }
+}
 
-export const useObjectsOfLowFanOutgoingPredicatesQuery = (query: string, resourceUri: string, enabled: boolean) =>
-    baseSherlockUseSparqlQuery(enabled, ['objects-of-low-fan-outgoing-predicates', resourceUri], query)
+export const useObjectsOfLowFanOutgoingPredicatesQuery = (resourceUri: string, lowFanOutPredicates: string[], enabled: boolean) => {
+    const query = identity(resourceUri, true, lowFanOutPredicates, LinkedResourcesDirectionEnum.OUTGOING)
+    const x = baseSherlockUseSparqlQuery(enabled, ['objects-of-low-fan-outgoing-predicates', resourceUri], query)
+    return { query, ...x }
+}
 
 export const useDotOnePropertiesQuery = (resourceUri: string) => {
     const query = getDotOneProperties(resourceUri)

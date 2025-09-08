@@ -2,17 +2,15 @@
 
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
-import { E55_BUSINESS_ID, makePrefixedUri, PrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
-import { LinkedResourcesDirectionEnum, identity } from 'sherlock-sparql-queries/lib/identity'
+import { E55_BUSINESS_ID, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import POTable from './POTable'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import { makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 const h2 = tv({
   base: 'font-light font-serif mb-6 mt-12 text-2xl font-[Jost] tracking-wider uppercase '
@@ -31,11 +29,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   //
   ////////////////////////////////////////////////////////////////////////////////
 
-  const queries = {
-    outgoingPredicatesCount: '',
-    objectsOfLowFanOutgoingPredicates: '',
-  }
-
   // Resource identity
   const { data: dataResourceIdentity, query: queryResourceIdentity } = useResourceIdentityQuery(resourceUri)
 
@@ -51,13 +44,11 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
-  queries.outgoingPredicatesCount = countOutgoingPredicates(resourceUri)
-  const { data: countObjectsOfOutgoingPredicatesResults } = useCountObjectsOfOutgoingPredicatesQuery(queries.outgoingPredicatesCount, resourceUri)
+  const { data: countObjectsOfOutgoingPredicatesResults, query: queryCountObjectsOfOutgoingPredicates } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(countObjectsOfOutgoingPredicatesResults)
 
   // Outgoing predicates :: low-fan
-  queries.objectsOfLowFanOutgoingPredicates = identity(resourceUri, true, outgoingPredicatesCountData.lowFanOutPredicates, LinkedResourcesDirectionEnum.OUTGOING)
-  const { data: objectsOfLowFanOutgoingPredicatesData } = useObjectsOfLowFanOutgoingPredicatesQuery(queries.objectsOfLowFanOutgoingPredicates, resourceUri, outgoingPredicatesCountData.lowFanOutPredicates.length > 0)
+  const { data: objectsOfLowFanOutgoingPredicatesData, query: queryObjectsOfLowFanOutgoingPredicatesData } = useObjectsOfLowFanOutgoingPredicatesQuery(resourceUri, outgoingPredicatesCountData.lowFanOutPredicates, outgoingPredicatesCountData.lowFanOutPredicates.length > 0)
   let literalObjectsOfLowFanOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   let nonLiteralObjectsOfLowFanOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   objectsOfLowFanOutgoingPredicatesData?.results.bindings.map(x => {
@@ -124,7 +115,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className=''>
-                    {makeNonClickablePrefixedUri(makePrefixedUri(lp))}
+                    {getReadablePredicate(makePrefixedUri(lp))}&nbsp;({makeNonClickablePrefixedUri(makePrefixedUri(lp))})&nbsp;:
                     <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
                   </div>
                 )
@@ -147,8 +138,9 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
       <DarkPart
         identityQuery={queryResourceIdentity}
         resourceUri={resourceUri}
-        outgoingPredicatesCountQuery={queries.outgoingPredicatesCount}
+        outgoingPredicatesCountQuery={queryCountObjectsOfOutgoingPredicates}
         queryE13WithLiteralP141={queryE13WithLiteralP141}
+        queryObjectsOfLowFanOutgoingPredicatesData={queryObjectsOfLowFanOutgoingPredicatesData}
       />
     </>
   )

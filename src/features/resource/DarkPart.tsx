@@ -7,13 +7,15 @@ export type DarkPartProps = {
     outgoingPredicatesCountQuery: string;
     queryE13WithLiteralP141?: string
     resourceUri: string;
+    queryObjectsOfLowFanOutgoingPredicatesData: string;
 }
 
 const DarkPart: React.FC<DarkPartProps> = ({
     resourceUri,
     identityQuery,
     outgoingPredicatesCountQuery,
-    queryE13WithLiteralP141
+    queryE13WithLiteralP141,
+    queryObjectsOfLowFanOutgoingPredicatesData,
 
 }) => <div className='font-mono'>
         <SherlockBar />
@@ -45,6 +47,9 @@ const DarkPart: React.FC<DarkPartProps> = ({
                     </YasguiButton>
                     {queryE13WithLiteralP141 && <YasguiButton className='grow' query={queryE13WithLiteralP141}>
                         annotations à valeurs litérales
+                    </YasguiButton>}
+                    {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
+                        ressources liées
                     </YasguiButton>}
                 </div>
             </div>

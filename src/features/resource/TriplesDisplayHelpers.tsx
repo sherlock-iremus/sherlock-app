@@ -1,5 +1,5 @@
 import Link from '@/components/Link'
-import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
+import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {
   return (
@@ -64,6 +64,10 @@ export function getReadablePredicate(pu: PrefixedUri): string {
         case 'altLabel': return 'a pour libellé alternatif'
       }
       break
+    case RDF_PREFIXES.get(IREMUS_NS_BASE):
+      switch (pu.localPart) {
+        case 'hasContextProject': return 'a pour projet contexte'
+      }
   }
 
   return ''
