@@ -46,10 +46,10 @@ const DarkPart: React.FC<DarkPartProps> = ({
                         nombres de triplets sortants par prédicats
                     </YasguiButton>
                     {queryE13WithLiteralP141 && <YasguiButton className='grow' query={queryE13WithLiteralP141}>
-                        annotations à valeurs litérales
+                        annotations E13 à valeurs litérales
                     </YasguiButton>}
                     {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
-                        ressources liées
+                        ressources pointées
                     </YasguiButton>}
                 </div>
             </div>
