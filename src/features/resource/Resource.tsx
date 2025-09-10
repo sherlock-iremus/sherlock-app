@@ -5,15 +5,17 @@ import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingP
 import { E55_BUSINESS_ID, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
+import { PiGraphDuotone } from 'react-icons/pi'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import POTable from './POTable'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { FaIdCard, FaPenNib } from 'react-icons/fa'
 
 const h2 = tv({
-  base: 'font-light font-serif mb-6 mt-12 text-2xl font-[Jost] tracking-wider uppercase '
+  base: 'font-light font-serif mb-6 mt-12 text-2xl font-mono tracking-wider items-center lowercase text-teal-500 flex gap-2'
 })
 
 interface Props {
@@ -73,7 +75,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   return (
     <>
       <div className='bg-background px-6 text-foreground light'>
-        <h2 className={h2()}>Identité de la ressource</h2>
+        <h2 className={h2()}><FaIdCard />Identité de la ressource</h2>
         <POTable bindings={identityData.identityBindings} />
 
         {mediaRepresentation && <>
@@ -85,7 +87,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
-          <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={""} n={null} />
+          <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={''} n={null} />
           <div className='px-6 py-6'>
             <POTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
           </div>
@@ -100,7 +102,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
-          <h2 className={h2()}>Annotations</h2>
+          <h2 className={h2()}><FaPenNib />Annotations</h2>
           <POTable bindings={
             e13WithLiteralP141Results?.results.bindings
               .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
@@ -110,7 +112,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
-            <h2 className={h2()}>Ressources pointées</h2>
+            <h2 className={h2()}><PiGraphDuotone />Ressources pointées</h2>
             {Object.entries(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).map(([lp, v1]) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
