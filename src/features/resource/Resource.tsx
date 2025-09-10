@@ -1,5 +1,6 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
 
+import clsx from 'clsx'
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
 import { E55_BUSINESS_ID, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
@@ -8,7 +9,7 @@ import { tv } from 'tailwind-variants'
 import { PiGraphDuotone } from 'react-icons/pi'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
-import POTable from './POTable'
+import POTable, { predicateFont } from './POTable'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
@@ -117,8 +118,11 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className=''>
-                    {getReadablePredicate(makePrefixedUri(lp))}&nbsp;({makeNonClickablePrefixedUri(makePrefixedUri(lp))})&nbsp;:
-                    <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
+                    <div className='mb-2'>
+                      <span className={clsx(predicateFont, 'text-xl')}>{getReadablePredicate(makePrefixedUri(lp))}&nbsp;</span>
+                      ({makeNonClickablePrefixedUri(makePrefixedUri(lp))})
+                    </div>
+                    <POTable className='ml-5' bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
                   </div>
                 )
               })

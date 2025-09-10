@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
@@ -5,12 +6,14 @@ import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
 import { tv } from 'tailwind-variants'
 import Link from '@/components/Link'
 
+export const predicateFont = 'font-light text-gray-500 font-["Jost"]'
+
 const tr = tv({
     base: 'border-b border-b-data_table_line last:border-none'
 })
 
 const predicate_td = tv({
-    base: 'align-baseline font-medium font-serif pr-6 pl-1 whitespace-nowrap'
+    base: clsx(predicateFont, 'align-baseline pr-6 pl-1 whitespace-nowrap')
 })
 
 const object_td = tv({
@@ -64,8 +67,8 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     </span>
 }
 
-export default function ({ bindings, startLines }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][] }) {
-    return <table className='border border-data_table_border'>
+export default function ({ bindings, startLines, className }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][], className?: string }) {
+    return <table className={clsx(className, 'border border-data_table_border')}>
         <tbody>
             {startLines?.map((line: string[], i: number) => {
                 return <tr className={tr()} key={i}>
