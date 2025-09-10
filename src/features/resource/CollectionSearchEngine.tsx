@@ -12,7 +12,6 @@ import { IdentityColumnContent } from '@/components/collection-search-engine/Ide
 import { CollectionColumnContent } from '@/components/collection-search-engine/CollectionColumnContent';
 
 export const DISPLAY_E13_TOOLTIP = false;
-export const QUERY_E13 = true;
 
 // Accepts an array of collection props and a single projectGraphUri
 export type SingleCollectionProps = {
@@ -37,7 +36,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
 
   const collectionUris = useMemo(() => collections.map(collection => collection.collectionUri), [collections]);
   const query = useMemo(
-    () => f(projectCode, collectionUris, projectGraphUri, activeSearch, QUERY_E13, DISPLAY_E13_TOOLTIP),
+    () => f(projectCode, collectionUris, projectGraphUri, activeSearch, DISPLAY_E13_TOOLTIP),
     [projectCode, collectionUris, projectGraphUri, activeSearch]
   );
 
