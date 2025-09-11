@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&display=swap');
 
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
@@ -17,9 +18,10 @@
 }
 
 @theme {
-    --font-sans: "Fira Code", sans-serif;
+    --font-sans: "Cascadia Mono", sans-serif;
     --font-serif: "Alegreya", serif;
-    --font-mono: "Fira Code", monospace;
+    --font-mono: "Firacode", monospace;
+    /* --font-mono: "Cascadia Mono", monospace; */
 }
 
 @layer base {
@@ -41,33 +43,3 @@ html * {
 }
 
 @import "./tei-mercure-galant.css";
-
-/* @layer components {
-    header.textSection {
-        margin-bottom: 2em;
-    }
-
-    header.textSection>h2 {
-        @apply font-serif font-bold text-2xl;
-    }
-
-    .section-font {
-        @apply font-["Albertus"] font-[350] font-bold uppercase;
-    }
-
-    .section-font-predicate {
-        @apply font-mono lowercase;
-    }
-
-    .linked_entity_icon {
-        @apply text-stone-400;
-    }
-
-    .lang {
-        @apply text-stone-400;
-    }
-
-    .icon {
-        @apply text-pink-500;
-    }
-} */

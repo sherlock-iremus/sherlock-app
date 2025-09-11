@@ -6,7 +6,7 @@ import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
 import { tv } from 'tailwind-variants'
 import Link from '@/components/Link'
 
-export const predicateFont = 'font-light text-gray-500 font-["Jost"]'
+export const predicateFont = 'font-light text-gray-500 font-serif text-normal'
 
 const tr = tv({
     base: 'border-b border-b-data_table_line last:border-none'
@@ -67,8 +67,8 @@ export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Bindi
     </span>
 }
 
-export default function ({ bindings, startLines, className }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][], className?: string }) {
-    return <table className={clsx(className, 'border border-data_table_border')}>
+export default function ({ bindings, startLines }: { bindings: SparqlQueryResultObject_Binding[], startLines?: string[][], className?: string }) {
+    return <table className={clsx('', 'border-data_table_border')}>
         <tbody>
             {startLines?.map((line: string[], i: number) => {
                 return <tr className={tr()} key={i}>
@@ -121,7 +121,7 @@ export default function ({ bindings, startLines, className }: { bindings: Sparql
                                 {b['label']
                                     && b['label'].value.startsWith('http')
                                     && !b['label'].value.startsWith('http://data-iremus.huma-num.fr/graph/')
-                                    && <Link href={b['label'].value} target="_blank">
+                                    && <Link href={b['label'].value} target='_blank'>
                                         <PiGlobeDuotone className='inline mb-1 ml-1 text-xl' />
                                     </Link>}
                                 {!b['label'] && b['r'] && <span className={`${uri()}`}>{makeNonClickablePrefixedUri(
@@ -134,5 +134,5 @@ export default function ({ bindings, startLines, className }: { bindings: Sparql
                 </tr>
             })}
         </tbody>
-    </table >
+    </table>
 }

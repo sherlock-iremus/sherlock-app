@@ -14,14 +14,27 @@ import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { FaIdCard, FaPenNib } from 'react-icons/fa'
+import TriplesTable from './TriplesTable'
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// STYLES
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const h2 = tv({
-  base: 'font-light font-serif mb-6 mt-12 text-2xl font-mono tracking-wider items-center lowercase text-teal-500 flex gap-2'
+  base: 'font-light mb-6 mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TYPES
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 interface Props {
   resourceUri: string;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// COMPONENT
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const Resource: React.FC<Props> = ({ resourceUri }) => {
   let projectId = null
@@ -77,7 +90,10 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
     <>
       <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}><FaIdCard />Identité de la ressource</h2>
-        <POTable bindings={identityData.identityBindings} />
+        <TriplesTable
+          humanReadablePropertiesColumn={true}
+          bindings={identityData.identityBindings}
+        />
 
         {mediaRepresentation && <>
           <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
@@ -104,11 +120,12 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
           <h2 className={h2()}><FaPenNib />Annotations</h2>
-          <POTable bindings={
-            e13WithLiteralP141Results?.results.bindings
+          <TriplesTable
+            humanReadablePropertiesColumn={false}
+            bindings={e13WithLiteralP141Results?.results.bindings
               .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
               .sort(sortBindingsFn('p177_label'))
-            || []} />
+              || []} />
         </>}
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
@@ -118,11 +135,13 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
               return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
                 return (
                   <div key={lp + lr} className=''>
-                    <div className='mb-2'>
-                      <span className={clsx(predicateFont, 'text-xl')}>{getReadablePredicate(makePrefixedUri(lp))}&nbsp;</span>
-                      ({makeNonClickablePrefixedUri(makePrefixedUri(lp))})
-                    </div>
-                    <POTable className='ml-5' bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} />
+                    {/* <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} /> */}
+                    <TriplesTable
+                      humanReadablePropertiesColumn={true}
+                      linkingPredicate={lp}
+                      linkedResource={lr}
+                      bindings={v2 as SparqlQueryResultObject_Binding[]}
+                    />
                   </div>
                 )
               })
