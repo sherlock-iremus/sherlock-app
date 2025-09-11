@@ -1,9 +1,10 @@
+import clsx from 'clsx'
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue } from '@heroui/table'
 import React, { JSX } from 'react'
 import { tv } from 'tailwind-variants'
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // STYLES
@@ -104,21 +105,50 @@ const TriplesTable: React.FC<Props> = ({ bindings, humanReadablePropertiesColumn
     const columns = makeColumns(humanReadablePropertiesColumn)
     const rows = transformBindingsToHeroTableData(bindings)
 
-    return <>
-        {linkingPredicate && linkedResource && <div>{linkingPredicate} {linkedResource}</div>}
-        <Table isCompact={true} hideHeader={true}>
-            <TableHeader columns={columns}>
-                {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+
+    const mainTable = (slots: object) => <Table
+        aria-label='triples table'
+        isCompact={true}
+        hideHeader={true}
+        removeWrapper={linkingPredicate && linkedResource}
+        classNames={slots}
+    >
+        <TableHeader columns={columns}>
+            {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+        </TableHeader>
+        <TableBody items={rows}>
+            {(item: any) => (
+                <TableRow key={item.key}>
+                    {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+                </TableRow>
+            )}
+        </TableBody>
+    </Table>
+
+    if (linkingPredicate && linkedResource) {
+        return <Table
+            aria-label='triple table'
+            hideHeader={true}
+        >
+            <TableHeader>
+                <TableColumn>lr</TableColumn>
+                <TableColumn>lp</TableColumn>
             </TableHeader>
-            <TableBody items={rows}>
-                {(item) => (
-                    <TableRow key={item.key} >
-                        {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
-                    </TableRow>
-                )}
+            <TableBody>
+                <TableRow>
+                    <TableCell>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
+                    <TableCell>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell>&nbsp;</TableCell>
+                    <TableCell>{mainTable({ td: "p-0" })}</TableCell>
+                </TableRow>
             </TableBody>
         </Table>
-    </>
+    }
+    else {
+        return mainTable({})
+    }
 }
 
 export default TriplesTable
