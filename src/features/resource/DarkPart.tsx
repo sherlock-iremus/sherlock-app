@@ -4,6 +4,7 @@ import YasguiButton from '@/components/YasguiButton'
 
 export type DarkPartProps = {
     identityQuery: string,
+    dotOnePropertiesQuery: string,
     outgoingPredicatesCountQuery: string;
     queryE13WithLiteralP141?: string
     resourceUri: string;
@@ -13,6 +14,7 @@ export type DarkPartProps = {
 const DarkPart: React.FC<DarkPartProps> = ({
     resourceUri,
     identityQuery,
+    dotOnePropertiesQuery,
     outgoingPredicatesCountQuery,
     queryE13WithLiteralP141,
     queryObjectsOfLowFanOutgoingPredicatesData,
@@ -51,6 +53,10 @@ const DarkPart: React.FC<DarkPartProps> = ({
                     {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
                         ressources pointées
                     </YasguiButton>}
+                    {dotOnePropertiesQuery && <YasguiButton className='grow' query={dotOnePropertiesQuery}>
+                        propriétés .1
+                    </YasguiButton>}
+
                 </div>
             </div>
         </div>

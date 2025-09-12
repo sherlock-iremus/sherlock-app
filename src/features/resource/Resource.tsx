@@ -73,7 +73,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralObjectsOfLowFanOutgoingPredicatesBindings)
 
   // .1 Properties
-  const { data: dataDotOneProperties } = useDotOnePropertiesQuery(resourceUri)
+  const { data: dataDotOneProperties, query: queryDotOneProperties } = useDotOnePropertiesQuery(resourceUri)
   const dotOnePropertiesBindings = dataDotOneProperties?.results.bindings || []
 
   // E13 with literal P141
@@ -111,9 +111,11 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {dotOnePropertiesBindings.length > 0 && <>
-          <div className='px-6 py-6'>
-            <POTable bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []} />
-          </div>
+          <h2 className={h2()}><FaPenNib />Propriétés .1</h2>
+          <BindingsTable
+            humanReadablePropertiesColumn={false}
+            bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []}
+          />
         </>
         }
 
@@ -124,7 +126,8 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
             bindings={e13WithLiteralP141Results?.results.bindings
               .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
               .sort(sortBindingsFn('p177_label'))
-              || []} />
+              || []}
+          />
         </>}
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
@@ -151,6 +154,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         outgoingPredicatesCountQuery={queryCountObjectsOfOutgoingPredicates}
         queryE13WithLiteralP141={queryE13WithLiteralP141}
         queryObjectsOfLowFanOutgoingPredicatesData={queryObjectsOfLowFanOutgoingPredicatesData}
+        dotOnePropertiesQuery={queryDotOneProperties}
       />
     </>
   )

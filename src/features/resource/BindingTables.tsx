@@ -119,6 +119,7 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, humanRea
         classNames={slots}
         hideHeader={true}
         isCompact={true}
+        radius='none'
         removeWrapper={removeWrapper}
     >
         <TableHeader columns={columns}>
@@ -139,6 +140,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         aria-label='linked resource bindings table'
         hideHeader={true}
         isCompact={true}
+        radius='none'
     >
         <TableHeader>
             <TableColumn>lr</TableColumn>
@@ -146,7 +148,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         </TableHeader>
         <TableBody>
             {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => <>
-                <TableRow>
+                <TableRow className='mt-10'>
                     <TableCell className={p()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
                     <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
                 </TableRow>
@@ -156,7 +158,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
                         <BindingsTable
                             bindings={bindings}
                             humanReadablePropertiesColumn={true}
-                            slots={{ td: 'p-0' }}
+                            slots={{ wrapper: 'py-1 px-3', td: 'p-0' }}
                             removeWrapper={false}
                         />
                     </TableCell>
