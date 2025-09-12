@@ -1,20 +1,19 @@
 // TODO : faire une requête count pour les prédicats entrants, same bins !
 
-import clsx from 'clsx'
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
-import { E55_BUSINESS_ID, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { FaIdCard, FaPenNib } from 'react-icons/fa'
+import { PiGraphDuotone } from 'react-icons/pi'
+import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
-import { PiGraphDuotone } from 'react-icons/pi'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
-import POTable, { predicateFont } from './POTable'
+import POTable from './POTable'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
-import { FaIdCard, FaPenNib } from 'react-icons/fa'
-import TriplesTable from './TriplesTable'
+import { LinkedResourcesBindingsTable, BindingsTable } from './BindingTables'
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // STYLES
@@ -90,7 +89,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
     <>
       <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}><FaIdCard />Identité de la ressource</h2>
-        <TriplesTable
+        <BindingsTable
           humanReadablePropertiesColumn={true}
           bindings={identityData.identityBindings}
         />
@@ -120,7 +119,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
           <h2 className={h2()}><FaPenNib />Annotations</h2>
-          <TriplesTable
+          <BindingsTable
             humanReadablePropertiesColumn={false}
             bindings={e13WithLiteralP141Results?.results.bindings
               .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
@@ -131,21 +130,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
             <h2 className={h2()}><PiGraphDuotone />Ressources pointées</h2>
-            {Object.entries(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).map(([lp, v1]) => {
-              return Object.entries(v1 as Record<string, any>).map(([lr, v2]) => {
-                return (
-                  <div key={lp + lr} className=''>
-                    {/* <POTable bindings={v2 as SparqlQueryResultObject_Binding[]} startLines={[['ressource pointée', lr]]} /> */}
-                    <TriplesTable
-                      humanReadablePropertiesColumn={true}
-                      linkingPredicate={lp}
-                      linkedResource={lr}
-                      bindings={v2 as SparqlQueryResultObject_Binding[]}
-                    />
-                  </div>
-                )
-              })
-            })}
+            <LinkedResourcesBindingsTable bindings={nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR} />
           </>
         )}
 

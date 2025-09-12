@@ -1,10 +1,10 @@
-import clsx from 'clsx'
-import { SparqlQueryResultObject_Variable, SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
-import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
-import { tv } from 'tailwind-variants'
 import Link from '@/components/Link'
+import clsx from 'clsx'
+import { PiGlobeDuotone, PiLinkDuotone } from 'react-icons/pi'
+import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
+import { tv } from 'tailwind-variants'
+import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 export const predicateFont = 'font-light text-gray-500 font-serif text-normal'
 

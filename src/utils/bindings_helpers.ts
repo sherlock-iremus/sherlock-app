@@ -2,12 +2,35 @@ import { RDF_BASE, sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject, SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
 import { IDENTITY_PREDICATES } from 'sherlock-sparql-queries/lib/identity'
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// TYPES
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type IdentityData = {
     rdfTypes: string[],
     authdocBindings: SparqlQueryResultObject_Binding[],
     identityBindings: SparqlQueryResultObject_Binding[],
     identityPredicates: string[]
 }
+
+export type OutgoingPredicatesData = {
+    highFanOutPredicatesBindings: SparqlQueryResultObject_Binding[],
+    lowFanOutPredicates: string[]
+}
+
+export type LRLPIndexedBindings = {
+    [key: string]: {
+        [key: string]: SparqlQueryResultObject_Binding[]
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// HELPERS
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function extractDataFromIdentityBindings(sqro: SparqlQueryResultObject | undefined): IdentityData {
     const x: IdentityData = {
@@ -46,11 +69,6 @@ export function extractDataFromIdentityBindings(sqro: SparqlQueryResultObject | 
     return x
 }
 
-export type OutgoingPredicatesData = {
-    highFanOutPredicatesBindings: SparqlQueryResultObject_Binding[],
-    lowFanOutPredicates: string[]
-}
-
 export function extractDataFromOutgoingPredicatesCountSparqlQueryResult(sqro: SparqlQueryResultObject | undefined): OutgoingPredicatesData {
     const x: OutgoingPredicatesData = {
         highFanOutPredicatesBindings: [],
@@ -72,8 +90,8 @@ export function extractDataFromOutgoingPredicatesCountSparqlQueryResult(sqro: Sp
     return x
 }
 
-export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]): Record<string, any> {
-    const x: Record<string, any> = {}
+export function groupByLPLR(bindings: SparqlQueryResultObject_Binding[]): LRLPIndexedBindings {
+    const x: LRLPIndexedBindings = {}
 
     for (const b of bindings) {
         if (!x[b.lp.value]) x[b.lp.value] = {}
@@ -95,20 +113,20 @@ export function groupByFields(
     bindings: SparqlQueryResultObject_Binding[],
     fields: string | string[]
 ): Record<string, SparqlQueryResultObject_Binding[]> {
-    const grouped: Record<string, SparqlQueryResultObject_Binding[]> = {};
-    const fieldList = Array.isArray(fields) ? fields : [fields];
+    const grouped: Record<string, SparqlQueryResultObject_Binding[]> = {}
+    const fieldList = Array.isArray(fields) ? fields : [fields]
 
     bindings.forEach(item => {
         // Concatène les valeurs des champs spécifiés pour créer une clé unique
         const key = fieldList
             .map(field => (item[field]?.value ?? 'no-binding'))
-            .join('||');
+            .join('||')
 
         if (!grouped[key]) {
-            grouped[key] = [];
+            grouped[key] = []
         }
-        grouped[key].push(item);
-    });
+        grouped[key].push(item)
+    })
 
-    return grouped;
+    return grouped
 }
