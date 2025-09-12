@@ -78,6 +78,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   // E13 with literal P141
   const { data: e13WithLiteralP141Results, query: queryE13WithLiteralP141 } = useE13WithLiteralP141Query(resourceUri)
+  const e13WithLiteralP141Bindings = e13WithLiteralP141Results?.results.bindings || []
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -111,7 +112,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {dotOnePropertiesBindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés .1</h2>
+          <h2 className={h2()}><FaPenNib />Propriétés</h2>
           <BindingsTable
             humanReadablePropertiesColumn={false}
             bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []}
@@ -119,8 +120,8 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         </>
         }
 
-        {e13WithLiteralP141Results && e13WithLiteralP141Results?.results.bindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Annotations</h2>
+        {e13WithLiteralP141Bindings.length > 0 && <>
+          <h2 className={h2()}><FaPenNib />Propriétés</h2>
           <BindingsTable
             humanReadablePropertiesColumn={false}
             bindings={e13WithLiteralP141Results?.results.bindings
@@ -152,9 +153,9 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         identityQuery={queryResourceIdentity}
         resourceUri={resourceUri}
         outgoingPredicatesCountQuery={queryCountObjectsOfOutgoingPredicates}
-        queryE13WithLiteralP141={queryE13WithLiteralP141}
         queryObjectsOfLowFanOutgoingPredicatesData={queryObjectsOfLowFanOutgoingPredicatesData}
-        dotOnePropertiesQuery={queryDotOneProperties}
+        queryE13WithLiteralP141={e13WithLiteralP141Bindings.length > 0 ? queryE13WithLiteralP141 : ''}
+        dotOnePropertiesQuery={dotOnePropertiesBindings.length > 0 ? queryDotOneProperties : ''}
       />
     </>
   )
