@@ -16,7 +16,7 @@ const p = tv({
 })
 
 const hrp = tv({
-    base: 'font-sans font-light lowercase text-xs'
+    base: 'font-sans font-light lowercase'
 })
 
 const uriData = tv({
@@ -24,7 +24,7 @@ const uriData = tv({
 })
 
 const literal = tv({
-    base: 'font-serif text-stone-700 font-medium'
+    base: 'font-serif text-stone-700 font-medium text-base'
 })
 
 /*
@@ -44,7 +44,8 @@ header.textSection>h2 @apply font-serif font-bold text-2xl;
 interface BindingsTableProps {
     bindings: SparqlQueryResultObject_Binding[],
     humanReadablePropertiesColumn: boolean,
-    slots: object
+    slots?: object,
+    removeWrapper?: boolean,
 }
 
 interface LinkedResourcesBindingsTableProps {
@@ -109,15 +110,16 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
 // COMPONENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, humanReadablePropertiesColumn, slots }) => {
+export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, humanReadablePropertiesColumn, slots = {}, removeWrapper = false }) => {
     const columns = makeColumns(humanReadablePropertiesColumn)
     const rows = transformBindingsToHeroTableData(bindings)
 
     return <Table
-        aria-label='triples table'
-        isCompact={true}
+        aria-label='bindings table'
+        classNames={slots}
         hideHeader={true}
-        slot=''
+        isCompact={true}
+        removeWrapper={removeWrapper}
     >
         <TableHeader columns={columns}>
             {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -133,30 +135,35 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, humanRea
 }
 
 export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTableProps> = ({ bindings }) => {
-    return Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => <Table
-        aria-label='triple table'
+    return <Table
+        aria-label='linked resource bindings table'
         hideHeader={true}
+        isCompact={true}
     >
         <TableHeader>
             <TableColumn>lr</TableColumn>
             <TableColumn>lp</TableColumn>
         </TableHeader>
         <TableBody>
-            <TableRow>
-                <TableCell>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
-                <TableCell>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell>&nbsp;</TableCell>
-                <TableCell>
-                    <BindingsTable
-                        bindings={bindings}
-                        humanReadablePropertiesColumn={true}
-                        slots={{ td: 'p-0' }}
-                    />
-                </TableCell>
-            </TableRow>
+            {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => <>
+                <TableRow>
+                    <TableCell className={p()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
+                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell>&nbsp;</TableCell>
+                    <TableCell>
+                        <BindingsTable
+                            bindings={bindings}
+                            humanReadablePropertiesColumn={true}
+                            slots={{ td: 'p-0' }}
+                            removeWrapper={false}
+                        />
+                    </TableCell>
+                </TableRow>
+            </>
+            ))}
         </TableBody>
-    </Table>))
+    </Table>
 }
 
