@@ -20,7 +20,7 @@ import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identi
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const h2 = tv({
-  base: 'font-light mb-6 mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
+  base: 'font-light mb-6 mt-12 not-first:mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
