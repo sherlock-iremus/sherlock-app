@@ -1,9 +1,9 @@
+import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer';
 import { ReactElement } from 'react';
-import { IdentityData } from '../../utils/bindings_helpers';
-import { E55_TEI_FILE_URI, E55_FORGE_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
-import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer'
-import { LuCodeXml } from 'react-icons/lu'
+import { LuCodeXml } from 'react-icons/lu';
+import { E55_FORGE_FILE_URI, E55_TEI_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
+import { IdentityData } from '../../utils/bindings_helpers';
 
 export function guessMediaRepresentation(idData: IdentityData, projectId: string | null): [string, ReactElement, string, ReactElement] | null {
   let teiFileUri = null

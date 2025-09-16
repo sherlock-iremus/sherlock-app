@@ -38,7 +38,7 @@ const DarkPart: React.FC<DarkPartProps> = ({
             <br />
             <div>
                 <div className='mb-2 font-mono text-stone-300 text-xs lowercase'>
-                    Requêtes SPARQL (ouverture dans Yasgui) :
+                    Toutes les données exposées dans cette page proviennent des requêtes SPARQL suivantes :
                 </div>
                 <div className='flex flex-wrap gap-1'>
                     <YasguiButton className='grow' query={identityQuery}>
@@ -50,11 +50,11 @@ const DarkPart: React.FC<DarkPartProps> = ({
                     {queryE13WithLiteralP141 && <YasguiButton className='grow' query={queryE13WithLiteralP141}>
                         annotations E13 à valeurs litérales
                     </YasguiButton>}
-                    {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
-                        ressources pointées
-                    </YasguiButton>}
                     {dotOnePropertiesQuery && <YasguiButton className='grow' query={dotOnePropertiesQuery}>
                         propriétés .1
+                    </YasguiButton>}
+                    {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
+                        ressources pointées
                     </YasguiButton>}
 
                 </div>

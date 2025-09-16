@@ -1,14 +1,15 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@heroui/table'
-import clsx from 'clsx'
 import React, { JSX } from 'react'
 import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
+import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
 import { getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { LRLPIndexedBindings } from '@/utils/bindings_helpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // STYLES
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const p = tv({
@@ -23,22 +24,18 @@ const uriData = tv({
     base: 'font-mono'
 })
 
+const miniUriData = tv({
+    base: 'font-mono text-texte_annexe text-xs tracking-tighter'
+})
+
 const literal = tv({
     base: 'font-serif text-stone-700 font-medium text-base'
 })
 
-/*
-header.textSection margin-bottom: 2em;
-header.textSection>h2 @apply font-serif font-bold text-2xl;
-.section-font @apply font-['Albertus'] font-[350] font-bold uppercase;
-.section-font-predicate @apply font-mono lowercase;
-.linked_entity_icon @apply text-stone-400;
-.lang @apply text-stone-400;
-.icon @apply text-pink-500;
-*/
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // TYPES
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 interface BindingsTableProps {
@@ -60,7 +57,9 @@ type RowData = {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // HELPERS
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function makeColumns(humanReadablePropertiesColumn: boolean) {
@@ -73,6 +72,23 @@ function makeColumns(humanReadablePropertiesColumn: boolean) {
     }
     columns.push()
     return columns
+}
+
+function makeLabel(v: SparqlQueryResultObject_Variable) {
+    if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
+        return (
+            <span className={miniUriData()}>
+                {v.value}
+            </span>
+        )
+    }
+
+    return (
+        <span className={`${literal()}`}>
+            {v.value}
+            {v['xml:lang'] && <span className='text-texte_annexe'>{' @' + v['xml:lang']}</span>}
+        </span>
+    )
 }
 
 function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Binding[]): any[] {
@@ -93,7 +109,7 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
             rowData.p = <span className={p()}>{makeNonClickablePrefixedUri(predicate)}</span>
 
             if (binding['label']) {
-                rowData['v'] = <span className={`${literal()}`}>{binding['label'].value}</span>
+                rowData['v'] = makeLabel(binding['label'])
             }
             else {
                 rowData['v'] = <span className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(binding['r'].value))}</span>
@@ -107,7 +123,9 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // COMPONENTS
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, humanReadablePropertiesColumn, slots = {}, removeWrapper = false }) => {

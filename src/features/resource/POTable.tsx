@@ -24,23 +24,6 @@ const uri = tv({
     base: 'font-mono font-normal text-sm'
 })
 
-export function displayLabel(v: SparqlQueryResultObject_Variable) {
-    if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
-        return (
-            <span className='font-mono text-gray-400 text-xs tracking-tighter'>
-                {v.value}
-            </span>
-        )
-    }
-
-    return (
-        <span className='font-serif'>
-            {v.value}
-            {v['xml:lang'] && <span className='lang'>{' @' + v['xml:lang']}</span>}
-        </span>
-    )
-}
-
 export function makeLinkedResourceTypesFragment(b: SparqlQueryResultObject_Binding) {
     let types_key = 0
     const getKey = () => 'types_key_' + types_key++
