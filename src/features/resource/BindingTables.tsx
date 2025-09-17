@@ -25,10 +25,6 @@ const uriData = tv({
     base: 'font-mono'
 })
 
-const externalUri = tv({
-    base: 'font-mono text-external_uri text-sm tracking-tighter'
-})
-
 const literal = tv({
     base: 'font-serif text-stone-700 font-medium text-base'
 })
