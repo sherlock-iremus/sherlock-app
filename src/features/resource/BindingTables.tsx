@@ -108,6 +108,12 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
             rowData.hrp = <span className={hrp()}>{getReadablePredicate(predicate)}</span>
             rowData.p = <span className={p()}>{makeNonClickablePrefixedUri(predicate)}</span>
 
+            // TODO
+            // r
+            // r_type
+            // r_type_type
+            // r_type_type_label
+
             if (binding['label']) {
                 rowData['v'] = makeLabel(binding['label'])
             }
