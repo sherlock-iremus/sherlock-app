@@ -5,6 +5,7 @@ import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } fro
 import { tv } from 'tailwind-variants'
 import { getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { LRLPIndexedBindings } from '@/utils/bindings_helpers'
+import Link from '@/components/Link'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -24,12 +25,16 @@ const uriData = tv({
     base: 'font-mono'
 })
 
-const miniUriData = tv({
-    base: 'font-mono text-texte_annexe text-xs tracking-tighter'
+const externalUri = tv({
+    base: 'font-mono text-external_uri text-sm tracking-tighter'
 })
 
 const literal = tv({
     base: 'font-serif text-stone-700 font-medium text-base'
+})
+
+const type = tv({
+    base: 'text-texte_annexe'
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,11 +81,7 @@ function makeColumns(humanReadablePropertiesColumn: boolean) {
 
 function makeLabel(v: SparqlQueryResultObject_Variable) {
     if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
-        return (
-            <span className={miniUriData()}>
-                {v.value}
-            </span>
-        )
+        return <Link href={v.value} target='_blank'>{v.value}</Link>
     }
 
     return (
@@ -108,18 +109,19 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
             rowData.hrp = <span className={hrp()}>{getReadablePredicate(predicate)}</span>
             rowData.p = <span className={p()}>{makeNonClickablePrefixedUri(predicate)}</span>
 
-            // TODO
-            // r
-            // r_type
-            // r_type_type
-            // r_type_type_label
-
+            let mainPart = null
             if (binding['label']) {
-                rowData['v'] = makeLabel(binding['label'])
+                mainPart = makeLabel(binding['label'])
             }
             else {
-                rowData['v'] = <span className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(binding['r'].value))}</span>
+                mainPart = <span className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(binding['r'].value))}</span>
             }
+            rowData['v'] = <>
+                {mainPart}
+                {/* <span>{binding['r_type']?.value}</span> */}
+                {/* <span>{binding['r_type_type']?.value}</span> */}
+                {binding['r_type_type_label'] && <span className={type()}> ({binding['r_type_type_label']?.value})</span>}
+            </>
         }
 
         tableData.push(rowData)
