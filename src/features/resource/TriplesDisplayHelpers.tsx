@@ -37,6 +37,19 @@ export function makeNonClickablePrefixedUri(
   )
 }
 
+export function getReadableClass(pu: PrefixedUri): string {
+  switch (pu.prefix) {
+    case RDF_PREFIXES.get(CRM_BASE):
+      switch (pu.localPart) {
+        case 'E21_Person': return 'Personne'
+        case 'E41_Appellation': return 'Appellation'
+        case 'E42_Identifier': return 'Identifiant'
+      }
+  }
+
+  return ''
+}
+
 export function getReadablePredicate(pu: PrefixedUri): string {
   switch (pu.prefix) {
     case RDF_PREFIXES.get(CRM_BASE):

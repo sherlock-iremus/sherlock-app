@@ -91,7 +91,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
       <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}><FaIdCard />Identité de la ressource</h2>
         <BindingsTable
-          humanReadablePropertiesColumn={true}
           bindings={identityData.identityBindings}
         />
 
@@ -103,19 +102,18 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         </>
         }
 
-        {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
+        {/* {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
           <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={''} n={null} />
           <div className='px-6 py-6'>
             <POTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
           </div>
         </>
-        }
+        } */}
 
         {dotOnePropertiesBindings.length > 0 && <>
           <h2 className={h2()}><FaPenNib />Propriétés</h2>
           <BindingsTable
-            humanReadablePropertiesColumn={false}
-            bindings={dotOnePropertiesBindings.map(x => ({ property: x.e55_label, ...x })) || []}
+            bindings={dotOnePropertiesBindings}
           />
         </>
         }
@@ -123,9 +121,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         {e13WithLiteralP141Bindings.length > 0 && <>
           <h2 className={h2()}><FaPenNib />Propriétés</h2>
           <BindingsTable
-            humanReadablePropertiesColumn={false}
             bindings={e13WithLiteralP141Results?.results.bindings
-              .map(x => ({ property: x.p177_label, value: x.p141, ...x }))
               .sort(sortBindingsFn('p177_label'))
               || []}
           />
