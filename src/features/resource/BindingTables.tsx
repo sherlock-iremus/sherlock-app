@@ -73,7 +73,6 @@ type RowData = {
 
 function makeColumns() {
     const columns: any[] = [
-        { key: 'hrp', label: 'HRP' },
         { key: 'p', label: 'P' },
         { key: 'v', label: 'V' },
         { key: 'v_md', label: 'V_MD' },
@@ -153,7 +152,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
             x.v_md = <>
                 {processClass(binding['r_type'].value)}
                 <span className={humanReadable()}> de type </span>
-                <Link href={binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
+                <Link href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
             </>
         }
         // Cas d'un objet de type ressource non décrite dans SHERLOCK
