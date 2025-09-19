@@ -182,7 +182,7 @@ function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Bind
 
 export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = {}, removeWrapper = false }) => {
     const columns = makeColumns()
-    const rows = transformBindingsToHeroTableData(bindings)
+    const rows = transformBindingsToHeroTableData(bindings).filter(x => x.p && x.v)
 
     return <Table
         aria-label='bindings table'
