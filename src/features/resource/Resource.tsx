@@ -6,14 +6,13 @@ import { FaIdCard, FaPenNib } from 'react-icons/fa'
 import { PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { tv } from 'tailwind-variants'
+import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
-import POTable from './POTable'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import { LinkedResourcesBindingsTable, BindingsTable } from './BindingTables'
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // STYLES

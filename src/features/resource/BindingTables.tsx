@@ -148,7 +148,6 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
         // Cas d'un objet de type ressource décrite dans SHERLOCK
         else if (binding['label'] && binding['r'] && binding['r_type']) {
             x.v = makeLabel(binding['label'])
-            console.log(binding['r_type_type'].value)
             x.v_md = <>
                 {processClass(binding['r_type'].value)}
                 <span className={humanReadable()}> de type </span>
