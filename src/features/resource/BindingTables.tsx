@@ -156,8 +156,9 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
         x.v = <span className={literal()}>{binding['value'].value}</span>
     }
     // Cas d'une E13 dont le P140 est la ressource consultée
-    else if (false) {
-
+    else if (binding['p177_label'] && binding['p141']) {
+        x.p = <span className={humanReadable()}>{binding['p177_label'].value}</span>
+        x.v = <span className={literal()}>{binding['p141'].value}</span>
     }
     // Cas d'un binding identité d'une ressource liée à la ressource consultée
     else if (binding['lp'] && binding['lr']) {
