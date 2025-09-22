@@ -12,7 +12,7 @@ const YasguiButton: React.FC<Props> = ({ query }) => <Tooltip className='text-xs
     <Button
         as={Link}
         // className='flex bg-black hover:bg-teal-950 border-1 hover:border-cyan-300 border-teal-900 rounded-full w-8 h-8 text-teal-500 hover:text-teal-300 transition-all'
-        className='border-1 text-lg'
+        className='border-1 text-lg cursor-default'
         color='primary'
         href={makeYasguiUri(query)}
         isExternal

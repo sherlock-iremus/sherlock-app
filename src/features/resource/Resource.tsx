@@ -145,14 +145,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         })}
       </div>
       <div className='mt-18'></div>
-      <DarkPart
-        identityQuery={queryResourceIdentity}
-        resourceUri={resourceUri}
-        outgoingPredicatesCountQuery={queryCountObjectsOfOutgoingPredicates}
-        queryObjectsOfLowFanOutgoingPredicatesData={queryObjectsOfLowFanOutgoingPredicatesData}
-        queryE13WithLiteralP141={e13WithLiteralP141Bindings.length > 0 ? queryE13WithLiteralP141 : ''}
-        dotOnePropertiesQuery={dotOnePropertiesBindings.length > 0 ? queryDotOneProperties : ''}
-      />
+      <DarkPart resourceUri={resourceUri} />
     </>
   )
 }

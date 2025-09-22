@@ -2,12 +2,7 @@ import React from 'react'
 import SherlockBar from '@/components/SherlockBar'
 
 export type DarkPartProps = {
-    identityQuery: string,
-    dotOnePropertiesQuery: string,
-    outgoingPredicatesCountQuery: string;
-    queryE13WithLiteralP141?: string
     resourceUri: string;
-    queryObjectsOfLowFanOutgoingPredicatesData: string;
 }
 
 const DarkPart: React.FC<DarkPartProps> = ({ resourceUri }) => <div className='font-mono'>
