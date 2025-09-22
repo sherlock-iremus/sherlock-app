@@ -13,6 +13,7 @@ import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
+import YasguiButton from '@/components/YasguiButton'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // STYLES
@@ -88,7 +89,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   return (
     <>
       <div className='bg-background px-6 text-foreground light'>
-        <h2 className={h2()}><FaIdCard />Identité de la ressource</h2>
+        <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={queryResourceIdentity} /></h2>
         <BindingsTable
           bindings={identityData.identityBindings}
         />
@@ -110,7 +111,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         } */}
 
         {dotOnePropertiesBindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés</h2>
+          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={queryDotOneProperties} /></h2>
           <BindingsTable
             bindings={dotOnePropertiesBindings}
           />
@@ -118,7 +119,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {e13WithLiteralP141Bindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés</h2>
+          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={queryE13WithLiteralP141} /></h2>
           <BindingsTable
             bindings={e13WithLiteralP141Results?.results.bindings
               .sort(sortBindingsFn('p177_label'))
@@ -128,7 +129,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
-            <h2 className={h2()}><PiGraphDuotone />Ressources pointées</h2>
+            <h2 className={h2()}><PiGraphDuotone />Ressources pointées <YasguiButton query={queryObjectsOfLowFanOutgoingPredicatesData} /></h2>
             <LinkedResourcesBindingsTable bindings={nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR} />
           </>
         )}
