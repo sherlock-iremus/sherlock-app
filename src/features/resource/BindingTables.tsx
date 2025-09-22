@@ -120,6 +120,31 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
             : rdfPredicate
     }
 
+    function caca() {
+        // Cas d'un prédicat pointant sur une valeur littérale
+        if (binding['label'] && !binding['r']) {
+            x.v = makeLabel(binding['label'])
+            x.v_md = binding['label']['xml:lang'] ? <span className='text-texte_annexe'>{' @' + binding['label']['xml:lang']}</span> : <></>
+        }
+        // Cas d'un objet de type ressource décrite dans SHERLOCK
+        else if (binding['label'] && binding['r'] && binding['r_type']) {
+            x.v = makeLabel(binding['label'])
+            x.v_md = <>
+                {processClass(binding['r_type'].value)}
+                {binding['r_type_type'] && binding['r_type_type_label'] &&
+                    <>
+                        <span className={humanReadable()}> de type </span>
+                        <Link href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
+                    </>
+                }
+            </>
+        }
+        // Cas d'un objet de type ressource non décrite dans SHERLOCK
+        else if (!binding['label'] && binding['r']) {
+            x.v = processClass(binding['r'].value)
+        }
+    }
+
     // Aspects liés au prédicat
     if (binding['p']) {
         x.p = processPredicate(binding['p'].value)
@@ -136,28 +161,12 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     }
     // Cas d'un binding identité d'une ressource liée à la ressource consultée
     else if (binding['lp'] && binding['lr']) {
-
+        x.p = processPredicate(binding['p'].value)
+        caca()
     }
     // Cas d'un binding identité de la ressource consultée
     else {
-        // Cas d'un prédicat pointant sur une valeur littérale
-        if (binding['label'] && !binding['r']) {
-            x.v = makeLabel(binding['label'])
-            x.v_md = binding['label']['xml:lang'] ? <span className='text-texte_annexe'>{' @' + binding['label']['xml:lang']}</span> : <></>
-        }
-        // Cas d'un objet de type ressource décrite dans SHERLOCK
-        else if (binding['label'] && binding['r'] && binding['r_type']) {
-            x.v = makeLabel(binding['label'])
-            x.v_md = <>
-                {processClass(binding['r_type'].value)}
-                <span className={humanReadable()}> de type </span>
-                <Link href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
-            </>
-        }
-        // Cas d'un objet de type ressource non décrite dans SHERLOCK
-        else if (!binding['label'] && binding['r']) {
-            x.v = processClass(binding['r'].value)
-        }
+        caca()
     }
 
     return x
@@ -217,23 +226,24 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
             <TableColumn>lp</TableColumn>
         </TableHeader>
         <TableBody>
-            {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => <>
-                <TableRow className='mt-10'>
-                    <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
-                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell>&nbsp;</TableCell>
-                    <TableCell>
-                        <BindingsTable
-                            bindings={bindings}
-                            humanReadablePropertiesColumn={true}
-                            slots={{ wrapper: 'py-1 px-3', td: 'p-0' }}
-                            removeWrapper={false}
-                        />
-                    </TableCell>
-                </TableRow>
-            </>
+            {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => {
+                return <>
+                    <TableRow className='mt-10'>
+                        <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
+                        <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>&nbsp;</TableCell>
+                        <TableCell>
+                            <BindingsTable
+                                bindings={bindings}
+                                slots={{ wrapper: 'py-1 px-3', td: 'p-0' }}
+                                removeWrapper={false}
+                            />
+                        </TableCell>
+                    </TableRow>
+                </>
+            }
             ))}
         </TableBody>
     </Table>
