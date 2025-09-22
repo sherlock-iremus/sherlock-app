@@ -233,7 +233,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
                         <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
                         <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className='border-b border-b-data_table_line last:border-none'>
                         <TableCell>&nbsp;</TableCell>
                         <TableCell>
                             <BindingsTable
