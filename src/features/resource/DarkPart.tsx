@@ -1,6 +1,5 @@
 import React from 'react'
 import SherlockBar from '@/components/SherlockBar'
-import YasguiButton from '@/components/YasguiButton'
 
 export type DarkPartProps = {
     identityQuery: string,
@@ -27,29 +26,6 @@ const DarkPart: React.FC<DarkPartProps> = ({ resourceUri }) => <div className='f
                 {resourceUri}
             </h2>
         </div>
-        {/* <div>
-                <div className='mb-2 font-mono text-stone-300 text-xs lowercase'>
-                    Toutes les données exposées dans cette page proviennent des requêtes SPARQL suivantes :
-                </div>
-                <div className='flex flex-wrap gap-1'>
-                    <YasguiButton className='grow' query={identityQuery}>
-                        identité de la ressource
-                    </YasguiButton>
-                    <YasguiButton className='grow' query={outgoingPredicatesCountQuery}>
-                        nombres de triplets sortants par prédicats
-                    </YasguiButton>
-                    {queryE13WithLiteralP141 && <YasguiButton className='grow' query={queryE13WithLiteralP141}>
-                        annotations E13 à valeurs litérales
-                    </YasguiButton>}
-                    {dotOnePropertiesQuery && <YasguiButton className='grow' query={dotOnePropertiesQuery}>
-                        propriétés .1
-                    </YasguiButton>}
-                    {queryObjectsOfLowFanOutgoingPredicatesData && <YasguiButton className='grow' query={queryObjectsOfLowFanOutgoingPredicatesData}>
-                        ressources pointées
-                    </YasguiButton>}
-
-                </div>
-            </div> */}
     </div>
 </div>
 
