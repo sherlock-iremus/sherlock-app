@@ -1,9 +1,75 @@
-import { heroui } from '@heroui/react'
+import { heroui, ThemeColors } from '@heroui/react'
 import colors from 'tailwindcss/colors'
 import { parse, formatHex } from 'culori'
 
+interface MyThemeColors extends ThemeColors {
+    external_uri: string;
+    texte_annexe: string,
+    data_table_border: string,
+    data_table_line: string,
+    data_table_parenthesis: string,
+    lang: string,
+    link: string,
+    link_hover: string,
+    uri_prefix: string,
+    uri_column: string,
+    uri_localpart: string,
+}
+
 function c(x: string) {
     return formatHex(parse(x))
+}
+
+const lightThemeColors: Partial<MyThemeColors> = {
+    background: "#FFFFFF",
+    foreground: "#000000",
+    primary: {
+        DEFAULT: '#14B8A6',
+        foreground: 'black',
+    },
+    secondary: {
+        DEFAULT: '#14B8A6',
+        foreground: 'black',
+    },
+    external_uri: c(colors.pink[600]),
+    texte_annexe: c(colors.gray[400]),
+    data_table_border: c(colors.gray[200]),
+    data_table_line: c(colors.gray[100]),
+    data_table_parenthesis: c(colors.gray[400]),
+    // link: c(colors.cyan[600]),
+    lang: c(colors.gray[400]),
+    link: '#14B8A6',
+    link_hover: '#FF1493',
+    // link_hover: c(colors.cyan[400]),
+    uri_prefix: '#6D29D9',
+    uri_column: '#6D29D9',
+    uri_localpart: '#A68BFA',
+}
+
+const darkThemeColors: Partial<MyThemeColors> = {
+    background: "#000000",
+    foreground: "#FFFFFF",
+    primary: {
+        DEFAULT: 'aqua',
+        foreground: 'black',
+    },
+    secondary: {
+        DEFAULT: '#14B8A6',
+        foreground: '#14B8A6',
+    },
+    external_uri: c(colors.pink[600]),
+    texte_annexe: c(colors.gray[400]),
+    data_table_border: c(colors.gray[200]),
+    data_table_line: c(colors.gray[100]),
+    data_table_parenthesis: c(colors.gray[400]),
+    // link: c(colors.violet[600]),
+    lang: c(colors.gray[400]),
+    link: '#14B8A6',
+    link_hover: '#FF1493',
+    // link_hover: c(colors.cyan[300]),
+    uri_prefix: '#6D29D9',
+    uri_column: '#6D29D9',
+    uri_localpart: '#A68BFA',
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -13,59 +79,11 @@ export default heroui({
     themes: {
         light: {
             extend: 'light',
-            colors: {
-                background: "#FFFFFF",
-                foreground: "#000000",
-                primary: {
-                    DEFAULT: '#14B8A6',
-                    foreground: 'black',
-                },
-                secondary: {
-                    DEFAULT: '#14B8A6',
-                    foreground: 'black',
-                },
-                external_uri: c(colors.pink[600]),
-                texte_annexe: c(colors.gray[400]),
-                data_table_border: c(colors.gray[200]),
-                data_table_line: c(colors.gray[100]),
-                data_table_parenthesis: c(colors.gray[400]),
-                // link: c(colors.cyan[600]),
-                lang: c(colors.gray[400]),
-                link: '#14B8A6',
-                link_hover: '#FF1493',
-                // link_hover: c(colors.cyan[400]),
-                uri_prefix: '#6D29D9',
-                uri_column: '#6D29D9',
-                uri_localpart: '#A68BFA',
-            },
+            colors: lightThemeColors,
         },
         dark: {
             extend: 'dark',
-            colors: {
-                background: "#000000",
-                foreground: "#FFFFFF",
-                primary: {
-                    DEFAULT: 'aqua',
-                    foreground: 'black',
-                },
-                secondary: {
-                    DEFAULT: '#14B8A6',
-                    foreground: '#14B8A6',
-                },
-                external_uri: c(colors.pink[600]),
-                texte_annexe: c(colors.gray[400]),
-                data_table_border: c(colors.gray[200]),
-                data_table_line: c(colors.gray[100]),
-                data_table_parenthesis: c(colors.gray[400]),
-                // link: c(colors.violet[600]),
-                lang: c(colors.gray[400]),
-                link: '#14B8A6',
-                link_hover: '#FF1493',
-                // link_hover: c(colors.cyan[300]),
-                uri_prefix: '#6D29D9',
-                uri_column: '#6D29D9',
-                uri_localpart: '#A68BFA',
-            }
+            colors: darkThemeColors
         }
     }
 })
