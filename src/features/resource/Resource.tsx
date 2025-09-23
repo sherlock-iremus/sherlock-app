@@ -49,6 +49,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   // Project ID
   const identityData: IdentityData = extractDataFromIdentityBindings(dataResourceIdentity)
+
   for (const b of identityData.identityBindings) {
     if (b.r_type_type?.value === E55_BUSINESS_ID) {
       projectId = b.label.value.split('/')[1]
@@ -88,10 +89,13 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   return (
     <>
+      <pre>
+        {JSON.stringify(dataResourceIdentity?.results.bindings, null, 4)}
+      </pre>
       <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={queryResourceIdentity} /></h2>
         <BindingsTable
-          bindings={identityData.identityBindings}
+          bindings={dataResourceIdentity?.results.bindings || []}
         />
 
         {mediaRepresentation && <>

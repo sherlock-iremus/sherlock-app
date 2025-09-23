@@ -120,7 +120,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
             : rdfPredicate
     }
 
-    function caca() {
+    function processV() {
         // Cas d'un prédicat pointant sur une valeur littérale
         if (binding['label'] && !binding['r']) {
             x.v = makeLabel(binding['label'])
@@ -163,11 +163,11 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     // Cas d'un binding identité d'une ressource liée à la ressource consultée
     else if (binding['lp'] && binding['lr']) {
         x.p = processPredicate(binding['p'].value)
-        caca()
+        processV()
     }
     // Cas d'un binding identité de la ressource consultée
     else {
-        caca()
+        processV()
     }
 
     return x
