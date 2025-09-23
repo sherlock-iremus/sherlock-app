@@ -89,9 +89,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   return (
     <>
-      <pre>
-        {JSON.stringify(dataResourceIdentity?.results.bindings, null, 4)}
-      </pre>
       <div className='bg-background px-6 text-foreground light'>
         <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={queryResourceIdentity} /></h2>
         <BindingsTable
