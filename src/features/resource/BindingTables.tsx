@@ -1,14 +1,12 @@
 import Link from '@/components/Link'
 import { LRLPIndexedBindings } from '@/utils/bindings_helpers'
-import { Link as HeroUiLink, extendVariants } from '@heroui/react'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@heroui/table'
-import React, { JSX } from 'react'
 import { Tooltip } from '@heroui/tooltip'
-// import { PiQuestionDuotone } from 'react-icons/pi'
+import React, { JSX } from 'react'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
-import { getReadablePredicate, getReadableClass, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
+import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -28,18 +26,8 @@ const literal = tv({
     base: 'font-serif text-stone-700 font-medium text-base'
 })
 
-const type = tv({
-    base: 'text-texte_annexe'
-})
-
 const rdfTypeTooltip = tv({
     base: 'bg-black'
-})
-
-const TypeLink = extendVariants(HeroUiLink, {
-    defaultVariants: {
-        class: 'text-texte_annexe font-mono cursor-default hover:text-link_hover transition-colors tracking-tighter'
-    }
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
