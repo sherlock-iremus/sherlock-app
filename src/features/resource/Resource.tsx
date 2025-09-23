@@ -60,7 +60,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
-  const { data: countObjectsOfOutgoingPredicatesResults, query: queryCountObjectsOfOutgoingPredicates } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
+  const { data: countObjectsOfOutgoingPredicatesResults, /*query: queryCountObjectsOfOutgoingPredicates*/ } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(countObjectsOfOutgoingPredicatesResults)
 
   // Outgoing predicates :: low-fan

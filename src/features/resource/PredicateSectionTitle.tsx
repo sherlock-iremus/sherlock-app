@@ -1,11 +1,12 @@
 import { IoEnterOutline, IoExitOutline } from 'react-icons/io5'
 
+import { makeNegativeButton } from '@/components/buttons'
+import YasguiButton from '@/components/YasguiButton'
+import { ReactNode } from 'react'
 import { PiGlobeFill } from 'react-icons/pi'
 import { PrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { makeNegativeButton, makeYasguiButton } from '@/components/buttons'
-import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
-import { ReactNode } from 'react'
+import { getReadablePredicate, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 export default function ({
   direction,
@@ -48,11 +49,7 @@ export default function ({
             <>
               {getReadablePredicate(prefixedUri)}
               {title && '('}
-              {makeNonClickablePrefixedUri(prefixedUri, [
-                'text-prefixed_uri_prefix_darkbg',
-                'text-prefixed_uri_prefix_darkbg',
-                'text-prefixed_uri_local_name_darkbg'
-              ])}
+              {makeNonClickablePrefixedUri(prefixedUri)}
               {title && ')'}
             </>}
           {n && (
@@ -62,10 +59,7 @@ export default function ({
           )}
           {sparqlQuery && (
             <div className='flex gap-[3px] ml-3'>
-              {makeYasguiButton(
-                sparqlQuery,
-                'Ouvrir la requête SPARQL dans Yasgui'
-              )}
+              <YasguiButton query={sparqlQuery} />
             </div>
           )}
           {link && (

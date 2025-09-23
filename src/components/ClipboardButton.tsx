@@ -20,7 +20,7 @@ const ClipboardButton: React.FC<Props> = ({ content }) => <Tooltip
         size='sm'
         startContent={<PiClipboardThin />}
         variant='ghost'
-        onClick={e => { navigator.clipboard.writeText(content) }}
+        onClick={() => navigator.clipboard.writeText(content)}
     />
 </Tooltip>
 

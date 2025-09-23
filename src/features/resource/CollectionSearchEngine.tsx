@@ -1,15 +1,14 @@
+import { CollectionColumnContent } from '@/components/collection-search-engine/CollectionColumnContent';
+import { IdentityColumnContent } from '@/components/collection-search-engine/IdentityColumnContent';
+import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent';
+import YasguiButton from '@/components/YasguiButton';
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql';
 import { groupByFields } from '@/utils/bindings_helpers';
-import { Button, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
-import React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { Button, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { TbSearch } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { f } from 'sherlock-sparql-queries/lib/collectionItems';
-import { TbSearch } from 'react-icons/tb'
-import { makeYasguiButton } from '@/components/buttons';
-import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent';
-import { IdentityColumnContent } from '@/components/collection-search-engine/IdentityColumnContent';
-import { CollectionColumnContent } from '@/components/collection-search-engine/CollectionColumnContent';
 
 export const DISPLAY_E13_TOOLTIP = false;
 
@@ -92,7 +91,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
             startContent={<TbSearch />}
             onPress={triggerSearch}
           ></Button>
-          {makeYasguiButton(query, 'Requête SPARQL')}
+          <YasguiButton query={query} />
           <div className='table-header ml-3'>({groupedData.length} items)</div>
         </div>
         {isLoading && (
