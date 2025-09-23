@@ -4,6 +4,7 @@ import ProjectHeader from './ProjectHeader'
 import Resource from './Resource'
 import SherlockBar from '@/components/SherlockBar'
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
+import ClipboardButton from '@/components/ClipboardButton'
 
 interface ProjectData {
     code?: string,
@@ -46,12 +47,27 @@ export default function () {
                     name={x.name}
                     uuid={x.uuid}
                 />
-                <SherlockBar />
+
             </>
             }
+            <SherlockBar />
+            <div className='bg-background px-6 py-4 text-foreground dark'>
+                <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
+                    URI de la ressource consultée :
+                </h2>
+                <div>
+                    <h2
+                        className='font-mono text-[aqua] text-link_negative'
+                        style={{
+                            textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
+                        }}
+                    >
+                        {resourceUri} <ClipboardButton content={resourceUri} />
+                    </h2>
+                </div>
+            </div>
+            <SherlockBar />
             <Resource resourceUri={resourceUri} />
         </>
     )
 }
-
-{/* <Navigate to={`/?resource=http://data-iremus.huma-num.fr/id/${resourceUUID}`} /> */ }

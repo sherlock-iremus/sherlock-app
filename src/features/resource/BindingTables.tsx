@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKey
 import React, { JSX } from 'react'
 import { Tooltip } from '@heroui/tooltip'
 // import { PiQuestionDuotone } from 'react-icons/pi'
-import { PrefixedUri, makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
 import { getReadablePredicate, getReadableClass, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
@@ -229,7 +229,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         <TableBody>
             {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => {
                 return <>
-                    <TableRow className='mt-10'>
+                    <TableRow>
                         <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
                         <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
                     </TableRow>
@@ -238,7 +238,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
                         <TableCell>
                             <BindingsTable
                                 bindings={bindings}
-                                slots={{ wrapper: 'py-1 px-3', td: 'p-0' }}
+                                slots={{ base: 'mb-2', wrapper: 'py-1 px-3', td: 'p-0' }}
                                 removeWrapper={false}
                             />
                         </TableCell>

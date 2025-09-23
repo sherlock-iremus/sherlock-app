@@ -20,6 +20,10 @@ export default heroui({
                     DEFAULT: '#14B8A6',
                     foreground: 'black',
                 },
+                secondary: {
+                    DEFAULT: '#14B8A6',
+                    foreground: 'black',
+                },
                 external_uri: c(colors.pink[600]),
                 texte_annexe: c(colors.gray[400]),
                 data_table_border: c(colors.gray[200]),
@@ -42,7 +46,11 @@ export default heroui({
                 foreground: "#FFFFFF",
                 primary: {
                     DEFAULT: 'aqua',
-                    foreground: 'aqua',
+                    foreground: 'black',
+                },
+                secondary: {
+                    DEFAULT: '#14B8A6',
+                    foreground: '#14B8A6',
                 },
                 external_uri: c(colors.pink[600]),
                 texte_annexe: c(colors.gray[400]),
