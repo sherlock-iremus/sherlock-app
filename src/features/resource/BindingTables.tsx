@@ -208,7 +208,7 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = 
         <TableBody items={rows}>
             {(item: any) => (
                 <TableRow key={item.key} className='border-b border-b-data_table_line last:border-none'>
-                    {(columnKey) => <TableCell className='align-top'>{getKeyValue(item, columnKey)}</TableCell>}
+                    {(columnKey) => <TableCell className='pr-3 last:pr-0 align-top'>{getKeyValue(item, columnKey)}</TableCell>}
                 </TableRow>
             )}
         </TableBody>
