@@ -2,7 +2,7 @@ import Link from '@/components/Link'
 import { LRLPIndexedBindings } from '@/utils/bindings_helpers'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@heroui/table'
 import { Tooltip } from '@heroui/tooltip'
-import React, { JSX } from 'react'
+import React, { JSX, ReactNode } from 'react'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
@@ -204,6 +204,33 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = 
 }
 
 export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTableProps> = ({ bindings }) => {
+    let content: any[] = []
+
+    for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
+        for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
+            console.log(linkingPredicate, linkedResource, bindingsList)
+
+            const x = <>
+                <TableRow>
+                    <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
+                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
+                </TableRow>
+                <TableRow className='border-b border-b-data_table_line last:border-none'>
+                    <TableCell>&nbsp;</TableCell>
+                    <TableCell>
+                        <BindingsTable
+                            bindings={bindingsList}
+                            slots={{ base: 'mb-2', wrapper: 'py-1 px-3', td: 'p-0' }}
+                            removeWrapper={false}
+                        />
+                    </TableCell>
+                </TableRow>
+            </>
+
+            content.push(x)
+        }
+    }
+
     return <Table
         aria-label='linked resource bindings table'
         hideHeader={true}
@@ -215,25 +242,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
             <TableColumn>lp</TableColumn>
         </TableHeader>
         <TableBody>
-            {Object.entries(bindings).map(([linkingPredicate, linkingPredicateData]) => Object.entries(linkingPredicateData).map(([linkedResource, bindings]) => {
-                return <>
-                    <TableRow>
-                        <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
-                        <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
-                    </TableRow>
-                    <TableRow className='border-b border-b-data_table_line last:border-none'>
-                        <TableCell>&nbsp;</TableCell>
-                        <TableCell>
-                            <BindingsTable
-                                bindings={bindings}
-                                slots={{ base: 'mb-2', wrapper: 'py-1 px-3', td: 'p-0' }}
-                                removeWrapper={false}
-                            />
-                        </TableCell>
-                    </TableRow>
-                </>
-            }
-            ))}
+            {content}
         </TableBody>
     </Table>
 }
