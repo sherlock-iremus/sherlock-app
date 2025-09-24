@@ -41,9 +41,12 @@ export function getReadableClass(pu: PrefixedUri): string {
   switch (pu.prefix) {
     case RDF_PREFIXES.get(CRM_BASE):
       switch (pu.localPart) {
+        case 'E7_Activity': return 'Activité'
         case 'E21_Person': return 'Personne'
         case 'E41_Appellation': return 'Appellation'
         case 'E42_Identifier': return 'Identifiant'
+        case 'E55_Type': return 'Type'
+        case 'E73_Information_Object': return 'Objet informationnel'
       }
   }
 
