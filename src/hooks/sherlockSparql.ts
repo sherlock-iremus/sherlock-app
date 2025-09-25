@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 //TODO: Put queries imports here
 import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
-import { getProject } from 'sherlock-sparql-queries/lib/project'
+import { getProjectByCode, getProjectByResourceUri } from 'sherlock-sparql-queries/lib/project'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
@@ -30,9 +30,15 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
     })
 }
 
-export const useProjectQuery = (resourceURI: string) => {
-    const query = getProject(resourceURI)
-    const x = baseSherlockUseSparqlQuery(true, ['project', resourceURI], query)
+export const useGetProjectByResourceUriQuery = (resourceURI: string) => {
+    const query = getProjectByResourceUri(resourceURI)
+    const x = baseSherlockUseSparqlQuery(true, ['project', 'resource', resourceURI], query)
+    return { query, ...x }
+}
+
+export const useGetProjectByCodeQuery = (code: string) => {
+    const query = getProjectByCode(code)
+    const x = baseSherlockUseSparqlQuery(true, ['project', code], query)
     return { query, ...x }
 }
 

@@ -45,10 +45,10 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   ////////////////////////////////////////////////////////////////////////////////
 
   // Resource identity
-  const { data: dataResourceIdentity, query: queryResourceIdentity } = useResourceIdentityQuery(resourceUri)
+  const { data: data__resourceIdentity, query: query__resourceIdentity } = useResourceIdentityQuery(resourceUri)
 
   // Project ID
-  const identityData: IdentityData = extractDataFromIdentityBindings(dataResourceIdentity)
+  const identityData: IdentityData = extractDataFromIdentityBindings(data__resourceIdentity)
 
   for (const b of identityData.identityBindings) {
     if (b.r_type_type?.value === E55_BUSINESS_ID) {
@@ -60,26 +60,26 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
-  const { data: countObjectsOfOutgoingPredicatesResults, /*query: queryCountObjectsOfOutgoingPredicates*/ } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
-  const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(countObjectsOfOutgoingPredicatesResults)
+  const { data: data__countObjectsOfOutgoingPredicates, /*query: query__countObjectsOfOutgoingPredicates*/ } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
+  const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(data__countObjectsOfOutgoingPredicates)
 
   // Outgoing predicates :: low-fan
-  const { data: objectsOfLowFanOutgoingPredicatesData, query: queryObjectsOfLowFanOutgoingPredicatesData } = useObjectsOfLowFanOutgoingPredicatesQuery(resourceUri, outgoingPredicatesCountData.lowFanOutPredicates, outgoingPredicatesCountData.lowFanOutPredicates.length > 0)
+  const { data: data__objectsOfLowFanOutgoingPredicates, query: query__objectsOfLowFanOutgoingPredicatesData } = useObjectsOfLowFanOutgoingPredicatesQuery(resourceUri, outgoingPredicatesCountData.lowFanOutPredicates, outgoingPredicatesCountData.lowFanOutPredicates.length > 0)
   let literalObjectsOfLowFanOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
   let nonLiteralObjectsOfLowFanOutgoingPredicatesBindings: SparqlQueryResultObject_Binding[] = []
-  objectsOfLowFanOutgoingPredicatesData?.results.bindings.map(x => {
+  data__objectsOfLowFanOutgoingPredicates?.results.bindings.map(x => {
     if (x.lr.type == 'literal') literalObjectsOfLowFanOutgoingPredicatesBindings.push(x)
     else nonLiteralObjectsOfLowFanOutgoingPredicatesBindings.push(x)
   })
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralObjectsOfLowFanOutgoingPredicatesBindings)
 
   // .1 Properties
-  const { data: dataDotOneProperties, query: queryDotOneProperties } = useDotOnePropertiesQuery(resourceUri)
-  const dotOnePropertiesBindings = dataDotOneProperties?.results.bindings || []
+  const { data: data__dotOneProperties, query: query__dotOneProperties } = useDotOnePropertiesQuery(resourceUri)
+  const dotOnePropertiesBindings = data__dotOneProperties?.results.bindings || []
 
   // E13 with literal P141
-  const { data: e13WithLiteralP141Results, query: queryE13WithLiteralP141 } = useE13WithLiteralP141Query(resourceUri)
-  const e13WithLiteralP141Bindings = e13WithLiteralP141Results?.results.bindings || []
+  const { data: data__e13WithLiteralP141, query: query__e13WithLiteralP141 } = useE13WithLiteralP141Query(resourceUri)
+  const e13WithLiteralP141Bindings = data__e13WithLiteralP141?.results.bindings || []
 
   ////////////////////////////////////////////////////////////////////////////////
   //
@@ -90,9 +90,9 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   return (
     <>
       <div className='bg-background px-6 text-foreground light'>
-        <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={queryResourceIdentity} /></h2>
+        <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={query__resourceIdentity} /></h2>
         <BindingsTable
-          bindings={dataResourceIdentity?.results.bindings || []}
+          bindings={data__resourceIdentity?.results.bindings || []}
         />
 
         {mediaRepresentation && <>
@@ -112,7 +112,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         } */}
 
         {dotOnePropertiesBindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={queryDotOneProperties} /></h2>
+          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={query__dotOneProperties} /></h2>
           <BindingsTable
             bindings={dotOnePropertiesBindings}
           />
@@ -120,9 +120,9 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {e13WithLiteralP141Bindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={queryE13WithLiteralP141} /></h2>
+          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={query__e13WithLiteralP141} /></h2>
           <BindingsTable
-            bindings={e13WithLiteralP141Results?.results.bindings
+            bindings={data__e13WithLiteralP141?.results.bindings
               .sort(sortBindingsFn('p177_label'))
               || []}
           />
@@ -130,7 +130,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
-            <h2 className={h2()}><PiGraphDuotone />Ressources pointées <YasguiButton query={queryObjectsOfLowFanOutgoingPredicatesData} /></h2>
+            <h2 className={h2()}><PiGraphDuotone />Ressources pointées <YasguiButton query={query__objectsOfLowFanOutgoingPredicatesData} /></h2>
             <LinkedResourcesBindingsTable bindings={nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR} />
           </>
         )}

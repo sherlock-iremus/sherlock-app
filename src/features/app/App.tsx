@@ -3,6 +3,7 @@ import ResourceRouter from '@/features/resource/ResourceRouter'
 import { HeroUIProvider } from "@heroui/react"
 import type { NavigateOptions } from 'react-router-dom'
 import { Route, Routes, useHref, useNavigate } from 'react-router-dom'
+import Project from '@/features/projects/Project'
 
 declare module '@react-types/shared' {
   interface RouterConfig {
@@ -17,9 +18,9 @@ export default function App() {
     <HeroUIProvider navigate={navigate} useHref={useHref}>
       <Routes>
         <Route element={<Root />} path='/'>
-
           <Route path='/' element={<ResourceRouter />} />
           <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
+          <Route path='/projects/:projectCode' element={<Project />} />
         </Route>
       </Routes>
     </HeroUIProvider>
