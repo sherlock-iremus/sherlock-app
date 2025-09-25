@@ -30,6 +30,10 @@ const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Arra
     })
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// PROJECTS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const useGetProjectByResourceUriQuery = (resourceURI: string) => {
     const query = getProjectByResourceUri(resourceURI)
     const x = baseSherlockUseSparqlQuery(true, ['project', 'resource', resourceURI], query)
@@ -41,6 +45,22 @@ export const useGetProjectByCodeQuery = (code: string) => {
     const x = baseSherlockUseSparqlQuery(true, ['project', code], query)
     return { query, ...x }
 }
+
+export const useGetProjectsFilesQuery = (projectUuid: string) => {
+    const query = getProjectByResourceUri(projectUuid)
+    const x = baseSherlockUseSparqlQuery(true, ['project', 'files', projectUuid], query)
+    return { query, ...x }
+}
+
+export const useGetAllProjectDataQuery = (query: string, projectGraphUri: string, search: string, enabled: boolean) =>
+    baseSherlockUseSparqlQuery(enabled, ['all-project-data', projectGraphUri, search], query)
+
+export const useGetProjectsAndCollections = (query: string, projectCode: string | undefined) =>
+    baseSherlockUseSparqlQuery(true, ['projects-and-collections', projectCode ? projectCode : "all"], query)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// RESOURCES
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const useResourceIdentityQuery = (resourceUri: string) => {
     const query = identity(resourceUri)
@@ -75,17 +95,19 @@ export const useE13WithLiteralP141Query = (resourceUri: string) => {
 export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
     baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)
 
-export const useGetAllProjectDataQuery = (query: string, projectGraphUri: string, search: string, enabled: boolean) =>
-    baseSherlockUseSparqlQuery(enabled, ['all-project-data', projectGraphUri, search], query)
-
-export const useGetProjectsAndCollections = (query: string, projectCode: string | undefined) =>
-    baseSherlockUseSparqlQuery(true, ['projects-and-collections', projectCode ? projectCode : "all"], query)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// CUSTOM
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const useMGLivraisonsQuery = (query: string) =>
     baseSherlockUseSparqlQuery(true, ['mg-livraisons'], query)
 
 export const useMGLivraisonQuery = (query: string, livraisonBusinessId: string) =>
     baseSherlockUseSparqlQuery(true, ['mg-livraison', livraisonBusinessId], query)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// BASE
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const useSparqlQuery = (query: string, key: Array<string>) =>
     baseSherlockUseSparqlQuery(true, key, query)

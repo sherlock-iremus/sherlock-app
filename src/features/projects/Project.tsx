@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom'
-import CollectionSearchEngine from '../resource/CollectionSearchEngine'
-import { f } from 'sherlock-sparql-queries/lib/projectsAndCollections'
-import { useGetProjectByCodeQuery, useGetProjectsAndCollections } from '@/hooks/sherlockSparql'
-import { projectName } from '../resource/ProjectHeader'
+import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
 import { extractProjectData } from './projectsDataHelpers'
+import { makeH2, projectName } from '../resource/markupHelpers'
+import { FaIdCard } from 'react-icons/fa'
 
 interface ProjectProps {
     searchEngine?: boolean
@@ -12,11 +11,12 @@ interface ProjectProps {
 const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     const { projectCode } = useParams()
 
-    const { data: dataProjectIdentity, query: queryProjectIdentity } = useGetProjectByCodeQuery(projectCode || '')
-    const projectData = extractProjectData(dataProjectIdentity)
+    const { data: data__projectIdentity, query: query__projectIdentity } = useGetProjectByCodeQuery(projectCode || '')
+    const projectData = extractProjectData(data__projectIdentity)
 
     return <div className='p-6'>
         {projectName(projectData.name || '')}
+        {makeH2('Identité', <FaIdCard />, query__projectIdentity)}
     </div>
 
     // const q = f(projectCode)

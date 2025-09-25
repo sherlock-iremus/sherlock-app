@@ -1,5 +1,6 @@
 import Link from '@/components/Link'
 import React from 'react'
+import { projectName } from './markupHelpers';
 
 interface Props {
     code?: string;
@@ -21,7 +22,3 @@ const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) =>
     </div >
 
 export default ProjectHeader
-
-export function projectName(name: string): React.ReactElement {
-    return <h1 className='font-["Jost"] font-extralight text-teal-800 text-3xl uppercase tracking-wide'>{name}</h1>
-}

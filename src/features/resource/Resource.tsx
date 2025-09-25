@@ -7,21 +7,12 @@ import { PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
-import { tv } from 'tailwind-variants'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import PredicateSectionTitle from './PredicateSectionTitle'
 import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
-import YasguiButton from '@/components/YasguiButton'
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// STYLES
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const h2 = tv({
-  base: 'font-light mb-6 mt-12 not-first:mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
-})
+import { makeH2 } from './markupHelpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TYPES
@@ -90,7 +81,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   return (
     <>
       <div className='bg-background px-6 text-foreground light'>
-        <h2 className={h2()}><FaIdCard />Identité de la ressource <YasguiButton query={query__resourceIdentity} /></h2>
+        {makeH2('Identité de la ressource', <FaIdCard />, query__resourceIdentity)}
         <BindingsTable
           bindings={data__resourceIdentity?.results.bindings || []}
         />
@@ -112,7 +103,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         } */}
 
         {dotOnePropertiesBindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={query__dotOneProperties} /></h2>
+          {makeH2('Propriétés', <FaPenNib />, query__dotOneProperties)}
           <BindingsTable
             bindings={dotOnePropertiesBindings}
           />
@@ -120,7 +111,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         }
 
         {e13WithLiteralP141Bindings.length > 0 && <>
-          <h2 className={h2()}><FaPenNib />Propriétés <YasguiButton query={query__e13WithLiteralP141} /></h2>
+          {makeH2('Propriétés', <FaPenNib />, query__e13WithLiteralP141)}
           <BindingsTable
             bindings={data__e13WithLiteralP141?.results.bindings
               .sort(sortBindingsFn('p177_label'))
@@ -130,7 +121,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
-            <h2 className={h2()}><PiGraphDuotone />Ressources pointées <YasguiButton query={query__objectsOfLowFanOutgoingPredicatesData} /></h2>
+            {makeH2('Ressources pointées', <PiGraphDuotone />, query__objectsOfLowFanOutgoingPredicatesData)}
             <LinkedResourcesBindingsTable bindings={nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR} />
           </>
         )}
