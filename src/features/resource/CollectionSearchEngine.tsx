@@ -117,7 +117,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
       </TableHeader>
       <TableBody items={groupedData}>
         {bindingsOfSameItem => (
-          <TableRow key={bindingsOfSameItem[0].item.value} className='hover:bg-row_hover'>
+          <TableRow key={bindingsOfSameItem[0].item.value} className='hover:bg-row_hover border-data_table_border border-b-1'>
             <TableCell className='py-0 font-serif align-top'>
               <IdentityColumnContent bindingsOfSameItem={bindingsOfSameItem} />
             </TableCell>
