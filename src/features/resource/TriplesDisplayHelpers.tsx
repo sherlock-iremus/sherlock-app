@@ -25,7 +25,7 @@ export function makeNonClickablePrefixedUri(
   key: string = ''
 ) {
   return pu.prefix ? (
-    <span key={key}>
+    <span key={key} className='font-mono'>
       <span className='text-uri_prefix'>{pu.prefix}</span>
       <span className='text-uri_column'>:</span>
       <span className='text-uri_localpart'>{pu.localPart}</span>

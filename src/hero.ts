@@ -3,14 +3,15 @@ import colors from 'tailwindcss/colors'
 import { parse, formatHex } from 'culori'
 
 interface MyThemeColors extends ThemeColors {
-    external_uri: string;
-    texte_annexe: string,
     data_table_border: string,
     data_table_line: string,
     data_table_parenthesis: string,
+    external_uri: string;
     lang: string,
     link: string,
     link_hover: string,
+    row_hover: string,
+    texte_annexe: string,
     uri_prefix: string,
     uri_column: string,
     uri_localpart: string,
@@ -31,6 +32,7 @@ const lightThemeColors: Partial<MyThemeColors> = {
         DEFAULT: '#14B8A6',
         foreground: 'black',
     },
+    row_hover: c(colors.gray[100]),
     external_uri: c(colors.pink[600]),
     texte_annexe: c(colors.gray[400]),
     data_table_border: c(colors.gray[200]),
@@ -57,6 +59,7 @@ const darkThemeColors: Partial<MyThemeColors> = {
         DEFAULT: '#14B8A6',
         foreground: '#14B8A6',
     },
+    row_hover: c(colors.gray[100]),
     external_uri: c(colors.pink[600]),
     texte_annexe: c(colors.gray[400]),
     data_table_border: c(colors.gray[200]),

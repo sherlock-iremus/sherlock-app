@@ -20,7 +20,7 @@ export default function App() {
         <Route element={<Root />} path='/'>
           <Route path='/' element={<ResourceRouter />} />
           <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
-          <Route path='/projects/:projectCode' element={<Project />} />
+          <Route path='/projects/:projectCode' element={<Project searchEngine />} />
         </Route>
       </Routes>
     </HeroUIProvider>
