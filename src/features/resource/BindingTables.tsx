@@ -246,4 +246,3 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         </TableBody>
     </Table>
 }
-

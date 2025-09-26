@@ -1,14 +1,13 @@
-import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 import { useQuery } from '@tanstack/react-query'
+import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 
-//TODO: Put queries imports here
-import { identity } from 'sherlock-sparql-queries/lib/identity'
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
-import { getProjectByCode, getProjectByResourceUri } from 'sherlock-sparql-queries/lib/project'
+import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
-import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
+import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
 // import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
+import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
 
 const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
@@ -47,7 +46,7 @@ export const useGetProjectByCodeQuery = (code: string) => {
 }
 
 export const useGetProjectsFilesQuery = (projectUuid: string) => {
-    const query = getProjectByResourceUri(projectUuid)
+    const query = getProjectFiles(projectUuid)
     const x = baseSherlockUseSparqlQuery(true, ['project', 'files', projectUuid], query)
     return { query, ...x }
 }
@@ -55,8 +54,11 @@ export const useGetProjectsFilesQuery = (projectUuid: string) => {
 export const useGetAllProjectDataQuery = (query: string, projectGraphUri: string, search: string, enabled: boolean) =>
     baseSherlockUseSparqlQuery(enabled, ['all-project-data', projectGraphUri, search], query)
 
-export const useGetProjectsAndCollections = (query: string, projectCode: string | undefined) =>
-    baseSherlockUseSparqlQuery(true, ['projects-and-collections', projectCode ? projectCode : "all"], query)
+export const useGetProjectsAndCollections = (projectCode: string | undefined) => {
+    const query = projectAndCollections(projectCode)
+    const x = baseSherlockUseSparqlQuery(true, ['projects-and-collections', projectCode ? projectCode : "all"], query)
+    return { query, ...x }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // RESOURCES

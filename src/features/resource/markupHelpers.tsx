@@ -17,3 +17,7 @@ export function makeH2(title: string, icon: React.ReactElement, sparqlQuery?: st
 export function projectName(name: string): React.ReactElement {
     return <h1 className='font-["Jost"] font-extralight text-teal-800 text-3xl uppercase tracking-wide'>{name}</h1>
 }
+
+export function projectLogo(logo: string): React.ReactElement {
+    return <img className='max-h-[111px]' src={logo} />
+}

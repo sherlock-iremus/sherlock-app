@@ -1,6 +1,6 @@
 import Link from '@/components/Link'
 import React from 'react'
-import { projectName } from './markupHelpers';
+import { projectLogo, projectName } from './markupHelpers';
 
 interface Props {
     code?: string;
@@ -9,9 +9,9 @@ interface Props {
     uuid?: string;
 }
 
-const ProjectHeader: React.FC<Props> = ({ code, logo, name, uuid }) =>
+const ProjectHeader: React.FC<Props> = ({ code, logo, name }) =>
     <div className='flex gap-6 bg-background p-6 text-foreground light'>
-        <img className='max-h-[111px]' src={logo} />
+        {logo && projectLogo(logo)}
         <div className='flex flex-col justify-end items-start'>
             {name && projectName(name)}
             <div className='mt-2 font-mono text-gray-500 text-xs lowercase'>
