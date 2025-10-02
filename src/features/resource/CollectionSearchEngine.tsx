@@ -27,6 +27,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
   projectCode,
   projectGraphUri,
 }) => {
+  console.log(collections)
   const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState('')
   const [activeSearch, setActiveSearch] = useState('')
