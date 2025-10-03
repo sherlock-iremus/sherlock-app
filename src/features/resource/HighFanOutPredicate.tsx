@@ -16,8 +16,6 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   resourceUri: string
   direction: LinkedResourcesDirectionEnum
 }) {
-
-  console.log(n)
   const prefixedUri = makePrefixedUri(predicateUri)
   const navigate = useNavigate()
 
@@ -26,6 +24,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   ////////////////////////////////////////////////////////////////////////////////
 
   const { data } = useResourceIdentityLightQuery(resourceUri, predicateUri, direction)
+  console.log(data?.results.bindings)
 
   ////////////////////////////////////////////////////////////////////////////////
   // SEARCH

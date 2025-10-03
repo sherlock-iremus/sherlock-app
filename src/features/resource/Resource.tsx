@@ -49,7 +49,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   }
 
   // Media representation
-  console.log(projectId)
+  // TODO console.log(projectId)
   // const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count

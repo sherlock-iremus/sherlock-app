@@ -210,8 +210,6 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
 
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
-            console.log(linkingPredicate, linkedResource, bindingsList)
-
             const x = <>
                 <TableRow>
                     <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate), textSize)}</TableCell>
