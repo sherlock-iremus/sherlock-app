@@ -1,14 +1,14 @@
+import { useResourceIdentityLightQuery } from "@/hooks/sherlockSparql"
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
+import { Tooltip } from '@heroui/tooltip'
 import { useCallback, useMemo, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
-import { Tooltip } from '@heroui/tooltip'
 import { useNavigate } from 'react-router-dom'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
-import { useResourceIdentityLightQuery } from "@/hooks/sherlockSparql"
+import { humanReadable, rdfTypeTooltip, uriData } from "./BindingTables"
 import { getReadablePredicate, makeNonClickablePrefixedUri } from "./TriplesDisplayHelpers"
-import { humanReadable, rdfTypeTooltip, textSize, uriData } from "./BindingTables"
 
 export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri, direction }: {
   n: number
