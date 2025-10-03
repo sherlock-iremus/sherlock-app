@@ -1,10 +1,11 @@
 import Link from '@/components/Link'
 import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
-export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: string = '') {
+export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, textSize: string = '') {
+  console.log('caca', textSize)
   return (
-    <Link href={'/?resource=' + uri}>
-      <span className='whitespace-nowrap' key={key}>
+    <Link href={'/?resource=' + uri} className={textSize}>
+      <span className='whitespace-nowrap'>
         {
           pu.prefix ?
             <>
@@ -22,16 +23,16 @@ export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, key: stri
 
 export function makeNonClickablePrefixedUri(
   pu: PrefixedUri,
-  key: string = ''
+  textSize: string
 ) {
   return pu.prefix ? (
-    <span key={key} className='font-mono'>
+    <span className={'font-mono' + ' ' + textSize}>
       <span className='text-uri_prefix'>{pu.prefix}</span>
       <span className='text-uri_column'>:</span>
       <span className='text-uri_localpart'>{pu.localPart}</span>
     </span>
   ) : (
-    <span key={key}>
+    <span className={textSize}>
       <span className='text-uri_localpart'>{pu.localPart}</span>
     </span>
   )
@@ -82,7 +83,8 @@ export function getReadablePredicate(pu: PrefixedUri): string {
       break
     case RDF_PREFIXES.get(IREMUS_NS_BASE):
       switch (pu.localPart) {
-        case 'hasContextProject': return 'a pour projet contexte'
+        case 'has_context_project': return 'a pour projet contexte'
+        case 'has_member': return 'contient'
       }
   }
 

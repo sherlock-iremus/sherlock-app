@@ -5,6 +5,7 @@ import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkin
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { identityIncomingLight, identityLight } from 'sherlock-sparql-queries/lib/identityLight'
 import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
 // import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
@@ -96,6 +97,14 @@ export const useE13WithLiteralP141Query = (resourceUri: string) => {
 
 export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
     baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)
+
+export const useResourceIdentityLightQuery = (resourceUri: string, predicateUri: string, direction: LinkedResourcesDirectionEnum) => {
+    let query: string = ''
+    if (direction === LinkedResourcesDirectionEnum.INCOMING) query = identityIncomingLight(resourceUri, predicateUri)
+    if (direction === LinkedResourcesDirectionEnum.OUTGOING) query = identityLight(resourceUri, predicateUri)
+    const x = baseSherlockUseSparqlQuery(true, ['identity-light', resourceUri, predicateUri], query)
+    return { query, ...x }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CUSTOM

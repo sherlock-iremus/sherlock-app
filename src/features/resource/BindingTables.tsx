@@ -14,19 +14,21 @@ import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeN
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const humanReadable = tv({
+export const textSize = 'text-sm'
+
+export const humanReadable = tv({
     base: 'font-sans font-light'
 })
 
-const uriData = tv({
+export const uriData = tv({
     base: 'font-mono'
 })
 
 const literal = tv({
-    base: 'font-serif text-stone-700 font-medium text-base'
+    base: 'font-serif text-stone-700 font-medium text-l'
 })
 
-const rdfTypeTooltip = tv({
+export const rdfTypeTooltip = tv({
     base: 'bg-black'
 })
 
@@ -71,7 +73,7 @@ function makeColumns() {
 
 function makeLabel(v: SparqlQueryResultObject_Variable) {
     if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
-        return <Link href={v.value} target='_blank'>{v.value}</Link>
+        return <Link className={textSize} href={v.value} target='_blank'>{v.value}</Link>
     }
 
     return (
@@ -87,7 +89,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     function processPredicate(predicate: string) {
         const pu = makePrefixedUri(predicate)
         const humanReadablePredicate = getReadablePredicate(pu)
-        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu)}</span>
+        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
 
         return humanReadablePredicate
             ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
@@ -99,7 +101,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     function processClass(className: string) {
         const pu = makePrefixedUri(className)
         const humanReadableClass = getReadableClass(pu)
-        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu)}</span>
+        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
 
         return humanReadableClass
             ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
@@ -122,7 +124,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
                 {binding['r_type_type'] && binding['r_type_type_label'] &&
                     <>
                         <span className={humanReadable()}> de type </span>
-                        <Link href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
+                        <Link className={textSize} href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
                     </>
                 }
             </>
@@ -196,7 +198,7 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = 
         <TableBody items={rows}>
             {(item: any) => (
                 <TableRow key={item.key} className='border-b border-b-data_table_line last:border-none'>
-                    {(columnKey) => <TableCell className='pr-3 last:pr-0 align-top'>{getKeyValue(item, columnKey)}</TableCell>}
+                    {(columnKey) => <TableCell className={`pr-3 last:pr-0 ${textSize} align-top`}>{getKeyValue(item, columnKey)}</TableCell>}
                 </TableRow>
             )}
         </TableBody>
@@ -212,8 +214,8 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
 
             const x = <>
                 <TableRow>
-                    <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate))}</TableCell>
-                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource))}</TableCell>
+                    <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate), textSize)}</TableCell>
+                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</TableCell>
                 </TableRow>
                 <TableRow className='border-b border-b-data_table_line last:border-none'>
                     <TableCell>&nbsp;</TableCell>

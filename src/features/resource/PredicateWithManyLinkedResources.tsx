@@ -1,13 +1,14 @@
+import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { useCallback, useMemo, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
-import { identityLight, identityIncomingLight } from 'sherlock-sparql-queries/lib/identityLight'
-import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import PredicateSectionTitle from './PredicateSectionTitle'
-import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { Tooltip } from '@heroui/tooltip'
 import { useNavigate } from 'react-router-dom'
-import { useSparqlQuery } from '@/hooks/sherlockSparql'
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { useResourceIdentityLightQuery } from "@/hooks/sherlockSparql"
+import { getReadablePredicate, makeNonClickablePrefixedUri } from "./TriplesDisplayHelpers"
+import { humanReadable, rdfTypeTooltip, textSize, uriData } from "./BindingTables"
 
 export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri, direction }: {
   n: number
@@ -16,16 +17,15 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   direction: LinkedResourcesDirectionEnum
 }) {
 
+  console.log(n)
+  const prefixedUri = makePrefixedUri(predicateUri)
   const navigate = useNavigate()
 
   ////////////////////////////////////////////////////////////////////////////////
-  // ITEMS
+  // DATA
   ////////////////////////////////////////////////////////////////////////////////
 
-  const identitySparqlQuery = direction === LinkedResourcesDirectionEnum.INCOMING
-    ? identityIncomingLight(resourceUri, predicateUri)
-    : identityLight(resourceUri, predicateUri)
-  const { data } = useSparqlQuery(identitySparqlQuery, ['identity-light', resourceUri])
+  const { data } = useResourceIdentityLightQuery(resourceUri, predicateUri, direction)
 
   ////////////////////////////////////////////////////////////////////////////////
   // SEARCH
@@ -117,25 +117,33 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   ////////////////////////////////////////////////////////////////////////////////
 
   const topContent = useMemo(() => {
+    const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(prefixedUri, '')}</span>
     return (
-      <div className='flex items-center'>
-        <Input
-          className='flex-1'
-          isClearable
-          onClear={() => onClear()}
-          onValueChange={onSearchChange}
-          placeholder='Chercher par label...'
-          startContent={<CiSearch />}
-          value={filterValue}
-        />
-        <div className='table-header ml-3'>({filteredItems.length} items)</div>
-      </div>
+      <>
+        <div>
+          <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
+            <span className={humanReadable()}>{getReadablePredicate(prefixedUri)}</span>
+          </Tooltip>
+        </div>
+        <div className='flex items-center'>
+          <Input
+            className='flex-1'
+            isClearable
+            onClear={() => onClear()}
+            onValueChange={onSearchChange}
+            placeholder='Chercher par label...'
+            startContent={<CiSearch />}
+            value={filterValue}
+          />
+          <div className='table-header ml-3'>({filteredItems.length} items)</div>
+        </div>
+      </>
     )
   }, [
     filterValue,
     onSearchChange,
     data?.results.bindings.length,
-    hasSearchFilter
+    hasSearchFilter,
   ])
 
   const bottomContent = useMemo(() => {
@@ -178,17 +186,8 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
 
   return (
     <>
-      <PredicateSectionTitle
-        direction={direction}
-        icon={null}
-        title=''
-        link={null}
-        prefixedUri={makePrefixedUri(predicateUri)}
-        sparqlQuery={identitySparqlQuery}
-        n={n}
-      />
       <br />
-      <div className='px-6'>
+      <div>
         {data ? (
           <Table
             aria-label={predicateUri}
@@ -199,6 +198,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
             topContent={topContent}
             topContentPlacement='inside'
             onRowAction={(key) => navigate('/?resource=' + key)}
+            radius="none"
           >
             <TableHeader>
               {/* <TableColumn key='internal_id' allowsSorting>Id</TableColumn> */}

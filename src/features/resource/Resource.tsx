@@ -1,18 +1,19 @@
-// TODO : faire une requête count pour les prédicats entrants, same bins !
+// TODO MEDIA REPRESENTATION
+// TODO PREDICATS SORTANTS LOW FAN
 
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
 import { FaIdCard, FaPenNib } from 'react-icons/fa'
+import { GiHerbsBundle } from "react-icons/gi"
 import { PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
-import { guessMediaRepresentation, sortBindingsFn } from './helpers'
-import PredicateSectionTitle from './PredicateSectionTitle'
-import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
+import { sortBindingsFn } from './helpers'
 import { makeH2 } from './markupHelpers'
+import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TYPES
@@ -48,10 +49,11 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   }
 
   // Media representation
-  const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
+  console.log(projectId)
+  // const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
-  const { data: data__countObjectsOfOutgoingPredicates, /*query: query__countObjectsOfOutgoingPredicates*/ } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
+  const { data: data__countObjectsOfOutgoingPredicates, query: query__countObjectsOfOutgoingPredicates } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(data__countObjectsOfOutgoingPredicates)
 
   // Outgoing predicates :: low-fan
@@ -86,13 +88,12 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           bindings={data__resourceIdentity?.results.bindings || []}
         />
 
-        {mediaRepresentation && <>
+        {/* {mediaRepresentation && <>
           <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
           <div className='flex justify-center p-11 w-full text-center'>
             {mediaRepresentation[3]}
           </div>
-        </>
-        }
+        </>} */}
 
         {/* {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
           <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={''} n={null} />
@@ -126,11 +127,12 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           </>
         )}
 
+        {outgoingPredicatesCountData.highFanOutPredicatesBindings.length > 0 && makeH2('Prédicats à degré sortant élevé', <GiHerbsBundle />, query__countObjectsOfOutgoingPredicates)}
         {outgoingPredicatesCountData.highFanOutPredicatesBindings.map(binding => {
           let k = 0
           const n = parseInt(binding.c.value)
           return (
-            <div key={k++} className='py-6'>
+            <div key={k++}>
               <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
             </div>
           )

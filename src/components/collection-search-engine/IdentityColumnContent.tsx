@@ -13,7 +13,7 @@ export const IdentityColumnContent: React.FC<IdentityColumnContentProps> = ({ bi
 
   return groupedByItemLabel.map((row: SparqlQueryResultObject_Binding[]) =>
     <p key={row[0].item_label_p.value + row[0].item_label.value}>
-      {makeNonClickablePrefixedUri(makePrefixedUri(row[0].item_label_p.value))} : {row[0].item_label.value}
+      {makeNonClickablePrefixedUri(makePrefixedUri(row[0].item_label_p.value), '')} : {row[0].item_label.value}
     </p>
   )
 };

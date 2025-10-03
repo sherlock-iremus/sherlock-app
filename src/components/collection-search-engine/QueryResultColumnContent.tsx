@@ -44,7 +44,7 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
             </p>
         } else {
             return <p key={row.p.value + row.lit.value + row.type_label?.value}>
-                {makeNonClickablePrefixedUri(makePrefixedUri(row.p.value))} : {row.lit.value} {displayIdentifier(row)}
+                {makeNonClickablePrefixedUri(makePrefixedUri(row.p.value), '')} : {row.lit.value} {displayIdentifier(row)}
             </p>
 
         }
