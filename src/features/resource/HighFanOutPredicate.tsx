@@ -10,7 +10,7 @@ import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identi
 import { humanReadable, rdfTypeTooltip, uriData } from "./BindingTables"
 import { getReadablePredicate, makeNonClickablePrefixedUri } from "./TriplesDisplayHelpers"
 
-export default function PredicateWithManyLinkedResources({ n, predicateUri, resourceUri, direction }: {
+export default function HighFanOutPredicate({ n, predicateUri, resourceUri, direction }: {
   n: number
   predicateUri: string
   resourceUri: string
@@ -23,8 +23,7 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   // DATA
   ////////////////////////////////////////////////////////////////////////////////
 
-  const { data } = useResourceIdentityLightQuery(resourceUri, predicateUri, direction)
-  console.log(data?.results.bindings)
+  const { data, query } = useResourceIdentityLightQuery(resourceUri, predicateUri, direction)
 
   ////////////////////////////////////////////////////////////////////////////////
   // SEARCH
@@ -123,6 +122,8 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
           <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
             <span className={humanReadable()}>{getReadablePredicate(prefixedUri)}</span>
           </Tooltip>
+          &nbsp;•&nbsp;
+          {n}
         </div>
         <div className='flex items-center'>
           <Input

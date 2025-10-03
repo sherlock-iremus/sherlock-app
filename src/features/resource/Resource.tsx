@@ -13,7 +13,7 @@ import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
 import { sortBindingsFn } from './helpers'
 import { makeH2 } from './markupHelpers'
-import PredicateWithManyLinkedResources from './PredicateWithManyLinkedResources'
+import HighFanOutPredicate from './HighFanOutPredicate'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TYPES
@@ -49,7 +49,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   }
 
   // Media representation
-  // TODO console.log(projectId)
+  // console.log(projectId) // TODO 
   // const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
@@ -133,7 +133,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           const n = parseInt(binding.c.value)
           return (
             <div key={k++}>
-              <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
+              <HighFanOutPredicate resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
             </div>
           )
         })}

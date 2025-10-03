@@ -73,13 +73,3 @@ const countIncomingPredicatesSparqlQuery = countIncomingPredicates(resourceUri)
         </div>
     </>
 }
-
-{
-    bigIncomingPredicatesBindings.map(binding => {
-        let k = 0
-        const n = parseInt(binding.c.value)
-        return <div key={k++} className='py-6'>
-            <PredicateWithManyLinkedResources resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.INCOMING} />
-        </div>
-    })
-}
