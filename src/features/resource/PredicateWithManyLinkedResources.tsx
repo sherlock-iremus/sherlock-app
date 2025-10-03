@@ -185,42 +185,38 @@ export default function PredicateWithManyLinkedResources({ n, predicateUri, reso
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <>
-      <br />
-      <div>
-        {data ? (
-          <Table
-            aria-label={predicateUri}
-            bottomContent={bottomContent}
-            bottomContentPlacement='inside'
-            onSortChange={setSortDescriptor}
-            sortDescriptor={sortDescriptor}
-            topContent={topContent}
-            topContentPlacement='inside'
-            onRowAction={(key) => navigate('/?resource=' + key)}
-            radius="none"
-          >
-            <TableHeader>
-              {/* <TableColumn key='internal_id' allowsSorting>Id</TableColumn> */}
-              <TableColumn key='label' allowsSorting>Label</TableColumn>
-            </TableHeader>
-            <TableBody items={items}>
-              {item => <TableRow
-                key={item.linked_resource.value}
-                className="hover:bg-row_hover"
-              >
-                {/* <TableCell>{item.internal_id?.value}</TableCell> */}
-                <TableCell className='py-0 font-serif align-top'>
-                  {item.label.value}
-                </TableCell>
-              </TableRow>}
-            </TableBody>
-          </Table>
-        ) : (
-          '⏳'
-        )}
-      </div>
-      <div className='divider' />
-    </>
+    <div>
+      {data ? (
+        <Table
+          aria-label={predicateUri}
+          bottomContent={bottomContent}
+          bottomContentPlacement='inside'
+          onSortChange={setSortDescriptor}
+          sortDescriptor={sortDescriptor}
+          topContent={topContent}
+          topContentPlacement='inside'
+          onRowAction={(key) => navigate('/?resource=' + key)}
+          radius="none"
+        >
+          <TableHeader>
+            {/* <TableColumn key='internal_id' allowsSorting>Id</TableColumn> */}
+            <TableColumn key='label' allowsSorting>Label</TableColumn>
+          </TableHeader>
+          <TableBody items={items}>
+            {item => <TableRow
+              key={item.linked_resource.value}
+              className="hover:bg-row_hover"
+            >
+              {/* <TableCell>{item.internal_id?.value}</TableCell> */}
+              <TableCell className='py-0 font-serif align-top'>
+                {item.label.value}
+              </TableCell>
+            </TableRow>}
+          </TableBody>
+        </Table>
+      ) : (
+        '⏳'
+      )}
+    </div>
   )
 }
