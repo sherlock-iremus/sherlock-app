@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
-
+import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/common'
 import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
-import { identity, LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
+import { identity } from 'sherlock-sparql-queries/lib/identity'
+import { listLinkedResources } from 'sherlock-sparql-queries/lib/listLinkedResources'
 import { identityIncomingLight, identityLight } from 'sherlock-sparql-queries/lib/identityLight'
 import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
 // import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
@@ -92,6 +93,12 @@ export const useDotOnePropertiesQuery = (resourceUri: string) => {
 export const useE13WithLiteralP141Query = (resourceUri: string) => {
     const query = e13WithLiteralP141(resourceUri)
     const x = baseSherlockUseSparqlQuery(true, ['e13-with-literal-p141', resourceUri], query)
+    return { query, ...x }
+}
+
+export const useListLinkedResources = (r: string, p: string) => {
+    const query = listLinkedResources(r, p)
+    const x = baseSherlockUseSparqlQuery(true, ['linked-resources', r, p], query)
     return { query, ...x }
 }
 

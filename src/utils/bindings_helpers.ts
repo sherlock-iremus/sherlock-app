@@ -1,6 +1,6 @@
 import { RDF_BASE, sortBindings } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject, SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
-import { IDENTITY_PREDICATES } from 'sherlock-sparql-queries/lib/identity'
+import { IDENTITY_PREDICATES } from 'sherlock-sparql-queries/lib/common'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //

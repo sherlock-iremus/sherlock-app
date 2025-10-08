@@ -8,7 +8,6 @@ import { GiHerbsBundle } from "react-icons/gi"
 import { PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
 import { sortBindingsFn } from './helpers'
@@ -133,7 +132,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           const n = parseInt(binding.c.value)
           return (
             <div key={k++}>
-              <HighFanOutPredicate resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} direction={LinkedResourcesDirectionEnum.OUTGOING} />
+              <HighFanOutPredicate resourceUri={resourceUri} predicateUri={binding.lp.value} n={n} />
             </div>
           )
         })}

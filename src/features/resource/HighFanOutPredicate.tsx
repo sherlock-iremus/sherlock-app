@@ -1,4 +1,5 @@
-import { useResourceIdentityLightQuery } from "@/hooks/sherlockSparql"
+import YasguiButton from "@/components/YasguiButton"
+import { useListLinkedResources } from "@/hooks/sherlockSparql"
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { Tooltip } from '@heroui/tooltip'
 import { useCallback, useMemo, useState } from 'react'
@@ -6,15 +7,13 @@ import { CiSearch } from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { LinkedResourcesDirectionEnum } from 'sherlock-sparql-queries/lib/identity'
 import { humanReadable, rdfTypeTooltip, uriData } from "./BindingTables"
 import { getReadablePredicate, makeNonClickablePrefixedUri } from "./TriplesDisplayHelpers"
 
-export default function HighFanOutPredicate({ n, predicateUri, resourceUri, direction }: {
+export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
   n: number
   predicateUri: string
   resourceUri: string
-  direction: LinkedResourcesDirectionEnum
 }) {
   const prefixedUri = makePrefixedUri(predicateUri)
   const navigate = useNavigate()
@@ -23,7 +22,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, dire
   // DATA
   ////////////////////////////////////////////////////////////////////////////////
 
-  const { data, query } = useResourceIdentityLightQuery(resourceUri, predicateUri, direction)
+  const { data, query } = useListLinkedResources(resourceUri, predicateUri)
 
   ////////////////////////////////////////////////////////////////////////////////
   // SEARCH
@@ -75,6 +74,11 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, dire
       ) => {
         const first = a[sortDescriptor.column as string].value as string
         const second = b[sortDescriptor.column as string].value as string
+        const isEmptyFirst = first === "" || first == null;
+        const isEmptySecond = second === "" || second == null;
+        if (isEmptyFirst && !isEmptySecond) return 1
+        if (!isEmptyFirst && isEmptySecond) return -1
+        if (isEmptyFirst && isEmptySecond) return 0
         const cmp = first < second ? -1 : first > second ? 1 : 0
 
         return sortDescriptor.direction === 'descending' ? -cmp : cmp
@@ -118,12 +122,14 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, dire
     const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(prefixedUri, '')}</span>
     return (
       <>
-        <div>
+        <div className="flex items-center">
           <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
             <span className={humanReadable()}>{getReadablePredicate(prefixedUri)}</span>
           </Tooltip>
           &nbsp;•&nbsp;
           {n}
+          &nbsp;
+          <YasguiButton query={query} />
         </div>
         <div className='flex items-center'>
           <Input
@@ -199,7 +205,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, dire
           radius="none"
         >
           <TableHeader>
-            {/* <TableColumn key='internal_id' allowsSorting>Id</TableColumn> */}
+            <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant projet</TableColumn>
             <TableColumn key='label' allowsSorting>Label</TableColumn>
           </TableHeader>
           <TableBody items={items}>
@@ -207,7 +213,9 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, dire
               key={item.linked_resource.value}
               className="hover:bg-row_hover"
             >
-              {/* <TableCell>{item.internal_id?.value}</TableCell> */}
+              <TableCell className='py-0 font-serif align-top'>
+                {item.business_id.value}
+              </TableCell>
               <TableCell className='py-0 font-serif align-top'>
                 {item.label.value}
               </TableCell>
