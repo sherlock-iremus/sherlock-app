@@ -8,6 +8,7 @@ import { IdentityData } from '../../utils/bindings_helpers';
 export type MediaRepresentation = {
   title: string
   icon: ReactElement
+  fileUri: string
   forgeFileUri: string
   component: ReactElement
 };
@@ -25,6 +26,7 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
   if (teiFileUri && forgeFileUri) return {
     title: 'Rendu du contenu TEI',
     icon: <LuCodeXml />,
+    fileUri: teiFileUri,
     forgeFileUri: forgeFileUri,
     component: <div className={'tei' + (projectId ? ` ${projectId}` : '')}>
       <TEIHTMLRenderer

@@ -1,19 +1,20 @@
 // TODO MEDIA REPRESENTATION
 // TODO PREDICATS SORTANTS LOW FAN
 
+import LinkButton from '@/components/LinkButton'
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
+import { BsFiletypeXml } from "react-icons/bs"
 import { FaIdCard, FaPenNib } from 'react-icons/fa'
 import { GiHerbsBundle } from "react-icons/gi"
-import { PiGraphDuotone } from 'react-icons/pi'
+import { PiGitBranchDuotone, PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
-import { guessMediaRepresentation, MediaRepresentation, sortBindingsFn } from './helpers'
-import { makeH2 } from './markupHelpers'
+import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import HighFanOutPredicate from './HighFanOutPredicate'
-import { Link } from '@heroui/react'
+import { makeH2 } from './markupHelpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TYPES
@@ -88,7 +89,15 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         />
 
         {mediaRepresentation && <>
-          {makeH2(mediaRepresentation.title, mediaRepresentation.icon, '', <Link href={mediaRepresentation.forgeFileUri}>{mediaRepresentation.forgeFileUri}</Link>)}
+          {makeH2(
+            mediaRepresentation.title,
+            mediaRepresentation.icon,
+            '',
+            <>
+              <LinkButton content='URI du fichier TEI dans sa forge' href={mediaRepresentation.forgeFileUri} icon={<PiGitBranchDuotone />} />
+              <LinkButton content='URI du fichier TEI' href={mediaRepresentation.fileUri} icon={<BsFiletypeXml />} />
+            </>
+          )}
           <div className='flex justify-center p-11 w-full text-center'>
             {mediaRepresentation.component}
           </div>
