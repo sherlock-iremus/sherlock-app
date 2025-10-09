@@ -1,16 +1,17 @@
 import YasguiButton from '@/components/YasguiButton'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { tv } from 'tailwind-variants'
 
 const h2 = tv({
     base: 'font-light mb-6 mt-12 not-first:mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
 })
 
-export function makeH2(title: string, icon: React.ReactElement, sparqlQuery?: string): React.ReactElement {
+export function makeH2(title: string, icon: React.ReactElement, sparqlQuery?: string, link?: ReactElement): React.ReactElement {
     return <h2 className={h2()}>
         {icon}
         {title}
         {sparqlQuery && <YasguiButton query={sparqlQuery} />}
+        {link && link}
     </h2>
 }
 

@@ -10,9 +10,10 @@ import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
 import DarkPart from './DarkPart'
-import { sortBindingsFn } from './helpers'
+import { guessMediaRepresentation, MediaRepresentation, sortBindingsFn } from './helpers'
 import { makeH2 } from './markupHelpers'
 import HighFanOutPredicate from './HighFanOutPredicate'
+import { Link } from '@heroui/react'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TYPES
@@ -48,8 +49,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   }
 
   // Media representation
-  // console.log(projectId) // TODO 
-  // const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
+  const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
   // Outgoing predicates :: count
   const { data: data__countObjectsOfOutgoingPredicates, query: query__countObjectsOfOutgoingPredicates } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
@@ -87,12 +87,12 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           bindings={data__resourceIdentity?.results.bindings || []}
         />
 
-        {/* {mediaRepresentation && <>
-          <PredicateSectionTitle direction={null} icon={mediaRepresentation[1]} title={mediaRepresentation[0]} prefixedUri={null} sparqlQuery={null} link={mediaRepresentation[2]} n={null} />
+        {mediaRepresentation && <>
+          {makeH2(mediaRepresentation.title, mediaRepresentation.icon, '', <Link href={mediaRepresentation.forgeFileUri}>{mediaRepresentation.forgeFileUri}</Link>)}
           <div className='flex justify-center p-11 w-full text-center'>
-            {mediaRepresentation[3]}
+            {mediaRepresentation.component}
           </div>
-        </>} */}
+        </>}
 
         {/* {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
           <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={''} n={null} />
