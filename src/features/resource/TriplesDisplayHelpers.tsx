@@ -43,6 +43,7 @@ export function getReadableClass(pu: PrefixedUri): string {
       switch (pu.localPart) {
         case 'E7_Activity': return 'Activité'
         case 'E21_Person': return 'Personne'
+        case 'E35_Title': return 'Titre'
         case 'E41_Appellation': return 'Appellation'
         case 'E42_Identifier': return 'Identifiant'
         case 'E55_Type': return 'Type'

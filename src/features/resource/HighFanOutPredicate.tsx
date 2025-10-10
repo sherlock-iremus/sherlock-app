@@ -37,6 +37,8 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
     if (hasSearchFilter) {
       _ = _.filter(binding =>
         binding.label.value.toLowerCase().includes(filterValue.toLowerCase())
+        ||
+        binding.business_id.value.toLowerCase().includes(filterValue.toLowerCase())
       )
     }
 
