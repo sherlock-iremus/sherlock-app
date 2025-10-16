@@ -64,7 +64,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
     if (x.lr.type == 'literal') literalObjectsOfLowFanOutgoingPredicatesBindings.push(x)
     else nonLiteralObjectsOfLowFanOutgoingPredicatesBindings.push(x)
   })
-  console.log(literalObjectsOfLowFanOutgoingPredicatesBindings)
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralObjectsOfLowFanOutgoingPredicatesBindings)
 
   // .1 Properties

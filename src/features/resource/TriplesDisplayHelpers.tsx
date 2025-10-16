@@ -1,5 +1,5 @@
 import Link from '@/components/Link'
-import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
+import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE, LRMOO_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, textSize: string = '') {
   return (
@@ -50,6 +50,12 @@ export function getReadableClass(pu: PrefixedUri): string {
         case 'E65_Creation': return 'Événement de création'
         case 'E73_Information_Object': return 'Objet informationnel'
       }
+      break
+    case RDF_PREFIXES.get(LRMOO_BASE):
+      switch (pu.localPart) {
+        case 'F2_Expression': return 'Expression'
+      }
+      break
   }
 
   return ''

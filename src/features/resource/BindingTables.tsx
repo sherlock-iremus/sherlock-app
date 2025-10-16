@@ -236,6 +236,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         hideHeader={true}
         isCompact={true}
         radius='none'
+        removeWrapper={true}
     >
         <TableHeader>
             <TableColumn>lr</TableColumn>
