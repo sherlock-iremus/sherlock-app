@@ -83,20 +83,20 @@ function makeLabel(v: SparqlQueryResultObject_Variable) {
     )
 }
 
+function displayClassOrProperty(x: string): JSX.Element {
+    const pu = makePrefixedUri(x)
+    const humanReadablePredicate = getReadablePredicate(pu)
+    const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
+
+    return humanReadablePredicate
+        ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
+            <span className={humanReadable()}>{humanReadablePredicate}</span>
+        </Tooltip>
+        : rdfPredicate
+}
+
 function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     const x: RowData = { key: i.toString() }
-
-    function processPredicate(predicate: string) {
-        const pu = makePrefixedUri(predicate)
-        const humanReadablePredicate = getReadablePredicate(pu)
-        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
-
-        return humanReadablePredicate
-            ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-                <span className={humanReadable()}>{humanReadablePredicate}</span>
-            </Tooltip>
-            : rdfPredicate
-    }
 
     function processClass(className: string) {
         const pu = makePrefixedUri(className)
@@ -137,7 +137,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
 
     // Aspects liés au prédicat
     if (binding['p']) {
-        x.p = processPredicate(binding['p'].value)
+        x.p = displayClassOrProperty(binding['p'].value)
     }
 
     // Cas d'une propriété .1
@@ -152,7 +152,7 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     }
     // Cas d'un binding identité d'une ressource liée à la ressource consultée
     else if (binding['lp'] && binding['lr']) {
-        x.p = processPredicate(binding['p'].value)
+        x.p = displayClassOrProperty(binding['p'].value)
         processV()
     }
     // Cas d'un binding identité de la ressource consultée
@@ -212,7 +212,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <>
                 <TableRow>
-                    <TableCell className={uriData()}>{makeNonClickablePrefixedUri(makePrefixedUri(linkingPredicate), textSize)}</TableCell>
+                    <TableCell className={uriData()}>{displayClassOrProperty(linkingPredicate)}</TableCell>
                     <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</TableCell>
                 </TableRow>
                 <TableRow className='border-b border-b-data_table_line last:border-none'>

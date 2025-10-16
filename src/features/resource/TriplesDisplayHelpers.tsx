@@ -47,6 +47,7 @@ export function getReadableClass(pu: PrefixedUri): string {
         case 'E41_Appellation': return 'Appellation'
         case 'E42_Identifier': return 'Identifiant'
         case 'E55_Type': return 'Type'
+        case 'E65_Creation': return 'Événement de création'
         case 'E73_Information_Object': return 'Objet informationnel'
       }
   }
@@ -60,6 +61,8 @@ export function getReadablePredicate(pu: PrefixedUri): string {
       switch (pu.localPart) {
         case 'P1_is_identified_by': return 'a pour identifiant'
         case 'P2_has_type': return 'a pour type'
+        case 'P9_consists_of': return 'comprend'
+        case 'P9i_forms_part_of': return 'fait partie de'
         case 'P71_lists': return 'liste'
         case 'P190_has_symbolic_content': return 'a pour contenu symbolique'
         case 'P102_has_title': return 'a pour titre'

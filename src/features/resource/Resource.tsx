@@ -64,6 +64,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
     if (x.lr.type == 'literal') literalObjectsOfLowFanOutgoingPredicatesBindings.push(x)
     else nonLiteralObjectsOfLowFanOutgoingPredicatesBindings.push(x)
   })
+  console.log(literalObjectsOfLowFanOutgoingPredicatesBindings)
   let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(nonLiteralObjectsOfLowFanOutgoingPredicatesBindings)
 
   // .1 Properties
@@ -103,13 +104,10 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           </div>
         </>}
 
-        {/* {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
-          <PredicateSectionTitle direction={null} link={null} icon={null} title='propriétés' prefixedUri={null} sparqlQuery={''} n={null} />
-          <div className='px-6 py-6'>
-            <POTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
-          </div>
-        </>
-        } */}
+        {literalObjectsOfLowFanOutgoingPredicatesBindings.length > 0 && <>
+          {makeH2('Propriétés', <FaIdCard />, query__objectsOfLowFanOutgoingPredicatesData)}
+          <BindingsTable bindings={literalObjectsOfLowFanOutgoingPredicatesBindings.map(x => ({ label: x.lr, p: x.lp }))} />
+        </>}
 
         {dotOnePropertiesBindings.length > 0 && <>
           {makeH2('Propriétés', <FaPenNib />, query__dotOneProperties)}
