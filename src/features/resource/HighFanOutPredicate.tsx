@@ -207,7 +207,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
           radius="none"
         >
           <TableHeader>
-            <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant projet</TableColumn>
+            <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant</TableColumn>
             <TableColumn key='label' allowsSorting>Label</TableColumn>
           </TableHeader>
           <TableBody items={items}>

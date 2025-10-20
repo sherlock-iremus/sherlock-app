@@ -18,16 +18,12 @@ export default function () {
 
     return (
         <>
-            {x.code && <>
-                <ProjectHeader
-                    code={x.code}
-                    logo={x.logo}
-                    name={x.name}
-                    uuid={x.uuid}
-                />
-
-            </>
-            }
+            {x.code && <ProjectHeader
+                code={x.code}
+                logo={x.logo}
+                name={x.name}
+                uuid={x.uuid}
+            />}
             <SherlockBar />
             <div className='bg-background px-6 py-4 text-foreground dark'>
                 <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>

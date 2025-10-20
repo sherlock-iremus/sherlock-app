@@ -1,6 +1,3 @@
-// TODO MEDIA REPRESENTATION
-// TODO PREDICATS SORTANTS LOW FAN
-
 import LinkButton from '@/components/LinkButton'
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
@@ -127,7 +124,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
         {Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0 && (
           <>
-            {makeH2('Ressources pointées', <PiGraphDuotone />, query__objectsOfLowFanOutgoingPredicatesData)}
+            {makeH2('Ressources liées', <PiGraphDuotone />, query__objectsOfLowFanOutgoingPredicatesData)}
             <LinkedResourcesBindingsTable bindings={nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR} />
           </>
         )}

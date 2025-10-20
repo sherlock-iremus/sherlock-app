@@ -11,7 +11,7 @@ import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sher
 // import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
 
-const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
+export const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
         enabled: !!somethingTruthyToEnable,
         queryKey,
@@ -112,16 +112,6 @@ export const useResourceIdentityLightQuery = (resourceUri: string, predicateUri:
     const x = baseSherlockUseSparqlQuery(true, ['identity-light', resourceUri, predicateUri], query)
     return { query, ...x }
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CUSTOM
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const useMGLivraisonsQuery = (query: string) =>
-    baseSherlockUseSparqlQuery(true, ['mg-livraisons'], query)
-
-export const useMGLivraisonQuery = (query: string, livraisonBusinessId: string) =>
-    baseSherlockUseSparqlQuery(true, ['mg-livraison', livraisonBusinessId], query)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // BASE

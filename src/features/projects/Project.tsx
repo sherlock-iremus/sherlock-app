@@ -81,7 +81,7 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                 >
                     <TableHeader>
                         <TableColumn>Nom</TableColumn>
-                        <TableColumn>Types</TableColumn>
+                        {/* <TableColumn>Types</TableColumn> */}
                         <TableColumn>Lien</TableColumn>
                     </TableHeader>
                     <TableBody>
@@ -89,9 +89,9 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                             <TableCell className='font-serif'>
                                 {(_.p1_literal as SparqlQueryResultObject_Variable)?.value}
                             </TableCell>
-                            <TableCell className='font-mono text-texte_annexe text-xs'>
+                            {/* <TableCell className='font-mono text-texte_annexe text-xs'>
                                 {(_.file_type_label as SparqlQueryResultObject_Variable[]).map(_ => _.value).join(', ')}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell>
                                 <Link className='text-sm' href={(_.file_uri as SparqlQueryResultObject_Variable).value} target='_blank'>
                                     {(_.file_uri as SparqlQueryResultObject_Variable).value.split('/').slice(-1)}

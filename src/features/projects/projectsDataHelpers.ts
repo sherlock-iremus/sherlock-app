@@ -1,3 +1,4 @@
+import { Location } from 'react-router-dom'
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 
 export interface ProjectData {
@@ -20,4 +21,9 @@ export function extractProjectData(data_project?: SparqlQueryResultObject): Proj
     x.name = data_project?.results.bindings[0]['project_name']['value']
     x.uuid = data_project?.results.bindings[0]['project_uuid']['value']
     return x
+}
+
+export function getProjecCodeFromLocation(location: Location): string {
+    const pathnameParts = location.pathname.split('/').filter(_ => _)
+    return pathnameParts[0] == 'projects' ? pathnameParts[1] : ''
 }

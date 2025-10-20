@@ -4,6 +4,7 @@ import { HeroUIProvider } from "@heroui/react"
 import type { NavigateOptions } from 'react-router-dom'
 import { Route, Routes, useHref, useNavigate } from 'react-router-dom'
 import Project from '@/features/projects/Project'
+import Livraisons from '@/specific-features/mercure-galant/Livraisons'
 
 declare module '@react-types/shared' {
   interface RouterConfig {
@@ -21,6 +22,8 @@ export default function App() {
           <Route path='/' element={<ResourceRouter />} />
           <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
           <Route path='/projects/:projectCode' element={<Project searchEngine />} />
+
+          <Route path='/projects/mg-tei/livraisons' element={<Livraisons />} />
         </Route>
       </Routes>
     </HeroUIProvider>
@@ -29,6 +32,5 @@ export default function App() {
 // <Route path='/p/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/ />} />
 // <Route path='/p/euterpe' element={<Project searchEngine />} />
 // <Route path='/p/mercure-galant' element={<Project />} />
-// <Route path='/p/mercure-galant/livraisons' element={<MercureGalantLivraisons />} />
 // <Route path='/p/mercure-galant/livraison/:livraison' element={<MercureGalantLivraison />} />
 // <Route path='/p/mercure-galant/article/:article' element={<MercureGalantArticle />} />
