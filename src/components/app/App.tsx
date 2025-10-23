@@ -1,11 +1,11 @@
-import Root from '@/features/app/Root'
-import ResourceRouter from '@/features/resource/ResourceRouter'
+import Root from '@/components/app/Root'
+import ResourceRouter from '@/components/resource/ResourceRouter'
+import Project from '@/components/projects/Project'
+import Livraison from '@/specific-features/mercure-galant/Livraison'
+import Livraisons from '@/specific-features/mercure-galant/Livraisons'
 import { HeroUIProvider } from "@heroui/react"
 import type { NavigateOptions } from 'react-router-dom'
 import { Route, Routes, useHref, useNavigate } from 'react-router-dom'
-import Project from '@/features/projects/Project'
-import Livraisons from '@/specific-features/mercure-galant/Livraisons'
-import Livraison from '@/specific-features/mercure-galant/Livraison'
 
 declare module '@react-types/shared' {
   interface RouterConfig {

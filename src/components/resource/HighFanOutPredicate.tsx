@@ -1,4 +1,4 @@
-import YasguiButton from "@/components/YasguiButton"
+import YasguiButton from "@/components/buttons-and-links/YasguiButton"
 import { useListLinkedResources } from "@/hooks/sherlockSparql"
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { Tooltip } from '@heroui/tooltip'

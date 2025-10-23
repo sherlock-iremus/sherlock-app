@@ -1,4 +1,4 @@
-import Link from '@/components/Link'
+import Link from '@/components/buttons-and-links/Link'
 import React from 'react'
 import { projectLogo, projectName } from './markupHelpers';
 

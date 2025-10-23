@@ -1,10 +1,10 @@
+import ClipboardButton from '@/components/buttons-and-links/ClipboardButton'
+import SherlockBar from '@/components/deco/SherlockBar'
+import { extractProjectData } from '@/components/projects/projectsDataHelpers'
 import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
 import { useParams, useSearchParams } from 'react-router-dom'
 import ProjectHeader from './ProjectHeader'
 import Resource from './Resource'
-import SherlockBar from '@/components/SherlockBar'
-import ClipboardButton from '@/components/ClipboardButton'
-import { extractProjectData } from '@/features/projects/projectsDataHelpers'
 
 export default function () {
     const { resourceUUID } = useParams()

@@ -1,5 +1,5 @@
-import { makeNonClickablePrefixedUri } from '@/features/resource/TriplesDisplayHelpers';
-import { groupByFields } from '@/utils/bindings_helpers';
+import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
+import { groupByFields } from '@/utils/bindingsHelpers';
 import React, { useMemo } from 'react';
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';

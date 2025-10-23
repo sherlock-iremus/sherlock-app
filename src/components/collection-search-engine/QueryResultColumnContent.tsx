@@ -1,12 +1,12 @@
-import Link from '@/components/Link';
-import { DISPLAY_E13_TOOLTIP } from '@/features/resource/CollectionSearchEngine';
-import { groupByFields } from '@/utils/bindings_helpers';
+import Link from '@/components/buttons-and-links/Link';
+import { DISPLAY_E13_TOOLTIP } from '@/components/resource/CollectionSearchEngine';
+import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
+import { groupByFields } from '@/utils/bindingsHelpers';
 import { Tooltip } from '@heroui/react';
 import React, { JSX, useMemo } from 'react';
 import { PiLinkDuotone } from 'react-icons/pi';
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
-import { makeNonClickablePrefixedUri } from '../../features/resource/TriplesDisplayHelpers';
 
 interface QueryResultColumnContentProps {
     bindingsOfSameItem: SparqlQueryResultObject_Binding[];

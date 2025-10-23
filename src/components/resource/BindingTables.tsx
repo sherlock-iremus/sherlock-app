@@ -1,5 +1,5 @@
-import Link from '@/components/Link'
-import { LRLPIndexedBindings } from '@/utils/bindings_helpers'
+import Link from '@/components/buttons-and-links/Link'
+import { LRLPIndexedBindings } from '@/utils/bindingsHelpers'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@heroui/table'
 import { Tooltip } from '@heroui/tooltip'
 import React, { JSX } from 'react'

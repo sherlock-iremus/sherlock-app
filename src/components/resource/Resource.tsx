@@ -1,6 +1,6 @@
-import LinkButton from '@/components/LinkButton'
+import LinkButton from '@/components/buttons-and-links/LinkButton'
 import { useCountObjectsOfOutgoingPredicatesQuery, useDotOnePropertiesQuery, useE13WithLiteralP141Query, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
-import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindings_helpers'
+import { IdentityData, extractDataFromIdentityBindings, extractDataFromOutgoingPredicatesCountSparqlQueryResult, groupByLPLR } from '@/utils/bindingsHelpers'
 import { BsFiletypeXml } from "react-icons/bs"
 import { FaIdCard, FaPenNib } from 'react-icons/fa'
 import { GiHerbsBundle } from "react-icons/gi"
@@ -8,7 +8,6 @@ import { PiGitBranchDuotone, PiGraphDuotone } from 'react-icons/pi'
 import { E55_BUSINESS_ID } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import { BindingsTable, LinkedResourcesBindingsTable } from './BindingTables'
-import DarkPart from './DarkPart'
 import { guessMediaRepresentation, sortBindingsFn } from './helpers'
 import HighFanOutPredicate from './HighFanOutPredicate'
 import { makeH2 } from './markupHelpers'

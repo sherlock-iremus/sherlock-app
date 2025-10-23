@@ -1,6 +1,6 @@
-import SherlockBar from '@/components/SherlockBar'
+import SherlockBar from '@/components/deco/SherlockBar'
 import SherlockLogo from './SherlockLogo'
-import Link from '@/components/Link'
+import Link from '@/components/buttons-and-links/Link'
 
 const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 

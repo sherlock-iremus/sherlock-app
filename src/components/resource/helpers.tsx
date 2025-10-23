@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { LuCodeXml } from 'react-icons/lu';
 import { E55_FORGE_FILE_URI, E55_TEI_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
-import { IdentityData } from '../../utils/bindings_helpers';
+import { IdentityData } from '../../utils/bindingsHelpers';
 
 export type MediaRepresentation = {
   title: string
