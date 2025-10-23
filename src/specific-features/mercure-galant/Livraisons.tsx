@@ -26,8 +26,8 @@ export default function () {
             />}
             <SherlockBar />
         </>
-        <div className='bg-background px-6 pb-6 text-foreground light'>
-            {makeH2(`Liste des ${isSuccess && data.results.bindings.length} livraisons`, <PiBooksDuotone />, query)}
+        <div className='bg-background p-6 text-foreground light'>
+            {data?.results.bindings.length && makeH2(`Liste des ${data?.results.bindings.length} livraisons`, <PiBooksDuotone />, query)}
             {!isSuccess ? '⏳' :
                 <>
                     <Table aria-label="Livraisons du Mercure Galant" radius='none' className='font-serif'>
@@ -40,7 +40,7 @@ export default function () {
                         </TableHeader>
                         <TableBody items={data?.results.bindings}>
                             {(item) => {
-                                const link = '/projects/' + projectCode + '/livraison/' + item['livraison_business_id'].value
+                                const link = 'projects/' + projectCode + '/livraison/' + item['livraison_business_id'].value
                                 return <TableRow
                                     className='hover:bg-gray-100'
                                     key={item['livraison_business_id'].value}>

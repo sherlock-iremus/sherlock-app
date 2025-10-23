@@ -48,11 +48,20 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
 
     // TODO Antoine
     const { data: data__projectsAndCollections } = useGetProjectsAndCollections(projectCode)
-    const projectGraphUri = data__projectsAndCollections?.results.bindings[0].graph_uri.value
-    const collections = data__projectsAndCollections?.results.bindings.map(row => ({
-        collectionName: row.collection_name.value,
-        collectionUri: row.collection.value,
-    }))
+    const projectGraphUri = (() => {
+        try {
+            return data__projectsAndCollections?.results.bindings[0].graph_uri.value
+        } catch { return '' }
+    })()
+
+    const collections = (() => {
+        try {
+            data__projectsAndCollections?.results.bindings.map(row => ({
+                collectionName: row.collection_name.value,
+                collectionUri: row.collection.value
+            }))
+        } catch { return null }
+    })()
 
     // <>
     return <div>
@@ -81,7 +90,6 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                 >
                     <TableHeader>
                         <TableColumn>Nom</TableColumn>
-                        {/* <TableColumn>Types</TableColumn> */}
                         <TableColumn>Lien</TableColumn>
                     </TableHeader>
                     <TableBody>
@@ -89,9 +97,6 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                             <TableCell className='font-serif'>
                                 {(_.p1_literal as SparqlQueryResultObject_Variable)?.value}
                             </TableCell>
-                            {/* <TableCell className='font-mono text-texte_annexe text-xs'>
-                                {(_.file_type_label as SparqlQueryResultObject_Variable[]).map(_ => _.value).join(', ')}
-                            </TableCell> */}
                             <TableCell>
                                 <Link className='text-sm' href={(_.file_uri as SparqlQueryResultObject_Variable).value} target='_blank'>
                                     {(_.file_uri as SparqlQueryResultObject_Variable).value.split('/').slice(-1)}
