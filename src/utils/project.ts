@@ -1,7 +1,7 @@
 import { Location } from 'react-router-dom'
 import { SparqlQueryResultObject } from 'sherlock-rdf/lib/sparql-result'
 
-export interface ProjectData {
+export interface ProjectId {
     code?: string,
     emoticon?: string,
     logo?: string,
@@ -9,8 +9,8 @@ export interface ProjectData {
     uuid?: string,
 }
 
-export function extractProjectData(data_project?: SparqlQueryResultObject): ProjectData {
-    const x: ProjectData = {
+export function extractProjectData(data_project?: SparqlQueryResultObject): ProjectId {
+    const x: ProjectId = {
         code: '',
         emoticon: '',
         logo: '',

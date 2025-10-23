@@ -1,9 +1,9 @@
 import SherlockBar from '@/components/deco/SherlockBar'
-import { extractProjectData, getProjecCodeFromLocation } from '@/components/projects/projectsDataHelpers'
 import { makeH2 } from '@/components/zzz/markupHelpers'
 import ProjectHeader from '@/components/zzz/ProjectHeader'
 import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
 import { useLivraisonQuery } from '@/specific-features/mercure-galant/hooks_sparql'
+import { extractProjectData, getProjecCodeFromLocation } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { PiNotebookDuotone } from "react-icons/pi"
 import { useLocation, useParams } from 'react-router-dom'

@@ -1,7 +1,7 @@
 import ClipboardButton from '@/components/buttons-and-links/ClipboardButton'
 import SherlockBar from '@/components/deco/SherlockBar'
-import { extractProjectData } from '@/components/projects/projectsDataHelpers'
 import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
+import { extractProjectData } from '@/utils/project'
 import { useParams, useSearchParams } from 'react-router-dom'
 import ProjectHeader from './ProjectHeader'
 import Resource from './Resource'
@@ -20,6 +20,7 @@ export default function () {
         <>
             {x.code && <ProjectHeader
                 code={x.code}
+                emoticon={x.emoticon}
                 logo={x.logo}
                 name={x.name}
                 uuid={x.uuid}

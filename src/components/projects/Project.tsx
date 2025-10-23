@@ -2,6 +2,7 @@ import Link from '@/components/buttons-and-links/Link'
 import SherlockBar from '@/components/deco/SherlockBar'
 import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'
 import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql'
+import { extractProjectData } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/table'
 import { FaIdCard } from 'react-icons/fa'
 import { IoDocumentAttachOutline } from 'react-icons/io5'
@@ -11,7 +12,6 @@ import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixe
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
 import { makeH2, projectLogo, projectName } from '../zzz/markupHelpers'
-import { extractProjectData } from './projectsDataHelpers'
 
 interface ProjectProps {
     searchEngine?: boolean

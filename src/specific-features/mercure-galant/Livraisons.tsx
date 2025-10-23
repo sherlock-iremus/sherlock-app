@@ -1,10 +1,10 @@
 import Link from '@/components/buttons-and-links/Link'
 import SherlockBar from '@/components/deco/SherlockBar'
-import { extractProjectData, getProjecCodeFromLocation } from '@/components/projects/projectsDataHelpers'
 import { makeH2 } from '@/components/zzz/markupHelpers'
 import ProjectHeader from '@/components/zzz/ProjectHeader'
 import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
 import { useLivraisonsQuery } from '@/specific-features/mercure-galant/hooks_sparql'
+import { extractProjectData, getProjecCodeFromLocation } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { PiBooksDuotone } from "react-icons/pi"
 import { useLocation } from 'react-router-dom'

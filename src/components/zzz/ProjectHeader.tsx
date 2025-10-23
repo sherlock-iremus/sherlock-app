@@ -1,15 +1,9 @@
 import Link from '@/components/buttons-and-links/Link'
 import React from 'react'
 import { projectLogo, projectName } from './markupHelpers';
+import { ProjectId } from '@/utils/project';
 
-interface Props {
-    code?: string;
-    logo?: string;
-    name?: string;
-    uuid?: string;
-}
-
-const ProjectHeader: React.FC<Props> = ({ code, logo, name }) =>
+const ProjectHeader: React.FC<ProjectId> = ({ code, logo, name }) =>
     <div className='flex gap-6 bg-background p-6 text-foreground light'>
         {logo && projectLogo(logo)}
         <div className='flex flex-col justify-end items-start'>
