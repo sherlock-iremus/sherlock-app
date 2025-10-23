@@ -8,7 +8,6 @@ import { identity } from 'sherlock-sparql-queries/lib/identity'
 import { listLinkedResources } from 'sherlock-sparql-queries/lib/listLinkedResources'
 import { identityIncomingLight, identityLight } from 'sherlock-sparql-queries/lib/identityLight'
 import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
-// import { countIncomingPredicates } from 'sherlock-sparql-queries/lib/countLinkingPredicates'
 import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
 
 export const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
@@ -41,9 +40,9 @@ export const useGetProjectByResourceUriQuery = (resourceURI: string) => {
     return { query, ...x }
 }
 
-export const useGetProjectByCodeQuery = (code: string) => {
-    const query = getProjectByCode(code)
-    const x = baseSherlockUseSparqlQuery(true, ['project', code], query)
+export const useGetProjectByCodeQuery = (projectCode: string) => {
+    const query = getProjectByCode(projectCode)
+    const x = baseSherlockUseSparqlQuery(true, ['project', projectCode], query)
     return { query, ...x }
 }
 
@@ -101,9 +100,6 @@ export const useListLinkedResources = (r: string, p: string) => {
     const x = baseSherlockUseSparqlQuery(true, ['linked-resources', r, p], query)
     return { query, ...x }
 }
-
-export const useGetResourceByUrlFragmentQuery = (query: string, businessId: string) =>
-    baseSherlockUseSparqlQuery(true, ['resource-by-url-fragment', businessId], query)
 
 export const useResourceIdentityLightQuery = (resourceUri: string, predicateUri: string, direction: LinkedResourcesDirectionEnum) => {
     let query: string = ''

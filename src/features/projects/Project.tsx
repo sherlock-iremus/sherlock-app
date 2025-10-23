@@ -79,33 +79,36 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                 <MarkdownFromUrl url={overviewFileUri} />
             </div>}
 
-            {makeH2('Fichiers', <IoDocumentAttachOutline />, query__projectFiles)}
-            <div>
-                <Table
-                    aria-label='Project files'
-                    hideHeader={false}
-                    isCompact={true}
-                    radius='none'
-                    removeWrapper={false}
-                >
-                    <TableHeader>
-                        <TableColumn>Nom</TableColumn>
-                        <TableColumn>Lien</TableColumn>
-                    </TableHeader>
-                    <TableBody>
-                        {(projectFilesData || []).map(_ => <TableRow>
-                            <TableCell className='font-serif'>
-                                {(_.p1_literal as SparqlQueryResultObject_Variable)?.value}
-                            </TableCell>
-                            <TableCell>
-                                <Link className='text-sm' href={(_.file_uri as SparqlQueryResultObject_Variable).value} target='_blank'>
-                                    {(_.file_uri as SparqlQueryResultObject_Variable).value.split('/').slice(-1)}
-                                </Link>
-                            </TableCell>
-                        </TableRow>)}
-                    </TableBody>
-                </Table>
-            </div>
+            {projectFilesData.length > 0 && <>
+                {makeH2('Fichiers', <IoDocumentAttachOutline />, query__projectFiles)}
+                <div>
+                    <Table
+                        aria-label='Project files'
+                        hideHeader={false}
+                        isCompact={true}
+                        radius='none'
+                        removeWrapper={false}
+                    >
+                        <TableHeader>
+                            <TableColumn>Nom</TableColumn>
+                            <TableColumn>Lien</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                            {(projectFilesData || []).map(_ => <TableRow>
+                                <TableCell className='font-serif'>
+                                    {(_.p1_literal as SparqlQueryResultObject_Variable)?.value}
+                                </TableCell>
+                                <TableCell>
+                                    <Link className='text-sm' href={(_.file_uri as SparqlQueryResultObject_Variable).value} target='_blank'>
+                                        {(_.file_uri as SparqlQueryResultObject_Variable).value.split('/').slice(-1)}
+                                    </Link>
+                                </TableCell>
+                            </TableRow>)}
+                        </TableBody>
+                    </Table>
+                </div>
+            </>
+            }
 
             {makeH2('Données', <PiGraphDuotone />)}
             {searchEngine && projectCode && collections && projectGraphUri && <CollectionSearchEngine

@@ -20,5 +20,5 @@ export function projectName(name: string): React.ReactElement {
 }
 
 export function projectLogo(logo: string): React.ReactElement {
-    return <img className='max-h-[111px]' src={logo} />
+    return logo ? <img className='max-h-[111px]' src={logo} /> : <></>
 }
