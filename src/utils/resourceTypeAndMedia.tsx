@@ -1,8 +1,8 @@
-import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer';
-import { IdentityData } from '@/utils/bindingsHelpers';
-import { ReactElement } from 'react';
-import { LuCodeXml } from 'react-icons/lu';
-import { E55_FORGE_FILE_URI, E55_TEI_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
+import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer'
+import { IdentityData } from '@/utils/bindingsHelpers'
+import { ReactElement } from 'react'
+import { LuCodeXml } from 'react-icons/lu'
+import { E55_FORGE_FILE_URI, E55_TEI_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export enum ResourceType {
   Project,
@@ -17,7 +17,7 @@ export type MediaRepresentation = {
   fileUri: string
   forgeFileUri: string
   component: ReactElement
-};
+}
 
 export function guessMediaRepresentation(idData: IdentityData, projectId: string | null): MediaRepresentation | undefined {
   let teiFileUri = null
