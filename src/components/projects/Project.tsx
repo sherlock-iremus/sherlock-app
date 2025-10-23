@@ -1,5 +1,6 @@
 import Link from '@/components/buttons-and-links/Link'
 import SherlockBar from '@/components/deco/SherlockBar'
+import { makeH2 } from '@/components/layout/markupHelpers'
 import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'
 import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql'
 import { extractProjectData } from '@/utils/project'
@@ -10,9 +11,8 @@ import { PiGraphDuotone } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
-import { makeH2, projectLogo, projectName } from '@/components/layout/markupHelpers'
 import ProjectHeader from '../layout/ProjectHeader'
+import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
 
 interface ProjectProps {
     searchEngine?: boolean
