@@ -1,9 +1,15 @@
 import { TEIHTMLRenderer } from '@/components/tei-html-renderer/TEIHTMLRenderer';
+import { IdentityData } from '@/utils/bindingsHelpers';
 import { ReactElement } from 'react';
 import { LuCodeXml } from 'react-icons/lu';
 import { E55_FORGE_FILE_URI, E55_TEI_FILE_URI } from 'sherlock-rdf/lib/rdf-prefixes';
-import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
-import { IdentityData } from '../../utils/bindingsHelpers';
+
+export enum ResourceType {
+  Project,
+  MEI,
+  TEI,
+  Picture,
+}
 
 export type MediaRepresentation = {
   title: string
@@ -37,12 +43,4 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
   }
 
   return undefined
-}
-
-export function sortBindingsFn(key: string): (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding) => number {
-  return function (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding): number {
-    if (a[key].value < b[key].value) return -1;
-    if (a[key].value > b[key].value) return 1;
-    return 0;
-  }
 }

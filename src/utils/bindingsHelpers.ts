@@ -130,3 +130,11 @@ export function groupByFields(
 
     return grouped
 }
+
+export function sortBindingsFn(key: string): (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding) => number {
+    return function (a: SparqlQueryResultObject_Binding, b: SparqlQueryResultObject_Binding): number {
+        if (a[key].value < b[key].value) return -1
+        if (a[key].value > b[key].value) return 1
+        return 0
+    }
+}
