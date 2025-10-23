@@ -1,5 +1,5 @@
 import Root from '@/components/app/Root'
-import ResourceRouter from '@/components/resource/ResourceRouter'
+import ResourceRouter from '@/components/zzz/ResourceRouter'
 import Project from '@/components/projects/Project'
 import Livraison from '@/specific-features/mercure-galant/Livraison'
 import Livraisons from '@/specific-features/mercure-galant/Livraisons'

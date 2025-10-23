@@ -1,6 +1,6 @@
 import Link from '@/components/buttons-and-links/Link';
-import { DISPLAY_E13_TOOLTIP } from '@/components/resource/CollectionSearchEngine';
-import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
+import { DISPLAY_E13_TOOLTIP } from '@/components/zzz/CollectionSearchEngine';
+import { makeNonClickablePrefixedUri } from '@/components/zzz/TriplesDisplayHelpers';
 import { groupByFields } from '@/utils/bindingsHelpers';
 import { Tooltip } from '@heroui/react';
 import React, { JSX, useMemo } from 'react';

@@ -1,4 +1,4 @@
-import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
+import { makeNonClickablePrefixedUri } from '@/components/zzz/TriplesDisplayHelpers';
 import { groupByFields } from '@/utils/bindingsHelpers';
 import React, { useMemo } from 'react';
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';

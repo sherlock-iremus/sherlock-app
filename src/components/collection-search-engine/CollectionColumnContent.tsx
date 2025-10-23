@@ -1,6 +1,6 @@
 import React from 'react';
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
-import { SingleCollectionProps } from '@/components/resource/CollectionSearchEngine';
+import { SingleCollectionProps } from '@/components/zzz/CollectionSearchEngine';
 
 interface CollectionColumnContentProps {
     bindingsOfSameItem: SparqlQueryResultObject_Binding[];

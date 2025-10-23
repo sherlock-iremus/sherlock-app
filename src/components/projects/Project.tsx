@@ -9,8 +9,8 @@ import { PiGraphDuotone } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import CollectionSearchEngine from '../../components/resource/CollectionSearchEngine'
-import { makeH2, projectLogo, projectName } from '../../components/resource/markupHelpers'
+import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
+import { makeH2, projectLogo, projectName } from '../zzz/markupHelpers'
 import { extractProjectData } from './projectsDataHelpers'
 
 interface ProjectProps {
