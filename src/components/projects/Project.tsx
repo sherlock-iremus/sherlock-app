@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
-import { makeH2, projectLogo, projectName } from '../zzz/markupHelpers'
+import { makeH2, projectLogo, projectName } from '@/components/layout/markupHelpers'
 
 interface ProjectProps {
     searchEngine?: boolean

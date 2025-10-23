@@ -3,8 +3,7 @@ import SherlockBar from '@/components/deco/SherlockBar'
 import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
 import { extractProjectData } from '@/utils/project'
 import { useParams, useSearchParams } from 'react-router-dom'
-import ProjectHeader from './ProjectHeader'
-import Resource from './Resource'
+import ProjectHeader from '@/components/layout/ProjectHeader'
 
 export default function () {
     const { resourceUUID } = useParams()
@@ -42,7 +41,8 @@ export default function () {
                 </div>
             </div>
             <SherlockBar />
-            <Resource resourceUri={resourceUri} />
+            🌀
+            {/* <Resource resourceUri={resourceUri} /> */}
         </>
     )
 }

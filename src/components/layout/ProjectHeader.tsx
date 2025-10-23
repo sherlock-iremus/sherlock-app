@@ -1,7 +1,7 @@
-import Link from '@/components/buttons-and-links/Link'
-import React from 'react'
-import { projectLogo, projectName } from './markupHelpers';
+import Link from '@/components/buttons-and-links/Link';
+import { projectLogo, projectName } from '@/components/layout/markupHelpers';
 import { ProjectId } from '@/utils/project';
+import React from 'react';
 
 const ProjectHeader: React.FC<ProjectId> = ({ code, logo, name }) =>
     <div className='flex gap-6 bg-background p-6 text-foreground light'>
