@@ -1,24 +1,17 @@
 import Link from '@/components/Link'
 import MarkdownFromUrl from '@/components/MarkdownFromUrl'
+import SherlockBar from '@/components/SherlockBar'
 import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql'
-import { PiGraphDuotone } from 'react-icons/pi'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow
-} from '@heroui/table'
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/table'
 import { FaIdCard } from 'react-icons/fa'
 import { IoDocumentAttachOutline } from 'react-icons/io5'
+import { PiGraphDuotone } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
+import CollectionSearchEngine from '../resource/CollectionSearchEngine'
 import { makeH2, projectLogo, projectName } from '../resource/markupHelpers'
 import { extractProjectData } from './projectsDataHelpers'
-import SherlockBar from '@/components/SherlockBar'
-import CollectionSearchEngine from '../resource/CollectionSearchEngine'
 
 interface ProjectProps {
     searchEngine?: boolean
@@ -30,6 +23,7 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     // Project data
     const { data: data__projectIdentity } = useGetProjectByCodeQuery(projectCode || '')
     const projectData = extractProjectData(data__projectIdentity)
+    console.log(projectData)
 
     // Project files data
     const { data: data__projectFiles, query: query__projectFiles } = useGetProjectsFilesQuery(projectData.uuid || '')

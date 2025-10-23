@@ -5,8 +5,8 @@ import { countOutgoingPredicates } from 'sherlock-sparql-queries/lib/countLinkin
 import { getDotOneProperties } from 'sherlock-sparql-queries/lib/dotOne'
 import { e13WithLiteralP141 } from 'sherlock-sparql-queries/lib/e13WithLiteralP141'
 import { identity } from 'sherlock-sparql-queries/lib/identity'
-import { listLinkedResources } from 'sherlock-sparql-queries/lib/listLinkedResources'
 import { identityIncomingLight, identityLight } from 'sherlock-sparql-queries/lib/identityLight'
+import { listLinkedResources } from 'sherlock-sparql-queries/lib/listLinkedResources'
 import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
 import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
 
