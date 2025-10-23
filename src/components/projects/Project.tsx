@@ -12,6 +12,7 @@ import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixe
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import CollectionSearchEngine from '../zzz/CollectionSearchEngine'
 import { makeH2, projectLogo, projectName } from '@/components/layout/markupHelpers'
+import ProjectHeader from '../layout/ProjectHeader'
 
 interface ProjectProps {
     searchEngine?: boolean
@@ -58,10 +59,13 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
 
     // <>
     return <div>
-        <div className='flex items-center gap-6 bg-background m-6 text-foreground light'>
-            {projectLogo(projectData.logo || '')}
-            {projectName(projectData.name + ' ' + projectData.emoticon || '')}
-        </div>
+        {projectData.code && <ProjectHeader
+            code={projectData.code}
+            emoticon={projectData.emoticon}
+            logo={projectData.logo}
+            name={projectData.name}
+            uuid={projectData.uuid}
+        />}
         <SherlockBar />
         <div className='px-6 pb-6'>
 
