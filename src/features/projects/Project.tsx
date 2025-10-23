@@ -23,7 +23,6 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     // Project data
     const { data: data__projectIdentity } = useGetProjectByCodeQuery(projectCode || '')
     const projectData = extractProjectData(data__projectIdentity)
-    console.log(projectData)
 
     // Project files data
     const { data: data__projectFiles, query: query__projectFiles } = useGetProjectsFilesQuery(projectData.uuid || '')
@@ -61,7 +60,7 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     return <div>
         <div className='flex items-center gap-6 bg-background m-6 text-foreground light'>
             {projectLogo(projectData.logo || '')}
-            {projectName(projectData.name || '')}
+            {projectName(projectData.name + ' ' + projectData.emoticon || '')}
         </div>
         <SherlockBar />
         <div className='px-6 pb-6'>

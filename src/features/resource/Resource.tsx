@@ -79,7 +79,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
 
   return (
     <>
-      <div className='bg-background px-6 text-foreground light'>
+      <div className='bg-background mb-6 px-6 text-foreground light'>
         {makeH2('Identité de la ressource', <FaIdCard />, query__resourceIdentity)}
         <BindingsTable
           bindings={data__resourceIdentity?.results.bindings || []}
@@ -140,8 +140,6 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
           )
         })}
       </div>
-      <div className='mt-18'></div>
-      <DarkPart resourceUri={resourceUri} />
     </>
   )
 }
