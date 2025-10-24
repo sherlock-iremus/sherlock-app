@@ -11,8 +11,8 @@ import { PiGraphDuotone } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
 import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import ProjectHeader from '../layout/ProjectHeader'
 import CollectionSearchEngine from '../collection-search-engine/CollectionSearchEngine'
+import ProjectHeader from '../layout/ProjectHeader'
 
 interface ProjectProps {
     searchEngine?: boolean

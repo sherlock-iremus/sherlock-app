@@ -8,6 +8,7 @@ import Identity from './parts/Identity'
 import LFOLR from './parts/LowFanOutgoingPredicatesLinkedResources'
 import LFO from './parts/LowFanOutgoingPredicatesLiteralObjects'
 import MediaRepresentation from './parts/MediaRepresentation'
+import Title from './parts/Title'
 
 interface Props {
   resourceUri: string
@@ -29,8 +30,9 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
   return (
     <>
       <div className='bg-background mb-6 px-6 text-foreground light'>
-        <Identity resourceIdentityBindings={dataId} resourceIdentityQuery={queryId} />
+        <Title idData={dataId} />
         <MediaRepresentation resourceIdentityBindings={dataId} />
+        <Identity resourceIdentityBindings={dataId} resourceIdentityQuery={queryId} />
         <Dotone resourceUri={resourceUri} />
         <E13 resourceUri={resourceUri} />
         <LFO bindings={literalObjectsOfLowFanOutgoingPredicatesBindings} query={query__objectsOfLowFanOutgoingPredicatesData} />
