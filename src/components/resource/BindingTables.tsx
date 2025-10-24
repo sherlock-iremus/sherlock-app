@@ -1,4 +1,5 @@
 import Link from '@/components/buttons-and-links/Link'
+import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
 import { LRLPIndexedBindings } from '@/utils/bindingsHelpers'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@heroui/table'
 import { Tooltip } from '@heroui/tooltip'
@@ -6,7 +7,6 @@ import React, { JSX } from 'react'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
-import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from './TriplesDisplayHelpers'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //

@@ -1,9 +1,10 @@
 import ClipboardButton from '@/components/buttons-and-links/ClipboardButton'
 import SherlockBar from '@/components/deco/SherlockBar'
+import ProjectHeader from '@/components/layout/ProjectHeader'
+import Resource from '@/components/resource/Resource'
 import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
 import { extractProjectData } from '@/utils/project'
 import { useParams, useSearchParams } from 'react-router-dom'
-import ProjectHeader from '@/components/layout/ProjectHeader'
 
 export default function () {
     const { resourceUUID } = useParams()
@@ -41,8 +42,7 @@ export default function () {
                 </div>
             </div>
             <SherlockBar />
-            🌀
-            {/* <Resource resourceUri={resourceUri} /> */}
+            <Resource resourceUri={resourceUri} />
         </>
     )
 }
