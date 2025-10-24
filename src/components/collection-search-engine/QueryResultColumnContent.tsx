@@ -1,15 +1,15 @@
-import Link from '@/components/buttons-and-links/Link';
-import { DISPLAY_E13_TOOLTIP } from '@/components/collection-search-engine/CollectionSearchEngine';
-import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
-import { groupByFields } from '@/utils/bindingsHelpers';
-import { Tooltip } from '@heroui/react';
-import React, { JSX, useMemo } from 'react';
-import { PiLinkDuotone } from 'react-icons/pi';
-import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';
-import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
+import Link from '@/components/buttons-and-links/Link'
+import { DISPLAY_E13_TOOLTIP } from '@/components/collection-search-engine/CollectionSearchEngine'
+import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
+import { groupByFields } from '@/utils/bindingsHelpers'
+import { Tooltip } from '@heroui/react'
+import React, { JSX, useMemo } from 'react'
+import { PiLinkDuotone } from 'react-icons/pi'
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 
 interface QueryResultColumnContentProps {
-    bindingsOfSameItem: SparqlQueryResultObject_Binding[];
+    bindingsOfSameItem: SparqlQueryResultObject_Binding[]
 }
 
 export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> = ({
@@ -19,11 +19,11 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
     const displayIdentifier = (row: SparqlQueryResultObject_Binding): JSX.Element => {
         return row.identifier ? <span className='text-gray-500 text-xs'>(<Link href={row.identifier.value} target="_blank">
             <PiLinkDuotone className='inline mb-1 ml-1 text-xl' />{row.type_label.value}
-        </Link>)</span> : <></>;
+        </Link>)</span> : <></>
     }
 
     const getSignificantE13Bindings = (bindings: SparqlQueryResultObject_Binding[]): SparqlQueryResultObject_Binding[] => {
-        return bindings.filter((row: SparqlQueryResultObject_Binding) => row.e13 && row.e13?.value == row.e13_indexed?.value);
+        return bindings.filter((row: SparqlQueryResultObject_Binding) => row.e13 && row.e13?.value == row.e13_indexed?.value)
     }
 
     const tooltipContent = (item: SparqlQueryResultObject_Binding[]) => {
@@ -52,10 +52,10 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
     }
 
     // All indexations. We have to filter because group by does not exclude items if columns are missing.
-    const uniqueDirectIndexation = useMemo(() => Object.values(groupByFields(bindingsOfSameItem, ['p', 'lit', 'type_label'])).map((row) => row[0]).filter((row) => row.p), [bindingsOfSameItem]);
-    const uniqueE13Indexation = useMemo(() => Object.values(groupByFields(bindingsOfSameItem, ['e13'])).map((row) => row[0]), [bindingsOfSameItem]);
-    const significantE13Bindings = useMemo(() => getSignificantE13Bindings(bindingsOfSameItem), [bindingsOfSameItem]);
-    const queryResults = useMemo(() => uniqueDirectIndexation.concat(significantE13Bindings), [uniqueDirectIndexation, significantE13Bindings]);
+    const uniqueDirectIndexation = useMemo(() => Object.values(groupByFields(bindingsOfSameItem, ['p', 'lit', 'type_label'])).map((row) => row[0]).filter((row) => row.p), [bindingsOfSameItem])
+    const uniqueE13Indexation = useMemo(() => Object.values(groupByFields(bindingsOfSameItem, ['e13'])).map((row) => row[0]), [bindingsOfSameItem])
+    const significantE13Bindings = useMemo(() => getSignificantE13Bindings(bindingsOfSameItem), [bindingsOfSameItem])
+    const queryResults = useMemo(() => uniqueDirectIndexation.concat(significantE13Bindings), [uniqueDirectIndexation, significantE13Bindings])
 
     return <Tooltip
         content={tooltipContent(uniqueE13Indexation)}
@@ -67,4 +67,4 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
             )}
         </div>
     </Tooltip>
-};
+}

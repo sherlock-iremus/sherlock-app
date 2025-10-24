@@ -1,4 +1,5 @@
 import YasguiButton from "@/components/buttons-and-links/YasguiButton"
+import { humanReadable, rdfTypeTooltip, uriData } from "@/components/resource/BindingTables"
 import { useListLinkedResources } from "@/hooks/sherlockSparql"
 import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { Tooltip } from '@heroui/tooltip'
@@ -7,8 +8,7 @@ import { CiSearch } from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { humanReadable, rdfTypeTooltip, uriData } from "./BindingTables"
-import { getReadablePredicate, makeNonClickablePrefixedUri } from "./TriplesDisplayHelpers"
+import { getReadablePredicate, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
 
 export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
   n: number
