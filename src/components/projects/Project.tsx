@@ -50,7 +50,7 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
 
     const collections = (() => {
         try {
-            data__projectsAndCollections?.results.bindings.map(row => ({
+            return data__projectsAndCollections?.results.bindings.map(row => ({
                 collectionName: row.collection_name.value,
                 collectionUri: row.collection.value
             }))
