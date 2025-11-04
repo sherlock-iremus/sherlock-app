@@ -23,8 +23,8 @@ export default function App() {
           <Route path='/' element={<ResourceRouter />} />
           <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
           <Route path='/projects/:projectCode' element={<Project searchEngine />} />
-          <Route path='/projects/mg-tei/livraisons' element={<Livraisons />} />
-          <Route path='/projects/mg-tei/livraison/:livraison' element={<Livraison />} />
+          <Route path='/projects/mercure-galant/livraisons' element={<Livraisons />} />
+          <Route path='/projects/mercure-galant/livraison/:livraison' element={<Livraison />} />
         </Route>
       </Routes>
     </HeroUIProvider>

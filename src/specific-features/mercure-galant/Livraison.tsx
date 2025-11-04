@@ -27,8 +27,8 @@ export default function () {
             <SherlockBar />
         </>
         <div className='bg-background p-6 text-foreground light'>
-            {data?.results.bindings.length && makeH2(`Contenu de la livraison (${data?.results.bindings.length} articles)`, <PiNotebookDuotone />, query)}
-            <Table aria-label="Livraisons du Mercure Galant" radius='none'>
+            {makeH2(`Contenu de la livraison (${data?.results?.bindings.length} articles)`, <PiNotebookDuotone />, query)}
+            {/* <Table aria-label="Livraisons du Mercure Galant" radius='none'>
                 <TableHeader>
                     <TableColumn>Titre de l'article</TableColumn>
                     <TableColumn>Lien</TableColumn>
@@ -42,14 +42,14 @@ export default function () {
                             <TableCell>coucou</TableCell>
                             <TableCell className='font-mono text-xs whitespace-nowrap'>
                                 coucou
-                                {/* <Link href={link} target='_blank' className='text-sm'>
+                                <Link href={link} target='_blank' className='text-sm'>
                                     {link}
-                                </Link> */}
+                                </Link>
                             </TableCell>
                         </TableRow>
                     }}
                 </TableBody>
-            </Table>
+            </Table> */}
         </div>
     </>
 }
