@@ -41,8 +41,7 @@ export default function () {
                 className='font-serif'
                 radius='none'
                 onRowAction={(key) => {
-                    const x = data.results.bindings.find(i => i['article_business_id'].value === key)
-                    navigate('/projects/' + projectCode + '/articles/' + key, { state: { uri: x['article'].value } })
+                    navigate('/projects/' + projectCode + '/articles/' + key)
                 }}
 
             >

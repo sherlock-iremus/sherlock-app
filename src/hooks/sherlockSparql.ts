@@ -9,6 +9,7 @@ import { identityIncomingLight, identityLight } from 'sherlock-sparql-queries/li
 import { listLinkedResources } from 'sherlock-sparql-queries/lib/listLinkedResources'
 import { getProjectByCode, getProjectByResourceUri, getProjectFiles } from 'sherlock-sparql-queries/lib/project'
 import { projectAndCollections } from 'sherlock-sparql-queries/lib/projectsAndCollections'
+import { getResourceByBusinessId } from 'sherlock-sparql-queries/lib/getResourceByBusinessId'
 
 export const baseSherlockUseSparqlQuery = (somethingTruthyToEnable: any, queryKey: Array<string>, body: string) => {
     return useQuery({
@@ -65,9 +66,15 @@ export const useGetProjectsAndCollections = (projectCode: string | undefined) =>
 // RESOURCES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const useResourceIdentityQuery = (resourceUri: string | undefined) => {
+export const useResourceIdentityQuery = (resourceUri: string) => {
     const query = identity(resourceUri)
     const x = baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
+    return { query, ...x }
+}
+
+export const useGetResourceByBusinessId = (resourceBusinessId: string) => {
+    const query = getResourceByBusinessId(resourceBusinessId)
+    const x = baseSherlockUseSparqlQuery(true, ['resource-by-business-id', resourceBusinessId], query)
     return { query, ...x }
 }
 

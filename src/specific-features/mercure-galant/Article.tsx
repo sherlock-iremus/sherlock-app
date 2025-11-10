@@ -1,13 +1,19 @@
+import { useGetResourceByBusinessId } from '@/hooks/sherlockSparql'
 import { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function () {
-    const location = useLocation()
+    const { article } = useParams()
     const navigate = useNavigate()
 
+    const { data } = useGetResourceByBusinessId(article || '')
+    console.log(data?.results.bindings[0])
+
     useEffect(() => {
-        navigate('/?resource=' + location.state.uri)
-    }, [])
+        if (data?.results.bindings[0]['resource'].value) {
+            navigate('/?resource=' + data?.results.bindings[0]['resource'].value)
+        }
+    }, [data?.results.bindings[0]['resource'].value])
 
     return ''
 }
