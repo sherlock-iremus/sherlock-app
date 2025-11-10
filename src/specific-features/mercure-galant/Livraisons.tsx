@@ -34,7 +34,7 @@ export default function () {
                         aria-label="Livraisons du Mercure Galant"
                         radius='none'
                         className='font-serif'
-                        onRowAction={(key) => navigate('/projects/' + projectCode + '/livraison/' + key)}
+                        onRowAction={(key) => navigate('/projects/' + projectCode + '/livraisons/' + key)}
                     >
                         <TableHeader>
                             <TableColumn>Date</TableColumn>
