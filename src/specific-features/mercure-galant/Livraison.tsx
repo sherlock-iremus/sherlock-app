@@ -24,6 +24,7 @@ export default function () {
         <>
             {projectData.code && <ProjectHeader
                 code={projectData.code}
+                emoticon={projectData.emoticon}
                 logo={projectData.logo}
                 name={projectData.name}
                 uuid={projectData.uuid}
@@ -54,15 +55,15 @@ export default function () {
                             className='hover:bg-gray-100'
                             key={item['article_business_id'].value}
                         >
-                            <TableCell><span className='text-nowrap'>{item['article_business_id'].value}</span></TableCell>
-                            <TableCell>
+                            <TableCell className='align-top'><span className='text-nowrap'>{item['article_business_id'].value}</span></TableCell>
+                            <TableCell className='align-top'>
                                 <div className='flex flex-col'>
                                     {'title_forge' in item && <div>{item['title_forge'].value} <span className='italic'>(titre forgé)</span></div>}
                                     {'title_courant' in item && <div>{item['title_courant'].value} <span className='italic'>(titre courant)</span></div>}
                                     {'title_paratexte' in item && <div>{item['title_paratexte'].value} <span className='italic'>(titre dans le paratexte)</span></div>}
                                 </div>
                             </TableCell>
-                            <TableCell><span className='text-nowrap'>{item.hasOwnProperty('pagination') ? item['pagination'].value : ''}</span></TableCell>
+                            <TableCell className='align-top'><span className='text-nowrap'>{item.hasOwnProperty('pagination') ? item['pagination'].value : ''}</span></TableCell>
                         </TableRow>
                     }}
                 </TableBody>

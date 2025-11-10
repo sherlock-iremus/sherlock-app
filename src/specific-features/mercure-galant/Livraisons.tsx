@@ -20,6 +20,7 @@ export default function () {
         <>
             {projectData.code && <ProjectHeader
                 code={projectData.code}
+                emoticon={projectData.emoticon}
                 logo={projectData.logo}
                 name={projectData.name}
                 uuid={projectData.uuid}
@@ -46,10 +47,10 @@ export default function () {
                             return <TableRow
                                 className='hover:bg-gray-100'
                                 key={item['livraison_business_id'].value}>
-                                <TableCell className='whitespace-nowrap'>{item['livraison_business_id'].value.slice(0, 7)}</TableCell>
-                                <TableCell>{item['livraison_title'].value}</TableCell>
-                                <TableCell>{item['livraison_subtitle']?.value}</TableCell>
-                                <TableCell className='text-center'>{item['n_articles'].value}</TableCell>
+                                <TableCell className='align-top whitespace-nowrap'>{item['livraison_business_id'].value.slice(0, 7)}</TableCell>
+                                <TableCell className='align-top'>{item['livraison_title'].value}</TableCell>
+                                <TableCell className='align-top'>{item['livraison_subtitle']?.value}</TableCell>
+                                <TableCell className='text-center align-top'>{item['n_articles'].value}</TableCell>
                             </TableRow>
                         }}
                     </TableBody>
