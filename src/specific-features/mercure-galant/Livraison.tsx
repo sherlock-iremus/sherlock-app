@@ -18,7 +18,7 @@ export default function () {
     const { livraison } = useParams()
     const { data, query } = useLivraisonQuery(livraison || '')
     const resourceUri = data?.results.bindings[0]['livraison'].value
-    const { data: dataId } = useResourceIdentityQuery(resourceUri || '')
+    const { data: dataId } = useResourceIdentityQuery(resourceUri)
 
     return <>
         <>
@@ -32,7 +32,9 @@ export default function () {
             <SherlockBar />
         </>
         <div className='bg-background p-6 text-foreground light'>
-            <Title idData={dataId} />
+            <div className='mt-6'>
+                <Title idData={dataId} />
+            </div>
             {makeH2(`Contenu de la livraison (${data?.results?.bindings.length} articles)`, <PiNotebookDuotone />, query)}
             {data?.results.bindings && <Table
                 aria-label="Livraisons du Mercure Galant"
