@@ -27,35 +27,34 @@ export default function () {
             <SherlockBar />
         </>
         <div className='bg-background p-6 text-foreground light'>
-            {makeH2(`Liste des ${data?.results?.bindings.length} livraisons`, <PiBooksDuotone />, query)}
-            {!isSuccess ? '⏳' :
-                <>
-                    <Table
-                        aria-label="Livraisons du Mercure Galant"
-                        radius='none'
-                        className='font-serif'
-                        onRowAction={(key) => navigate('/projects/' + projectCode + '/livraisons/' + key)}
-                    >
-                        <TableHeader>
-                            <TableColumn>Date</TableColumn>
-                            <TableColumn>Titre</TableColumn>
-                            <TableColumn>Sous-titre</TableColumn>
-                            <TableColumn>Nb d'articles</TableColumn>
-                        </TableHeader>
-                        <TableBody items={data?.results.bindings}>
-                            {(item) => {
-                                return <TableRow
-                                    className='hover:bg-gray-100'
-                                    key={item['livraison_business_id'].value}>
-                                    <TableCell className='whitespace-nowrap'>{item['livraison_business_id'].value.slice(0, 7)}</TableCell>
-                                    <TableCell>{item['livraison_title'].value}</TableCell>
-                                    <TableCell>{item['livraison_subtitle']?.value}</TableCell>
-                                    <TableCell className='text-center'>{item['n_articles'].value}</TableCell>
-                                </TableRow>
-                            }}
-                        </TableBody>
-                    </Table>
-                </>}
+            {isSuccess && <>
+                {makeH2(`Liste des ${data?.results?.bindings.length} livraisons`, <PiBooksDuotone />, query)}
+                <Table
+                    aria-label="Livraisons du Mercure Galant"
+                    radius='none'
+                    className='font-serif'
+                    onRowAction={(key) => navigate('/projects/' + projectCode + '/livraisons/' + key)}
+                >
+                    <TableHeader>
+                        <TableColumn>Date</TableColumn>
+                        <TableColumn>Titre</TableColumn>
+                        <TableColumn>Sous-titre</TableColumn>
+                        <TableColumn>Nb d'articles</TableColumn>
+                    </TableHeader>
+                    <TableBody items={data?.results.bindings}>
+                        {(item) => {
+                            return <TableRow
+                                className='hover:bg-gray-100'
+                                key={item['livraison_business_id'].value}>
+                                <TableCell className='whitespace-nowrap'>{item['livraison_business_id'].value.slice(0, 7)}</TableCell>
+                                <TableCell>{item['livraison_title'].value}</TableCell>
+                                <TableCell>{item['livraison_subtitle']?.value}</TableCell>
+                                <TableCell className='text-center'>{item['n_articles'].value}</TableCell>
+                            </TableRow>
+                        }}
+                    </TableBody>
+                </Table>
+            </>}
         </div>
     </>
 }

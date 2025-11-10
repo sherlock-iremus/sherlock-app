@@ -1,5 +1,4 @@
 import { makeH2 } from '@/components/layout/markupHelpers'
-import { Tooltip } from '@heroui/tooltip'
 import { MdTitle } from "react-icons/md"
 import { CRM_BASE } from "sherlock-rdf/lib/rdf-prefixes"
 import { SparqlQueryResultObject } from "sherlock-rdf/lib/sparql-result"
@@ -42,8 +41,7 @@ const X: React.FC<Props> = ({ idData }) => {
             <div className="flex flex-col gap-3 mt-6 p-6 font-serif text-xl text-center">
                 {titles.map(t => <div key={t.type_type}>
                     <span className='font-bold'>{t.value}</span>
-                    &nbsp;
-                    <span className='italic lowercase'>({t.type_type})</span>
+                    {t.type_type && <>&nbsp;<span className='italic lowercase'>({t.type_type})</span></>}
                 </div>)}
             </div>
         </>

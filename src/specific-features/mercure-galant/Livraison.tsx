@@ -1,12 +1,14 @@
 import SherlockBar from '@/components/deco/SherlockBar'
 import { makeH2 } from '@/components/layout/markupHelpers'
 import ProjectHeader from '@/components/layout/ProjectHeader'
-import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
+import { useGetProjectByCodeQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { useLivraisonQuery } from '@/specific-features/mercure-galant/hooks_sparql'
 import { extractProjectData, getProjecCodeFromLocation } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
-import { PiNotebookDuotone } from "react-icons/pi"
+import { PiLinkDuotone, PiNotebookDuotone } from "react-icons/pi"
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import Title from '@/components/resource/parts/Title'
+import LinkButton from '@/components/buttons-and-links/LinkButton'
 
 export default function () {
     const navigate = useNavigate()
@@ -15,6 +17,8 @@ export default function () {
     const projectData = extractProjectData(data_project)
     const { livraison } = useParams()
     const { data, query } = useLivraisonQuery(livraison || '')
+    const resourceUri = data?.results.bindings[0]['livraison'].value
+    const { data: dataId } = useResourceIdentityQuery(resourceUri || '')
 
     return <>
         <>
@@ -27,12 +31,17 @@ export default function () {
             <SherlockBar />
         </>
         <div className='bg-background p-6 text-foreground light'>
+            <Title idData={dataId} />
             {makeH2(`Contenu de la livraison (${data?.results?.bindings.length} articles)`, <PiNotebookDuotone />, query)}
             {data?.results.bindings && <Table
                 aria-label="Livraisons du Mercure Galant"
                 className='font-serif'
                 radius='none'
-                onRowAction={(key) => navigate('/projects/' + projectCode + '/articles/' + key, { state: { uri: data?.results.bindings[0]['article'].value } })}
+                onRowAction={(key) => {
+                    const x = data.results.bindings.find(i => i['article_business_id'].value === key)
+                    navigate('/projects/' + projectCode + '/articles/' + key, { state: { uri: x['article'].value } })
+                }}
+
             >
                 <TableHeader>
                     <TableColumn>Identifiant</TableColumn>
@@ -53,11 +62,27 @@ export default function () {
                                     {'title_paratexte' in item && <div>{item['title_paratexte'].value} <span className='italic'>(titre dans le paratexte)</span></div>}
                                 </div>
                             </TableCell>
-                            <TableCell><span className='text-nowrap'>{item['pagination'].value}</span></TableCell>
+                            <TableCell><span className='text-nowrap'>{item.hasOwnProperty('pagination') ? item['pagination'].value : ''}</span></TableCell>
                         </TableRow>
                     }}
                 </TableBody>
             </Table>}
         </div>
+        <SherlockBar />
+        {resourceUri && <div className='bg-background px-6 py-4 text-foreground dark'>
+            <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
+                Consulter la ressource dans SHERLOCK :
+            </h2>
+            <div>
+                <h2
+                    className='font-mono text-[aqua] text-link_negative'
+                    style={{
+                        textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
+                    }}
+                >
+                    {resourceUri} <LinkButton icon={<PiLinkDuotone />} href={resourceUri} content={resourceUri} />
+                </h2>
+            </div>
+        </div>}
     </>
 }
