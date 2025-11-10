@@ -39,11 +39,12 @@ const X: React.FC<Props> = ({ idData }) => {
     return titles.length > 0
         ? <>
             {makeH2('titre de la ressource', <MdTitle />)}
-            <div className="flex flex-col gap-3 mt-6 p-6 font-serif font-bold text-xl text-center">
-                {titles.map(t => <Tooltip content={t.type_type} color='secondary' delay={500}>
-                    <div>{t.value}</div>
-                </Tooltip>)
-                }
+            <div className="flex flex-col gap-3 mt-6 p-6 font-serif text-xl text-center">
+                {titles.map(t => <div key={t.type_type}>
+                    <span className='font-bold'>{t.value}</span>
+                    &nbsp;
+                    <span className='italic lowercase'>({t.type_type})</span>
+                </div>)}
             </div>
         </>
         : ''
