@@ -79,6 +79,12 @@ export function getReadablePredicate(pu: PrefixedUri): string {
         case 'type': return 'a pour classe'
       }
       break
+    case RDF_PREFIXES.get(LRMOO_BASE):
+      switch (pu.localPart) {
+        case 'R5_has_component': return 'a pour composant'
+        case 'R5i_is_component_of': return 'est un composant de'
+      }
+      break
     case RDF_PREFIXES.get(RDFS_BASE):
       switch (pu.localPart) {
         case 'label': return 'a pour libellé générique'

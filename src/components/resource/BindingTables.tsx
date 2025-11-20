@@ -7,6 +7,7 @@ import React, { JSX } from 'react'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
+import Markdown from 'react-markdown'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -22,6 +23,7 @@ export const humanReadable = tv({
 
 export const uriData = tv({
     base: 'font-mono'
+
 })
 
 const literal = tv({
@@ -143,7 +145,13 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     // Cas d'une propriété .1
     if (binding['pc0'] && binding['pc0_type'] && binding['dotOneProperty']) {
         x.p = <span className={humanReadable()}>{binding['e55_label'].value}</span>
-        x.v = <span className={literal()}>{binding['value'].value}</span>
+        x.v = binding.markdown.value == "true"
+            ? <span className={literal()}><Markdown components={{
+                a: ({ node, ...props }) => (
+                    <a {...props} className="text-link hover:text-link_hover" />
+                )
+            }}>{binding['value'].value}</Markdown></span>
+            : <span className={literal()}>{binding['value'].value}</span>
     }
     // Cas d'une E13 dont le P140 est la ressource consultée
     else if (binding['p177_label'] && binding['p141']) {

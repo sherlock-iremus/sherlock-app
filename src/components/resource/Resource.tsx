@@ -16,7 +16,7 @@ interface Props {
 
 const Resource: React.FC<Props> = ({ resourceUri }) => {
   const { data: dataId, query: queryId } = useResourceIdentityQuery(resourceUri)
-  const { data: dataCountOutgoing } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
+  const { data: dataCountOutgoing, query: queryCount } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(dataCountOutgoing)
 
   const { data: data__objectsOfLowFanOutgoingPredicates, query: query__objectsOfLowFanOutgoingPredicatesData } = useObjectsOfLowFanOutgoingPredicatesQuery(resourceUri, outgoingPredicatesCountData.lowFanOutPredicates, outgoingPredicatesCountData.lowFanOutPredicates.length > 0)
@@ -40,7 +40,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         <HighFanOutPredicates
           bindings={outgoingPredicatesCountData.highFanOutPredicatesBindings}
           outgoingPredicatesCountData={outgoingPredicatesCountData}
-          query={query__objectsOfLowFanOutgoingPredicatesData}
+          query={queryCount}
           resourceUri={resourceUri}
         />
       </div>

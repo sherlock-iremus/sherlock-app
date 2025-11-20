@@ -126,11 +126,9 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
       <>
         <div className="flex items-center">
           <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-            <span className={humanReadable()}>{getReadablePredicate(prefixedUri)}</span>
+            <span className={humanReadable()}>{getReadablePredicate(prefixedUri) || prefixedUri.prefix + ':' + prefixedUri.localPart}</span>
           </Tooltip>
-          &nbsp;•&nbsp;
-          {n}
-          &nbsp;
+          <span className='mx-2 font-light'>({n} ressources)</span>
           <YasguiButton query={query} />
         </div>
         <div className='flex items-center'>

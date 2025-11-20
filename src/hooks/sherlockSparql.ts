@@ -66,9 +66,9 @@ export const useGetProjectsAndCollections = (projectCode: string | undefined) =>
 // RESOURCES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const useResourceIdentityQuery = (resourceUri: string) => {
-    const query = identity(resourceUri)
-    const x = baseSherlockUseSparqlQuery(true, ['identity', resourceUri], query)
+export const useResourceIdentityQuery = (resourceUri: string | undefined) => {
+    const query = identity(resourceUri || '')
+    const x = baseSherlockUseSparqlQuery(true, ['identity', resourceUri || ""], query)
     return { query, ...x }
 }
 

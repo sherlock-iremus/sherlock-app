@@ -7,7 +7,6 @@ export default function () {
     const navigate = useNavigate()
 
     const { data } = useGetResourceByBusinessId(article || '')
-    console.log(data?.results.bindings[0])
 
     useEffect(() => {
         if (data?.results.bindings[0]['resource'].value) {
