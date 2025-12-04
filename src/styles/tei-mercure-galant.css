@@ -26,27 +26,39 @@
 }
 
 .tei-note-editor,
-.tei-bibl {
+.tei-bibl,
+.tei-note-wrapper::after {
     color: oklch(62.3% 0.214 259.815);
 }
 
 .tei-note {
-    clear: right;
-    float: right;
     font-size: 82%;
-    text-align: left;
     line-height: 1.25em;
-    margin-right: -50%;
-    max-height: 1.75em;
     padding: 0.25em;
+    text-align: left;
     text-overflow: ellipsis;
-    width: 45%;
 
-    /* white-space: nowrap; */
+    max-height: 1.75em;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .tei-note:hover {
     max-height: none;
+}
+
+.tei-note-wrapper {
+    clear: right;
+    float: right;
+    margin-right: -50%;
+    width: 45%;
+
+    position: relative;
+}
+
+.tei-note-wrapper:not(:hover)::after {
+    content: '… 🖱️';
+    margin-top: -13px;
+    padding: 0.25em;
+    position: absolute;
 }
