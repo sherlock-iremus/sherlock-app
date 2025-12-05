@@ -43,7 +43,7 @@ export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) 
             return <span className='tei-note-wrapper'>
                 <div className={'tei-' + tag + ' ' + 'tei-' + tag + '-' + respClass} onClick={() => noteClickHandler(computeNode)}>{N}</div>
             </span>
-        case 'p': return <p className={'tei-' + tag}>{N}</p>
+        case 'p': return <div className={'tei-' + tag}>{N}</div>
         case 'quote': return <div className={'tei-' + tag}>{N}</div>
         case 'ref':
             if ((node.attributes as any)?.target) {
@@ -61,7 +61,9 @@ export function tagTranslate(tag: any, node: ParsedNode, noteClickHandler: any) 
                     {N}
                 </a>
             }
+        case 'stage': return <div className={'tei-' + tag}>{N}</div>
         case 'space': return <span className={'tei-' + tag}>{N}</span> // mr 4
+        case 'speaker': return <div className={'tei-' + tag}>{N}</div>
         case 'TEI': return <span className={'tei-' + tag}>{N}</span>
         case 'teiHeader': return <span className={'tei-' + tag}>{N}</span>
         case 'text': return <span className={'tei-' + tag}>{N}</span>

@@ -57,8 +57,21 @@
 }
 
 .tei-note-wrapper:not(:hover)::after {
-    content: '… 🖱️';
-    margin-top: -13px;
-    padding: 0.25em;
+    content: '🖱️⤴︎';
+    color: lightgray;
+    font-size: 1.25rem;
+    font-style: normal;
+    left: 0;
     position: absolute;
+    pointer-events: none;
+}
+
+.tei-stage,
+.tei-speaker {
+    color: gray;
+    font-style: italic;
+}
+
+.tei-stage {
+    margin: 0.5rem 0;
 }
