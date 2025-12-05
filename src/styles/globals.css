@@ -4,6 +4,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
 
+@font-face {
+    font-family: "Moder-DOS-437";
+    src: url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.eot");
+    src: url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.eot?#iefix")format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.woff2")format("woff2"),
+        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.woff")format("woff"),
+        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.ttf")format("truetype"),
+        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.svg#Moder DOS 437")format("svg");
+}
+
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
