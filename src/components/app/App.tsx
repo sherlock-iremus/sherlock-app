@@ -32,7 +32,6 @@ export default function App() {
     </HeroUIProvider>
   )
 }
+
 // <Route path='/p/aam' element={<Project searchEngine /*engineAnnotationP177AsQueryResult={}*/ />} />
 // <Route path='/p/euterpe' element={<Project searchEngine />} />
-// <Route path='/p/mercure-galant' element={<Project />} />
-// <Route path='/p/mercure-galant/article/:article' element={<MercureGalantArticle />} />
