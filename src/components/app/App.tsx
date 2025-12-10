@@ -1,6 +1,6 @@
 import Root from '@/components/app/Root'
 import Project from '@/components/projects/Project'
-import ResourceRouter from '@/components/resource/ResourceRouter'
+import GenericResourceRouter from '@/components/resource/GenericResourceRouter'
 import Article from '@/specific-features/mercure-galant/Article'
 import Livraison from '@/specific-features/mercure-galant/Livraison'
 import Livraisons from '@/specific-features/mercure-galant/Livraisons'
@@ -21,8 +21,8 @@ export default function App() {
     <HeroUIProvider navigate={navigate} useHref={useHref}>
       <Routes>
         <Route element={<Root />} path='/'>
-          <Route path='/' element={<ResourceRouter />} />
-          <Route path='/id/:resourceUUID' element={<ResourceRouter />} />
+          <Route path='/' element={<GenericResourceRouter />} />
+          <Route path='/id/:resourceUUID' element={<GenericResourceRouter />} />
           <Route path='/projects/:projectCode' element={<Project searchEngine />} />
           <Route path='/projects/mercure-galant/livraisons' element={<Livraisons />} />
           <Route path='/projects/mercure-galant/livraisons/:livraison' element={<Livraison />} />

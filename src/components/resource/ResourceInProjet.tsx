@@ -2,28 +2,23 @@ import ClipboardButton from '@/components/buttons-and-links/ClipboardButton'
 import SherlockBar from '@/components/deco/SherlockBar'
 import ProjectHeader from '@/components/layout/ProjectHeader'
 import Resource from '@/components/resource/Resource'
-import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
-import { extractProjectData } from '@/utils/project'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { ProjectIdData } from "@/utils/project"
 
-export default function () {
-    const { resourceUUID } = useParams()
-    const [searchParams] = useSearchParams()
-    let resourceUri = searchParams.get('resource') || ''
-    if (!resourceUri && resourceUUID) resourceUri = 'http://data-iremus.huma-num.fr/id/' + resourceUUID
+interface Props {
+    projectIdData: ProjectIdData
+    resourceUri: string
+    resourceBusinessId?: string
+}
 
-    const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri)
-
-    const x = extractProjectData(data_project)
-
+const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, resourceBusinessId }) => {
     return (
         <>
-            {x.code && <ProjectHeader
-                code={x.code}
-                emoticon={x.emoticon}
-                logo={x.logo}
-                name={x.name}
-                uuid={x.uuid}
+            {projectIdData.code && <ProjectHeader
+                code={projectIdData.code}
+                emoticon={projectIdData.emoticon}
+                logo={projectIdData.logo}
+                name={projectIdData.name}
+                uuid={projectIdData.uuid}
             />}
             <SherlockBar />
             <div className='bg-background px-6 py-4 text-foreground dark'>
@@ -46,3 +41,5 @@ export default function () {
         </>
     )
 }
+
+export default ResourceInProject
