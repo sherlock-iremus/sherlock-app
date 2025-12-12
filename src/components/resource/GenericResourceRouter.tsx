@@ -1,5 +1,5 @@
 import { useGetProjectByResourceUriQuery } from '@/hooks/sherlockSparql'
-import { extractProjectData } from '@/utils/project'
+import { extractProjectIdData } from '@/utils/project'
 import { useParams, useSearchParams } from 'react-router-dom'
 import ResourceInProject from './ResourceInProjet'
 
@@ -10,7 +10,7 @@ export default function () {
     if (!resourceUri && resourceUUID) resourceUri = 'http://data-iremus.huma-num.fr/id/' + resourceUUID
 
     const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri)
-    const projectIdData = extractProjectData(data_project)
+    const projectIdData = extractProjectIdData(data_project)
 
     return <ResourceInProject projectIdData={projectIdData} resourceUri={resourceUri} />
 }

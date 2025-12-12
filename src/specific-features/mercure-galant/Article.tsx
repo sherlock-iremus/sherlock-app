@@ -1,6 +1,6 @@
 import ResourceInProject from '@/components/resource/ResourceInProjet'
 import { useGetProjectByResourceUriQuery, useGetResourceByBusinessId } from '@/hooks/sherlockSparql'
-import { extractProjectData } from '@/utils/project'
+import { extractProjectIdData } from '@/utils/project'
 import { useParams } from 'react-router-dom'
 
 export default function () {
@@ -8,7 +8,7 @@ export default function () {
     const { data } = useGetResourceByBusinessId(resourceBusinessId || '')
     const resourceUri = data?.results.bindings[0]['resource'].value
     const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri || '')
-    const projectIdData = extractProjectData(data_project)
+    const projectIdData = extractProjectIdData(data_project)
 
     return <ResourceInProject resourceUri={resourceUri || ''} projectIdData={projectIdData} />
 }

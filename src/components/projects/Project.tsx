@@ -3,7 +3,7 @@ import SherlockBar from '@/components/deco/SherlockBar'
 import { makeH2 } from '@/components/layout/markupHelpers'
 import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'
 import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql'
-import { extractProjectData } from '@/utils/project'
+import { extractProjectIdData } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/table'
 import { FaIdCard } from 'react-icons/fa'
 import { IoDocumentAttachOutline } from 'react-icons/io5'
@@ -23,7 +23,7 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
 
     // Project data
     const { data: data__projectIdentity } = useGetProjectByCodeQuery(projectCode || '')
-    const projectData = extractProjectData(data__projectIdentity)
+    const projectData = extractProjectIdData(data__projectIdentity)
 
     // Project files data
     const { data: data__projectFiles, query: query__projectFiles } = useGetProjectsFilesQuery(projectData.uuid || '')

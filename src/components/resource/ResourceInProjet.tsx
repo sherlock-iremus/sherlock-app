@@ -3,14 +3,16 @@ import SherlockBar from '@/components/deco/SherlockBar'
 import ProjectHeader from '@/components/layout/ProjectHeader'
 import Resource from '@/components/resource/Resource'
 import { ProjectIdData } from "@/utils/project"
+import { ReactElement } from 'react'
 
 interface Props {
     projectIdData: ProjectIdData
     resourceUri: string
     resourceBusinessId?: string
+    customParts: ReactElement[]
 }
 
-const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, resourceBusinessId }) => {
+const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, customParts }) => {
     return (
         <>
             {projectIdData.code && <ProjectHeader
@@ -20,6 +22,9 @@ const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, resour
                 name={projectIdData.name}
                 uuid={projectIdData.uuid}
             />}
+            <SherlockBar />
+            <Resource resourceUri={resourceUri} />
+            {customParts}
             <SherlockBar />
             <div className='bg-background px-6 py-4 text-foreground dark'>
                 <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
@@ -36,8 +41,6 @@ const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, resour
                     </h2>
                 </div>
             </div>
-            <SherlockBar />
-            <Resource resourceUri={resourceUri} />
         </>
     )
 }

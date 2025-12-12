@@ -3,7 +3,7 @@ import { makeH2 } from '@/components/layout/markupHelpers'
 import ProjectHeader from '@/components/layout/ProjectHeader'
 import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
 import { useLivraisonsQuery } from '@/specific-features/mercure-galant/hooks_sparql'
-import { extractProjectData, getProjecCodeFromLocation } from '@/utils/project'
+import { extractProjectIdData, getProjecCodeFromLocation } from '@/utils/project'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { PiBooksDuotone } from "react-icons/pi"
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,7 +13,7 @@ export default function () {
     const navigate = useNavigate()
     const projectCode = getProjecCodeFromLocation(useLocation())
     const { data: data_project } = useGetProjectByCodeQuery(projectCode)
-    const projectData = extractProjectData(data_project)
+    const projectData = extractProjectIdData(data_project)
     const { data, isSuccess, query } = useLivraisonsQuery()
 
     return <>

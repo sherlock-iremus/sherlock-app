@@ -9,7 +9,7 @@ export interface ProjectIdData {
     uuid?: string,
 }
 
-export function extractProjectData(data_project?: SparqlQueryResultObject): ProjectIdData {
+export function extractProjectIdData(data_project?: SparqlQueryResultObject): ProjectIdData {
     const x: ProjectIdData = {
         code: '',
         emoticon: '',
