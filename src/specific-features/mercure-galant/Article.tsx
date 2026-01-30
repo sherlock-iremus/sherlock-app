@@ -10,5 +10,5 @@ export default function () {
     const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri || '')
     const projectIdData = extractProjectIdData(data_project)
 
-    return <ResourceInProject resourceUri={resourceUri || ''} projectIdData={projectIdData} />
+    return <ResourceInProject resourceUri={resourceUri || ''} projectIdData={projectIdData} customParts={[<div key="0"></div>]} />
 }

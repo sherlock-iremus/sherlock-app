@@ -23,8 +23,7 @@ const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, custom
                 uuid={projectIdData.uuid}
             />}
             <SherlockBar />
-            <Resource resourceUri={resourceUri} />
-            {customParts}
+            <Resource resourceUri={resourceUri} customParts={customParts} />
             <SherlockBar />
             <div className='bg-background px-6 py-4 text-foreground dark'>
                 <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>

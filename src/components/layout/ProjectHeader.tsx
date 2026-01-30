@@ -10,7 +10,7 @@ const ProjectHeader: React.FC<ProjectIdData> = ({ code, emoticon, logo, name }) 
             {name && projectName(name + (emoticon ? ` ${emoticon}` : ''))}
             <div className='mt-2 font-mono text-gray-500 text-xs lowercase'>
                 page du projet :&nbsp;
-                <Link className='text-xs' href={`projects/${code}/`} target='_blank'>{`/projects/${code}/`}</Link>
+                <Link className='text-xs' href={`/projects/${code}/`} target='_blank'>{`/projects/${code}/`}</Link>
             </div>
         </div>
     </div >

@@ -12,5 +12,5 @@ export default function () {
     const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri)
     const projectIdData = extractProjectIdData(data_project)
 
-    return <ResourceInProject projectIdData={projectIdData} resourceUri={resourceUri} />
+    return <ResourceInProject projectIdData={projectIdData} resourceUri={resourceUri} customParts={[<></>]} />
 }

@@ -1,5 +1,6 @@
 import { useCountObjectsOfOutgoingPredicatesQuery, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { extractDataFromOutgoingPredicatesCountSparqlQueryResult } from '@/utils/bindingsHelpers'
+import { ReactElement } from 'react'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import Dotone from './parts/CRMDotOneProperties'
 import E13 from './parts/CRME13WithLiteraP141'
@@ -12,9 +13,10 @@ import Title from './parts/Title'
 
 interface Props {
   resourceUri: string
+  customParts: ReactElement[]
 }
 
-const Resource: React.FC<Props> = ({ resourceUri }) => {
+const Resource: React.FC<Props> = ({ resourceUri, customParts }) => {
   const { data: dataId, query: queryId } = useResourceIdentityQuery(resourceUri)
   const { data: dataCountOutgoing, query: queryCount } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(dataCountOutgoing)
@@ -36,6 +38,7 @@ const Resource: React.FC<Props> = ({ resourceUri }) => {
         <Dotone resourceUri={resourceUri} />
         <E13 resourceUri={resourceUri} />
         <LFO bindings={literalObjectsOfLowFanOutgoingPredicatesBindings} query={query__objectsOfLowFanOutgoingPredicatesData} />
+        {customParts}
         <LFOLR bindings={nonLiteralObjectsOfLowFanOutgoingPredicatesBindings} query={query__objectsOfLowFanOutgoingPredicatesData} />
         <HighFanOutPredicates
           bindings={outgoingPredicatesCountData.highFanOutPredicatesBindings}

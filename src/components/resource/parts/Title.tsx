@@ -35,21 +35,17 @@ const X: React.FC<Props> = ({ idData }) => {
         }
     }
 
+    console.log(titles)
+
     return titles.length > 0
         ? <>
             {makeH2('titre de la ressource', <MdTitle />)}
-            {/* <div className="relative bg-stone-50 border-1 border-stone-100">
-                <div className="top-[-9px] left-[-7px] absolute font-['Moder-DOS-437']">╔</div>
-                <div className="top-[-9px] right-[-7px] absolute font-['Moder-DOS-437']">╗</div>
-                <div className="bottom-[-13px] left-[-7px] absolute font-['Moder-DOS-437']">╚</div>
-                <div className="right-[-7px] bottom-[-13px] absolute font-['Moder-DOS-437']">╝</div> */}
-            <div className="flex flex-col gap-3 bg-stone-50 p-3 font-serif text-2xl text-center">
+            <div className="flex flex-col gap-3 bg-stone-50 p-3 border border-stone-100 font-serif text-2xl text-center">
                 {titles.map(t => <div key={t.type_type}>
                     <span className='font-bold'>{t.value}</span>
                     {t.type_type && <>&nbsp;<span className='italic lowercase'>({t.type_type})</span></>}
                 </div>)}
             </div>
-            {/* </div> */}
         </>
         : ''
 }
