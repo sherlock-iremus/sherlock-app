@@ -1,6 +1,7 @@
+import { Link } from '@heroui/react'
+import { linkStyles } from '@/styles/variants/link';
 import SherlockBar from '@/components/deco/SherlockBar'
 import SherlockLogo from './SherlockLogo'
-import Link from '@/components/buttons-and-links/Link'
 
 const VBar = () => <div className='bg-stone-700 w-[1px]'></div>
 
@@ -8,7 +9,7 @@ export default () => <footer className='flex flex-col flex-1 bg-background font-
     <SherlockBar />
     <div className='flex mt-11 text-gray-500'>
         <div className="flex-1 mx-11 text-right">
-            <Link href="https://musica.hypotheses.org/" target='_blank'>Musica2</Link>
+            <Link className={linkStyles({ fontWeight: 'normal' })} href="https://musica.hypotheses.org/" target='_blank'>Musica2</Link>
             <br />
             <br />
             Consortium en musicologie numérique
@@ -24,7 +25,10 @@ export default () => <footer className='flex flex-col flex-1 bg-background font-
         </div>
         <VBar />
         <div className='flex-1 mx-11'>
-            <Link href="https://www.iremus.cnrs.fr/" target='_blank'>Institut de Recherche en Musicologie</Link>
+            <Link
+                className={linkStyles({ fontWeight: 'normal' })}
+                href="https://www.iremus.cnrs.fr/"
+                target='_blank'>Institut de Recherche en Musicologie</Link>
             <br />
             <br />
             UMR 8223

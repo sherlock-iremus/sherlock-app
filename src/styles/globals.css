@@ -19,12 +19,25 @@
     --font-mono: 'Fira Code', monospace;
     --font-sans: 'Fira Code', monospace;
     --font-serif: 'Alegreya', serif;
-    --link: '#14B8A6';
-    --link_hover: '#FF1493';
 }
 
+/* Define in both light and dark themes */
+:root,
+[data-theme="light"] {
+    --link-foreground: #14B8A6;
+    --link-hover-foreground: #FF1493;
+}
+
+.dark,
+[data-theme="dark"] {
+    --link-foreground: #14B8A6;
+    --link-hover-foreground: #FF1493;
+}
+
+/* Make the colors available to Tailwind */
 @theme inline {
-    --color-link: var(--link);
+    --color-link-foreground: var(--link-foreground);
+    --color-link-hover-foreground: var(--link-hover-foreground);
 }
 
 html {
