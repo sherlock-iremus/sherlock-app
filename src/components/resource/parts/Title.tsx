@@ -35,8 +35,6 @@ const X: React.FC<Props> = ({ idData }) => {
         }
     }
 
-    console.log(titles)
-
     return titles.length > 0
         ? <>
             {makeH2('titre de la ressource', <MdTitle />)}

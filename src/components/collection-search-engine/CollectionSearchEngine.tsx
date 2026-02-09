@@ -3,7 +3,7 @@ import { IdentityColumnContent } from '@/components/collection-search-engine/Ide
 import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent'
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql'
 import { groupByFields } from '@/utils/bindingsHelpers'
-import { Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
+import { Input } from '@heroui/react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { f } from 'sherlock-sparql-queries/lib/collectionItems'

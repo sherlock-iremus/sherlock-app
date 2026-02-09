@@ -1,5 +1,4 @@
-import { Tooltip } from '@heroui/tooltip'
-import { Button } from '@heroui/react'
+import { Button, Tooltip } from '@heroui/react'
 import { PiClipboardThin } from "react-icons/pi";
 
 interface Props {

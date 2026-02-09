@@ -1,5 +1,4 @@
-import { Button, Link } from '@heroui/react'
-import { Tooltip } from '@heroui/tooltip'
+import { Button, Link, Tooltip } from '@heroui/react'
 import { ReactElement } from 'react'
 
 interface Props {

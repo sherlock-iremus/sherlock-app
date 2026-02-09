@@ -1,6 +1,5 @@
 import { makeH2 } from "@/components/layout/markupHelpers"
 import { ProjectIdData } from "@/utils/project"
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
 import { PiNotebookDuotone } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
 import { useLivraisonQuery } from './hooks_sparql'

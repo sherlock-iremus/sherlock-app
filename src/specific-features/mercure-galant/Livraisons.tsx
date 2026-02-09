@@ -4,10 +4,36 @@ import ProjectHeader from '@/components/layout/ProjectHeader'
 import { useGetProjectByCodeQuery } from '@/hooks/sherlockSparql'
 import { useLivraisonsQuery } from '@/specific-features/mercure-galant/hooks_sparql'
 import { extractProjectIdData, getProjecCodeFromLocation } from '@/utils/project'
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { PiBooksDuotone } from "react-icons/pi"
+import {
+    createColumnHelper,
+    flexRender,
+    getCoreRowModel,
+    useReactTable,
+} from '@tanstack/react-table'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 
+const columnHelper = createColumnHelper<SparqlQueryResultObject_Binding>()
+
+const columns = [
+    columnHelper.accessor('livraison_business_id', {
+        cell: _ => _.getValue().value,
+        header: _ => <span className='underline'>Date</span>,
+    }),
+    columnHelper.accessor('livraison_title', {
+        cell: _ => _.getValue().value,
+        header: _ => <span className='underline'>Titre</span>,
+    }),
+    columnHelper.accessor('livraison_subtitle', {
+        cell: _ => _.getValue()?.value,
+        header: _ => <span className='underline'>Sous-titre</span>,
+    }),
+    columnHelper.accessor('livraison_n_articles', {
+        cell: _ => _.getValue().value,
+        header: _ => <span className='underline'>Nb d'articles</span>,
+    })
+]
 
 export default function () {
     const navigate = useNavigate()
@@ -15,6 +41,12 @@ export default function () {
     const { data: data_project } = useGetProjectByCodeQuery(projectCode)
     const projectData = extractProjectIdData(data_project)
     const { data, isSuccess, query } = useLivraisonsQuery()
+
+    const table = useReactTable({
+        data: data?.results.bindings || [],
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+    })
 
     return <>
         <>
@@ -30,7 +62,34 @@ export default function () {
         <div className='bg-background p-6 text-foreground light'>
             {isSuccess && <>
                 {makeH2(`Liste des ${data?.results?.bindings.length} livraisons`, <PiBooksDuotone />, query)}
-                <Table
+                <table>
+                    <thead>
+                        {table.getHeaderGroups().map(headerGroup => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map(header => (
+                                    <th key={header.id}>
+                                        {flexRender(
+                                            header.column.columnDef.header,
+                                            header.getContext()
+                                        )}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {/* <Table
                     aria-label="Livraisons du Mercure Galant"
                     radius='none'
                     className='font-serif'
@@ -54,7 +113,7 @@ export default function () {
                             </TableRow>
                         }}
                     </TableBody>
-                </Table>
+                </Table> */}
             </>}
         </div>
     </>

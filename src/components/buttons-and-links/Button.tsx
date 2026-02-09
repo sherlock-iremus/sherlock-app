@@ -1,6 +1,8 @@
-import { extendVariants, Button } from '@heroui/react';
+import { Button } from '@heroui/react';
+import { tv } from 'tailwind-variants';
 
-export default extendVariants(Button, {
+const x = tv({
+    base: "",
     variants: {
         border: {
             thin: 'border',
@@ -16,4 +18,8 @@ export default extendVariants(Button, {
         variant: 'ghost',
         className: 'cursor-default'
     }
-})
+});
+
+export default function (props: any) {
+    return <Button className={x()} {...props} />
+};

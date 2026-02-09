@@ -1,8 +1,7 @@
 import YasguiButton from "@/components/buttons-and-links/YasguiButton"
 import { humanReadable, rdfTypeTooltip, uriData } from "@/components/resource/BindingTables"
 import { useListLinkedResources } from "@/hooks/sherlockSparql"
-import { Button, Input, Pagination, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { Tooltip } from '@heroui/tooltip'
+import { Button, Input, Tooltip } from "@heroui/react"
 import { useCallback, useMemo, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom'

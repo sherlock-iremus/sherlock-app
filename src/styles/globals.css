@@ -2,23 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
-
-@font-face {
-    font-family: "Moder-DOS-437";
-    src: url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.eot");
-    src: url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.eot?#iefix")format("embedded-opentype"),
-        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.woff2")format("woff2"),
-        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.woff")format("woff"),
-        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.ttf")format("truetype"),
-        url("https://db.onlinewebfonts.com/t/b03166189955cd59e130b9415e0c791e.svg#Moder DOS 437")format("svg");
-}
-
-@import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
-@custom-variant light (&:where(.light, .light *));
-@plugin "../hero.ts";
-@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 @font-face {
     font-family: "Albertus";
@@ -27,16 +11,20 @@
     font-style: normal;
 }
 
-@theme {
-    --font-sans: "Fira Code", sans-serif;
-    --font-serif: "Alegreya", serif;
-    --font-mono: "Fira Code", monospace;
+@layer theme, base, components, utilities;
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+    --font-mono: 'Fira Code', monospace;
+    --font-sans: 'Fira Code', monospace;
+    --font-serif: 'Alegreya', serif;
+    --link: '#14B8A6';
+    --link_hover: '#FF1493';
 }
 
-@layer base {
-    html {
-        cursor: default;
-    }
+@theme inline {
+    --color-link: var(--link);
 }
 
 html {
@@ -48,6 +36,7 @@ html {
 }
 
 html * {
+    cursor: default;
     font-variant-ligatures: no-common-ligatures common-ligatures discretionary-ligatures historical-ligatures contextual;
 }
 
