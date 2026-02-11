@@ -24,20 +24,23 @@
 /* Define in both light and dark themes */
 :root,
 [data-theme="light"] {
-    --link-foreground: #14B8A6;
-    --link-hover-foreground: #FF1493;
+    --link-foreground: oklch(70.38% 0.123 182.50);
+    --link-hover: oklch(70.38% 0.123 182.50);
+    --link-hover-foreground: oklch(0.6549 0.2613 356.94);
+    --table-head: oklch(97% 0.001 106.424);
+    --table-row-hover: oklch(97% 0.001 106.424);
 }
 
 .dark,
-[data-theme="dark"] {
-    --link-foreground: #14B8A6;
-    --link-hover-foreground: #FF1493;
-}
+[data-theme="dark"] {}
 
 /* Make the colors available to Tailwind */
 @theme inline {
     --color-link-foreground: var(--link-foreground);
+    --color-link-hover: var(--link-hover);
     --color-link-hover-foreground: var(--link-hover-foreground);
+    --color-table-head: var(--table-head);
+    --color-table-row-hover: var(--table-row-hover);
 }
 
 html {

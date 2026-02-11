@@ -13,25 +13,26 @@ import {
 } from '@tanstack/react-table'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
+import TableWrapper from '@/components/layout/TableWrapper'
 
 const columnHelper = createColumnHelper<SparqlQueryResultObject_Binding>()
 
 const columns = [
     columnHelper.accessor('livraison_business_id', {
         cell: _ => _.getValue().value,
-        header: _ => <span className='underline'>Date</span>,
+        header: _ => "Date",
     }),
     columnHelper.accessor('livraison_title', {
         cell: _ => _.getValue().value,
-        header: _ => <span className='underline'>Titre</span>,
+        header: _ => "Titre",
     }),
     columnHelper.accessor('livraison_subtitle', {
         cell: _ => _.getValue()?.value,
-        header: _ => <span className='underline'>Sous-titre</span>,
+        header: _ => "Sous-titre",
     }),
     columnHelper.accessor('livraison_n_articles', {
         cell: _ => _.getValue().value,
-        header: _ => <span className='underline'>Nb d'articles</span>,
+        header: _ => "Nb d'articles",
     })
 ]
 
@@ -59,36 +60,41 @@ export default function () {
             />}
             <SherlockBar />
         </>
-        <div className='bg-background p-6 text-foreground light'>
+        <div className='p-6'>
             {isSuccess && <>
                 {makeH2(`Liste des ${data?.results?.bindings.length} livraisons`, <PiBooksDuotone />, query)}
-                <table>
-                    <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map(header => (
-                                    <th key={header.id}>
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => (
-                            <tr key={row.id}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <TableWrapper>
+                    <table className='p-6 [&_th,&_td]:p-3 font-serif text-sm [&_th]:text-left'>
+                        <thead className='bg-table-head [&_th>span]:no-underline'>
+                            {table.getHeaderGroups().map(headerGroup => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map(header => (
+                                        <th key={header.id}>
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id}
+                                    className='hover:bg-table-row-hover'
+                                    onClick={() => navigate('/projects/' + projectCode + '/livraisons/' + row.getValue('livraison_business_id').value)}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td key={cell.id} className={cell.column.id === 'livraison_n_articles' ? 'text-center' : ''}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </TableWrapper>
                 {/* <Table
                     aria-label="Livraisons du Mercure Galant"
                     radius='none'
