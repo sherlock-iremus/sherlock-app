@@ -40,7 +40,7 @@ export default function ({ projectIdData, resourceBusinessId }: Props) {
 
     //TODO
     // onRowAction={(key) => {
-    //     navigate('/projects/' + projectIdData.code + '/articles/' + key)
+    //     
     // }}
 
     return <>
@@ -50,9 +50,10 @@ export default function ({ projectIdData, resourceBusinessId }: Props) {
                 <BasicTanStackTable
                     data={data.results.bindings}
                     columns={columns}
-                    tableStyle='p-6 [&_th,&_td]:p-3 font-serif text-sm [&_th:nth-child(2)]:text-left'
+                    tableStyle='p-6 [&_th,&_td]:p-3 font-serif text-sm [&_th:nth-child(1)]:text-left [&_th:nth-child(2)]:text-left'
                     theadStyle='bg-table-head [&_th>span]:no-underline'
-                    trStyle='hover:bg-table-row-hover [&>td:nth-child(1)]:text-text-secondary-foreground [&>td:nth-child(1)]:text-xs [&>td:nth-child(1)]:font-mono [&>td:nth-child(1)]:text-center [&>td:nth-child(3)]:text-center [&>td:nth-child(3)]:text-nowrap'
+                    trStyle='hover:bg-table-row-hover [&>td:nth-child(1)]:text-text-secondary-foreground [&>td:nth-child(1)]:text-xs [&>td:nth-child(1)]:font-mono [&>td:nth-child(3)]:text-center [&>td:nth-child(3)]:text-nowrap'
+                    trClick={row => navigate('/projects/' + projectIdData.code + '/articles/' + (row.getValue('article_business_id') as SparqlQueryResultObject_Binding).value)}
                 />
             </TableWrapper>
         }

@@ -25,7 +25,7 @@ export default function App() {
           {/* <Route path='/projects/:projectCode' element={<Project searchEngine />} /> */}
           <Route path='/projects/mercure-galant/livraisons' element={<Livraisons />} />
           <Route path='/projects/mercure-galant/livraisons/:livraison' element={<Livraison />} />
-          {/* <Route path='/projects/mercure-galant/articles/:article' element={<Article />} /> */}
+          <Route path='/projects/mercure-galant/articles/:article' element={<Article />} />
         </Route>
       </Routes>
     </RouterProvider>
