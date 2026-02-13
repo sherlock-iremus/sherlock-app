@@ -1,9 +1,10 @@
-import Link from '@/components/common/Link'
+import { Link } from '@heroui/react'
+import { linkStyles } from '@/styles/variants/link'
 import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE, LRMOO_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
-export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, textSize: string = '') {
+export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri) {
   return (
-    <Link href={'/?resource=' + uri} className={textSize}>
+    <Link href={'/?resource=' + uri} className={linkStyles({ fontWeight: 'normal', textSize: 'base' })}>
       <span className='whitespace-nowrap'>
         {
           pu.prefix ?
