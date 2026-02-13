@@ -8,11 +8,12 @@ interface Props {
     resourceIdentityQuery: string
 }
 
-const X: React.FC<Props> = ({ resourceIdentityBindings, resourceIdentityQuery }) => {
+export default function ({ resourceIdentityBindings, resourceIdentityQuery }: Props) {
     return <>
         {makeH2('Identité de la ressource', <FaIdCard />, resourceIdentityQuery)}
-        {resourceIdentityBindings?.results.bindings && <BindingsTable bindings={resourceIdentityBindings?.results.bindings} />}
+        {resourceIdentityBindings?.results.bindings && <BindingsTable
+            bindings={resourceIdentityBindings?.results.bindings}
+            wrapper={true}
+        />}
     </>
 }
-
-export default X

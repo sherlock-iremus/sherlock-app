@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { tv } from 'tailwind-variants';
 
 const h2 = tv({
-    base: 'font-light mb-6 mt-6 not-first:mt-12 text-2xl font-sans tracking-wider items-center lowercase text-teal-500 flex gap-4'
+    base: 'font-light mb-6 mt-6 not-first:mt-12 text-2xl font-sans tracking-tight items-center lowercase text-teal-500 flex gap-4'
 })
 
 export function makeH2(title: string, icon: React.ReactElement, sparqlQuery?: string, link?: ReactElement): React.ReactElement {

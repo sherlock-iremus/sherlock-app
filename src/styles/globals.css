@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
 
 @font-face {
     font-family: "Albertus";
@@ -18,7 +17,7 @@
 :root {
     --font-mono: 'Fira Code', monospace;
     --font-sans: 'Fira Code', monospace;
-    --font-serif: 'Alegreya', serif;
+    --font-serif: 'Source Serif 4', serif;
 }
 
 /* Define in both light and dark themes */
@@ -27,8 +26,8 @@
     --link-foreground: oklch(70.38% 0.123 182.50);
     --link-hover: oklch(91% 0.096 180.426);
     --link-hover-foreground: oklch(0.6549 0.2613 356.94);
-    --table-head: oklch(97% 0.001 106.424);
-    --table-row-hover: oklch(97% 0.001 106.424);
+    --table-head: oklch(96.8% 0.007 247.896);
+    --table-row-hover: oklch(96.8% 0.007 247.896);
     --text-secondary-foreground: oklch(70.4% 0.04 256.788);
 
     --data-table-line: oklch(96.8% 0.007 247.896);

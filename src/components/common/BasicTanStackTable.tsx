@@ -7,6 +7,7 @@ type BasicTanStackTableProps = {
     columns: ColumnDef<unknown, any>[],
     tableStyle: string,
     theadStyle: string,
+    thStyle: string,
     tbodyStyle: string,
     trStyle: string,
     tdStyle: string,
@@ -19,6 +20,7 @@ export default ({
     columns = [],
     tableStyle = '',
     theadStyle = '',
+    thStyle = '',
     tbodyStyle = '',
     trStyle = '',
     tdStyle = '',
@@ -32,7 +34,7 @@ export default ({
             {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
-                        <th key={header.id}>
+                        <th key={header.id} className={thStyle}>
                             {header.isPlaceholder
                                 ? null
                                 : flexRender(

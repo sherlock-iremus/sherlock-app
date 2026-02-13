@@ -55,7 +55,7 @@ function displayClassOrProperty(x: string): ReactNode {
 
     return humanReadablePredicate
         ? <Tooltip delay={0}>
-            <Tooltip.Trigger>
+            <Tooltip.Trigger className='inline'>
                 <span className={humanReadable()}>{humanReadablePredicate}</span>
             </Tooltip.Trigger>
             <Tooltip.Content className={rdfTypeTooltip()}>
@@ -176,11 +176,10 @@ function makeRowFromBinding(binding: SparqlQueryResultObject_Binding) {
 
 interface BindingsTableProps {
     bindings: SparqlQueryResultObject_Binding[],
-    slots?: object,
-    removeWrapper?: boolean,
+    wrapper: boolean
 }
 
-export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings }) => {
+export function BindingsTable({ bindings, wrapper }: BindingsTableProps) {
     const rows = bindings.map(makeRowFromBinding).filter(x => x.p && x.v)
 
     const columnHelper = createColumnHelper<RowData>()
@@ -190,15 +189,15 @@ export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings }) => {
         columnHelper.accessor('v_md', { cell: x => x.getValue() }),
     ]
 
-    return <TableWrapper>
-        <BasicTanStackTable
-            data={rows}
-            columns={columns}
-            showHeader={false}
-            trStyle='border-b border-b-data-table-line last:border-none'
-            tdStyle={`pr-3 pl-3 pt-1 pb-1 last:pr-0 ${textSize} align-top`}
-        />
-    </TableWrapper>
+    const table = <BasicTanStackTable
+        data={rows}
+        columns={columns}
+        showHeader={false}
+        trStyle='border-b border-b-data-table-line last:border-none'
+        tdStyle={`pr-3 pl-3 pt-1 pb-1 last:pr-0 ${textSize} align-top`}
+    />
+
+    return wrapper ? <TableWrapper>{table}</TableWrapper> : table
 }
 
 interface LinkedResourcesBindingsTableProps {
@@ -212,16 +211,16 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <>
                 <tr>
-                    <td className={uriData()}>{displayClassOrProperty(linkingPredicate)}</td>
-                    <td className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</td>
-                </tr>
-                <tr className='border-b border-b-data_table_line last:border-none'>
-                    <td>&nbsp;</td>
+                    <td className='pr-2 text-base'>🌐</td>
                     <td>
+                        {displayClassOrProperty(linkingPredicate)} {makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), 'sm')}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td className='p-20'>
                         <BindingsTable
                             bindings={bindingsList}
-                            slots={{ base: 'mb-2', wrapper: 'py-1 px-3', td: 'p-0' }}
-                            removeWrapper={false}
                         />
                     </td>
                 </tr>
@@ -231,7 +230,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
         }
     }
 
-    return <table>
+    return <table className="border [&_td]:border w-full text-sm">
         <tbody>
             {content}
         </tbody>

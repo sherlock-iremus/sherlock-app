@@ -83,7 +83,6 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                         hideHeader={false}
                         isCompact={true}
                         radius='none'
-                        removeWrapper={false}
                     >
                         <TableHeader>
                             <TableColumn>Nom</TableColumn>
