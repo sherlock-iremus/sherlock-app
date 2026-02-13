@@ -180,7 +180,7 @@ interface BindingsTableProps {
     removeWrapper?: boolean,
 }
 
-export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = {}, removeWrapper = false }) => {
+export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings }) => {
     const rows = bindings.map(makeRowFromBinding).filter(x => x.p && x.v)
 
     const columnHelper = createColumnHelper<RowData>()

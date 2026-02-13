@@ -3,6 +3,7 @@ import { ProjectIdData } from "@/utils/project"
 import { PiNotebookDuotone } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
 import { useLivraisonQuery } from './hooks_sparql'
+import BasicTanStackTable from "@/components/common/BasicTanStackTable"
 
 interface Props {
     projectIdData: ProjectIdData
@@ -15,7 +16,7 @@ const LivraisonContent: React.FC<Props> = ({ projectIdData, resourceBusinessId }
 
     return <>
         {makeH2(`Contenu de la livraison (${data?.results?.bindings.length} articles)`, <PiNotebookDuotone />, query)}
-        {data?.results.bindings && <div>🌲</div>
+        {data?.results.bindings && <BasicTanStackTable />
             // <Table
             //     aria-label="Livraisons du Mercure Galant"
             //     className='font-serif'

@@ -11,7 +11,7 @@ interface Props {
 const X: React.FC<Props> = ({ resourceIdentityBindings, resourceIdentityQuery }) => {
     return <>
         {makeH2('Identité de la ressource', <FaIdCard />, resourceIdentityQuery)}
-        <BindingsTable bindings={resourceIdentityBindings?.results.bindings || []} />
+        {resourceIdentityBindings?.results.bindings && <BindingsTable bindings={resourceIdentityBindings?.results.bindings} />}
     </>
 }
 
