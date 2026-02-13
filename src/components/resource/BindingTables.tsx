@@ -48,25 +48,25 @@ type RowData = {
     v_md: ReactNode
 }
 
+function displayClassOrProperty(x: string): ReactNode {
+    const pu = makePrefixedUri(x)
+    const humanReadablePredicate = getReadablePredicate(pu)
+    const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
+
+    return humanReadablePredicate
+        ? <Tooltip delay={0}>
+            <Tooltip.Trigger>
+                <span className={humanReadable()}>{humanReadablePredicate}</span>
+            </Tooltip.Trigger>
+            <Tooltip.Content className={rdfTypeTooltip()}>
+                {rdfPredicate}
+            </Tooltip.Content>
+        </Tooltip>
+        : rdfPredicate
+}
+
 function makeRowFromBinding(binding: SparqlQueryResultObject_Binding) {
     const x: RowData = { p: undefined, v: undefined, v_md: undefined }
-
-    function displayClassOrProperty(x: string): ReactNode {
-        const pu = makePrefixedUri(x)
-        const humanReadablePredicate = getReadablePredicate(pu)
-        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
-
-        return humanReadablePredicate
-            ? <Tooltip delay={0}>
-                <Tooltip.Trigger>
-                    <span className={humanReadable()}>{humanReadablePredicate}</span>
-                </Tooltip.Trigger>
-                <Tooltip.Content className={rdfTypeTooltip()}>
-                    {rdfPredicate}
-                </Tooltip.Content>
-            </Tooltip>
-            : rdfPredicate
-    }
 
     function processClass(className: string) {
         const pu = makePrefixedUri(className)
@@ -211,41 +211,29 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <>
-                <div>🌲</div>
-                {/* <TableRow>
-                    <TableCell className={uriData()}>{displayClassOrProperty(linkingPredicate)}</TableCell>
-                    <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</TableCell>
-                </TableRow>
-                <TableRow className='border-b border-b-data_table_line last:border-none'>
-                    <TableCell>&nbsp;</TableCell>
-                    <TableCell>
+                <tr>
+                    <td className={uriData()}>{displayClassOrProperty(linkingPredicate)}</td>
+                    <td className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</td>
+                </tr>
+                <tr className='border-b border-b-data_table_line last:border-none'>
+                    <td>&nbsp;</td>
+                    <td>
                         <BindingsTable
                             bindings={bindingsList}
                             slots={{ base: 'mb-2', wrapper: 'py-1 px-3', td: 'p-0' }}
                             removeWrapper={false}
                         />
-                    </TableCell>
-                </TableRow> */}
+                    </td>
+                </tr>
             </>
 
             content.push(x)
         }
     }
 
-    return <div>🌲</div>
-    // <Table
-    //     aria-label='linked resource bindings table'
-    //     hideHeader={true}
-    //     isCompact={true}
-    //     radius='none'
-    //     removeWrapper={true}
-    // >
-    //     <TableHeader>
-    //         <TableColumn>lr</TableColumn>
-    //         <TableColumn>lp</TableColumn>
-    //     </TableHeader>
-    //     <TableBody>
-    //         {content}
-    //     </TableBody>
-    // </Table>
+    return <table>
+        <tbody>
+            {content}
+        </tbody>
+    </table>
 }
