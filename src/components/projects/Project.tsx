@@ -1,4 +1,4 @@
-import Link from '@/components/buttons-and-links/Link'
+import Link from '@/components/common/Link'
 import SherlockBar from '@/components/deco/SherlockBar'
 import { makeH2 } from '@/components/layout/markupHelpers'
 import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'

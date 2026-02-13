@@ -9,13 +9,15 @@ const ProjectHeader: React.FC<ProjectIdData> = ({ code, emoticon, logo, name }) 
         {logo && projectLogo(logo)}
         <div className='flex flex-col justify-end items-start'>
             {name && projectName(name + (emoticon ? ` ${emoticon}` : ''))}
-            <div className='mt-2 font-mono text-gray-500 text-xs lowercase'>
+            <div className='mt-2 font-mono text-text-secondary-foreground text-xs lowercase'>
                 page du projet :&nbsp;
                 <Link
                     className={linkStyles({ textSize: 'xs', letterSpacing: 'normal', fontWeight: 'light' })}
                     href={`/projects/${code}/`}
                     target='_blank'
-                >{`/projects/${code}/`}</Link>
+                >
+                    {`/projects/${code}/`}
+                </Link>
             </div>
         </div>
     </div >

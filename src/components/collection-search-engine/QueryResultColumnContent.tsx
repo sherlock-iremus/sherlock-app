@@ -1,4 +1,4 @@
-import Link from '@/components/buttons-and-links/Link'
+import Link from '@/components/common/Link'
 import { DISPLAY_E13_TOOLTIP } from '@/components/collection-search-engine/CollectionSearchEngine'
 import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
 import { groupByFields } from '@/utils/bindingsHelpers'

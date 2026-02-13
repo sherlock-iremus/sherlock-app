@@ -1,4 +1,4 @@
-import Link from '@/components/buttons-and-links/Link'
+import Link from '@/components/common/Link'
 import { CRM_BASE, PrefixedUri, RDF_BASE, RDF_PREFIXES, RDFS_BASE, SKOS_BASE, IREMUS_NS_BASE, LRMOO_BASE } from 'sherlock-rdf/lib/rdf-prefixes'
 
 export function makeClickablePrefixedUri(uri: string, pu: PrefixedUri, textSize: string = '') {
@@ -26,13 +26,13 @@ export function makeNonClickablePrefixedUri(
 ) {
   return pu.prefix ? (
     <span className={'font-mono' + ' ' + textSize}>
-      <span className='text-uri_prefix'>{pu.prefix}</span>
-      <span className='text-uri_column'>:</span>
-      <span className='text-uri_localpart'>{pu.localPart}</span>
+      <span className='text-uri-prefix'>{pu.prefix}</span>
+      <span className='text-uri-column'>:</span>
+      <span className='text-uri-localpart'>{pu.localPart}</span>
     </span>
   ) : (
     <span className={textSize}>
-      <span className='text-uri_localpart'>{pu.localPart}</span>
+      <span className='text-uri-localpart'>{pu.localPart}</span>
     </span>
   )
 }

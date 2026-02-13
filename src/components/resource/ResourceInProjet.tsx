@@ -1,4 +1,4 @@
-import ClipboardButton from '@/components/buttons-and-links/ClipboardButton'
+import ClipboardButton from '@/components/common/ClipboardButton'
 import SherlockBar from '@/components/deco/SherlockBar'
 import ProjectHeader from '@/components/layout/ProjectHeader'
 import Resource from '@/components/resource/Resource'

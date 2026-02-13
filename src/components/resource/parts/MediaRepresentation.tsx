@@ -1,4 +1,4 @@
-import LinkButton from "@/components/buttons-and-links/LinkButton"
+import LinkButton from "@/components/common/LinkButton"
 import { makeH2 } from "@/components/layout/markupHelpers"
 import { extractDataFromIdentityBindings, IdentityData } from "@/utils/bindingsHelpers"
 import { guessMediaRepresentation } from "@/utils/resourceTypeAndMedia"

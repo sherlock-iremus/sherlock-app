@@ -1,4 +1,4 @@
-import YasguiButton from "@/components/buttons-and-links/YasguiButton"
+import YasguiButton from "@/components/common/YasguiButton"
 import { humanReadable, rdfTypeTooltip, uriData } from "@/components/resource/BindingTables"
 import { useListLinkedResources } from "@/hooks/sherlockSparql"
 import { Button, Input, Tooltip } from "@heroui/react"
@@ -27,203 +27,205 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
   // SEARCH
   ////////////////////////////////////////////////////////////////////////////////
 
-  const [filterValue, setFilterValue] = useState('')
-  const hasSearchFilter = Boolean(filterValue)
+  // const [filterValue, setFilterValue] = useState('')
+  // const hasSearchFilter = Boolean(filterValue)
 
-  const filteredItems = useMemo(() => {
-    let _ = data ? [...data.results.bindings] : []
+  // const filteredItems = useMemo(() => {
+  //   let _ = data ? [...data.results.bindings] : []
 
-    if (hasSearchFilter) {
-      _ = _.filter(binding =>
-        binding.label.value.toLowerCase().includes(filterValue.toLowerCase())
-        ||
-        binding.business_id.value.toLowerCase().includes(filterValue.toLowerCase())
-      )
-    }
+  //   if (hasSearchFilter) {
+  //     _ = _.filter(binding =>
+  //       binding.label.value.toLowerCase().includes(filterValue.toLowerCase())
+  //       ||
+  //       binding.business_id.value.toLowerCase().includes(filterValue.toLowerCase())
+  //     )
+  //   }
 
-    return _
-  }, [data?.results.bindings, filterValue])
+  //   return _
+  // }, [data?.results.bindings, filterValue])
 
-  const onSearchChange = useCallback((value?: string) => {
-    if (value) {
-      setFilterValue(value)
-      setPage(1)
-    } else {
-      setFilterValue('')
-    }
-  }, [])
+  // const onSearchChange = useCallback((value?: string) => {
+  //   if (value) {
+  //     setFilterValue(value)
+  //     setPage(1)
+  //   } else {
+  //     setFilterValue('')
+  //   }
+  // }, [])
 
-  const onClear = useCallback(() => {
-    setFilterValue('')
-    setPage(1)
-  }, [])
+  // const onClear = useCallback(() => {
+  //   setFilterValue('')
+  //   setPage(1)
+  // }, [])
 
   ////////////////////////////////////////////////////////////////////////////////
   // SORT
   ////////////////////////////////////////////////////////////////////////////////
 
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: 'label',
-    direction: 'ascending'
-  })
+  // const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
+  //   column: 'label',
+  //   direction: 'ascending'
+  // })
 
-  const sortedItems = useMemo(() => {
-    return [...filteredItems].sort(
-      (
-        a: SparqlQueryResultObject_Binding,
-        b: SparqlQueryResultObject_Binding
-      ) => {
-        const first = a[sortDescriptor.column as string].value as string
-        const second = b[sortDescriptor.column as string].value as string
-        const isEmptyFirst = first === "" || first == null;
-        const isEmptySecond = second === "" || second == null;
-        if (isEmptyFirst && !isEmptySecond) return 1
-        if (!isEmptyFirst && isEmptySecond) return -1
-        if (isEmptyFirst && isEmptySecond) return 0
-        const cmp = first < second ? -1 : first > second ? 1 : 0
+  // const sortedItems = useMemo(() => {
+  //   return [...filteredItems].sort(
+  //     (
+  //       a: SparqlQueryResultObject_Binding,
+  //       b: SparqlQueryResultObject_Binding
+  //     ) => {
+  //       const first = a[sortDescriptor.column as string].value as string
+  //       const second = b[sortDescriptor.column as string].value as string
+  //       const isEmptyFirst = first === "" || first == null;
+  //       const isEmptySecond = second === "" || second == null;
+  //       if (isEmptyFirst && !isEmptySecond) return 1
+  //       if (!isEmptyFirst && isEmptySecond) return -1
+  //       if (isEmptyFirst && isEmptySecond) return 0
+  //       const cmp = first < second ? -1 : first > second ? 1 : 0
 
-        return sortDescriptor.direction === 'descending' ? -cmp : cmp
-      }
-    )
-  }, [sortDescriptor, filteredItems])
+  //       return sortDescriptor.direction === 'descending' ? -cmp : cmp
+  //     }
+  //   )
+  // }, [sortDescriptor, filteredItems])
 
   ////////////////////////////////////////////////////////////////////////////////
   // PAGINATION
   ////////////////////////////////////////////////////////////////////////////////
 
-  const [page, setPage] = useState(1)
+  // const [page, setPage] = useState(1)
 
-  const rowsPerPage = 20
+  // const rowsPerPage = 20
 
-  const pages = Math.ceil(sortedItems.length / rowsPerPage)
+  // const pages = Math.ceil(sortedItems.length / rowsPerPage)
 
-  const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage
-    const end = start + rowsPerPage
-    return sortedItems.slice(start, end)
-  }, [page, sortedItems, rowsPerPage])
+  // const items = useMemo(() => {
+  //   const start = (page - 1) * rowsPerPage
+  //   const end = start + rowsPerPage
+  //   return sortedItems.slice(start, end)
+  // }, [page, sortedItems, rowsPerPage])
 
-  const onNextPage = useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1)
-    }
-  }, [page, pages])
+  // const onNextPage = useCallback(() => {
+  //   if (page < pages) {
+  //     setPage(page + 1)
+  //   }
+  // }, [page, pages])
 
-  const onPreviousPage = useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1)
-    }
-  }, [page])
+  // const onPreviousPage = useCallback(() => {
+  //   if (page > 1) {
+  //     setPage(page - 1)
+  //   }
+  // }, [page])
 
   ////////////////////////////////////////////////////////////////////////////////
   // TOP & BOTTOM CONTENT
   ////////////////////////////////////////////////////////////////////////////////
 
-  const topContent = useMemo(() => {
-    const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(prefixedUri, '')}</span>
-    return (
-      <>
-        <div className="flex items-center">
-          <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-            <span className={humanReadable()}>{getReadablePredicate(prefixedUri) || prefixedUri.prefix + ':' + prefixedUri.localPart}</span>
-          </Tooltip>
-          <span className='mx-2 font-light'>({n} ressources)</span>
-          <YasguiButton query={query} />
-        </div>
-        <div className='flex items-center'>
-          <Input
-            className='flex-1'
-            isClearable
-            onClear={() => onClear()}
-            onValueChange={onSearchChange}
-            placeholder='Chercher par label...'
-            startContent={<CiSearch />}
-            value={filterValue}
-          />
-          <div className='table-header ml-3'>({filteredItems.length} items)</div>
-        </div>
-      </>
-    )
-  }, [
-    filterValue,
-    onSearchChange,
-    data?.results.bindings.length,
-    hasSearchFilter,
-  ])
+  // const topContent = useMemo(() => {
+  //   const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(prefixedUri, '')}</span>
+  //   return (
+  //     <>
+  //       <div className="flex items-center">
+  //         <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
+  //           <span className={humanReadable()}>{getReadablePredicate(prefixedUri) || prefixedUri.prefix + ':' + prefixedUri.localPart}</span>
+  //         </Tooltip>
+  //         <span className='mx-2 font-light'>({n} ressources)</span>
+  //         <YasguiButton query={query} />
+  //       </div>
+  //       <div className='flex items-center'>
+  //         <Input
+  //           className='flex-1'
+  //           isClearable
+  //           onClear={() => onClear()}
+  //           onValueChange={onSearchChange}
+  //           placeholder='Chercher par label...'
+  //           startContent={<CiSearch />}
+  //           value={filterValue}
+  //         />
+  //         <div className='table-header ml-3'>({filteredItems.length} items)</div>
+  //       </div>
+  //     </>
+  //   )
+  // }, [
+  //   filterValue,
+  //   onSearchChange,
+  //   data?.results.bindings.length,
+  //   hasSearchFilter,
+  // ])
 
-  const bottomContent = useMemo(() => {
-    return (
-      <div className='flex justify-between items-center'>
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color='primary'
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
-        <div className='hidden sm:flex justify-end gap-2 w-[30%]'>
-          <Button
-            isDisabled={pages === 1}
-            size='sm'
-            variant='flat'
-            onPress={onPreviousPage}
-          >
-            «
-          </Button>
-          <Button
-            isDisabled={pages === 1}
-            size='sm'
-            variant='flat'
-            onPress={onNextPage}
-          >
-            »
-          </Button>
-        </div>
-      </div>
-    )
-  }, [items.length, page, pages, hasSearchFilter])
+  // const bottomContent = useMemo(() => {
+  //   return (
+  //     <div className='flex justify-between items-center'>
+  //       <Pagination
+  //         isCompact
+  //         showControls
+  //         showShadow
+  //         color='primary'
+  //         page={page}
+  //         total={pages}
+  //         onChange={setPage}
+  //       />
+  //       <div className='hidden sm:flex justify-end gap-2 w-[30%]'>
+  //         <Button
+  //           isDisabled={pages === 1}
+  //           size='sm'
+  //           variant='flat'
+  //           onPress={onPreviousPage}
+  //         >
+  //           «
+  //         </Button>
+  //         <Button
+  //           isDisabled={pages === 1}
+  //           size='sm'
+  //           variant='flat'
+  //           onPress={onNextPage}
+  //         >
+  //           »
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   )
+  // }, [items.length, page, pages, hasSearchFilter])
 
   ////////////////////////////////////////////////////////////////////////////////
   // RENDER
   ////////////////////////////////////////////////////////////////////////////////
 
-  return (
-    <div>
-      {data ? (
-        <Table
-          aria-label={predicateUri}
-          bottomContent={bottomContent}
-          bottomContentPlacement='inside'
-          onSortChange={setSortDescriptor}
-          sortDescriptor={sortDescriptor}
-          topContent={topContent}
-          topContentPlacement='inside'
-          onRowAction={(key) => navigate('/?resource=' + key)}
-          radius="none"
-        >
-          <TableHeader>
-            <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant</TableColumn>
-            <TableColumn key='label' allowsSorting>Label</TableColumn>
-          </TableHeader>
-          <TableBody items={items}>
-            {item => <TableRow
-              key={item.linked_resource.value}
-              className="hover:bg-row_hover"
-            >
-              <TableCell className='py-0 font-serif align-top'>
-                {item.business_id.value}
-              </TableCell>
-              <TableCell className='py-0 font-serif align-top'>
-                {item.label.value}
-              </TableCell>
-            </TableRow>}
-          </TableBody>
-        </Table>
-      ) : (
-        '⏳'
-      )}
-    </div>
-  )
+  return <div>{JSON.stringify(data)}</div>
+
+  // return (
+  //   <div>
+  //     {data ? (
+  //       <Table
+  //         aria-label={predicateUri}
+  //         bottomContent={bottomContent}
+  //         bottomContentPlacement='inside'
+  //         onSortChange={setSortDescriptor}
+  //         sortDescriptor={sortDescriptor}
+  //         topContent={topContent}
+  //         topContentPlacement='inside'
+  //         onRowAction={(key) => navigate('/?resource=' + key)}
+  //         radius="none"
+  //       >
+  //         <TableHeader>
+  //           <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant</TableColumn>
+  //           <TableColumn key='label' allowsSorting>Label</TableColumn>
+  //         </TableHeader>
+  //         <TableBody items={items}>
+  //           {item => <TableRow
+  //             key={item.linked_resource.value}
+  //             className="hover:bg-row_hover"
+  //           >
+  //             <TableCell className='py-0 font-serif align-top'>
+  //               {item.business_id.value}
+  //             </TableCell>
+  //             <TableCell className='py-0 font-serif align-top'>
+  //               {item.label.value}
+  //             </TableCell>
+  //           </TableRow>}
+  //         </TableBody>
+  //       </Table>
+  //     ) : (
+  //       '⏳'
+  //     )}
+  //   </div>
+  // )
 }

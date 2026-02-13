@@ -25,10 +25,16 @@
 :root,
 [data-theme="light"] {
     --link-foreground: oklch(70.38% 0.123 182.50);
-    --link-hover: oklch(70.38% 0.123 182.50);
+    --link-hover: oklch(91% 0.096 180.426);
     --link-hover-foreground: oklch(0.6549 0.2613 356.94);
     --table-head: oklch(97% 0.001 106.424);
     --table-row-hover: oklch(97% 0.001 106.424);
+    --text-secondary-foreground: oklch(70.4% 0.04 256.788);
+
+    --data-table-line: oklch(96.8% 0.007 247.896);
+    --uri-prefix: #6D29D9;
+    --uri-column: #6D29D9;
+    --uri-localpart: #A68BFA;
 }
 
 .dark,
@@ -41,6 +47,13 @@
     --color-link-hover-foreground: var(--link-hover-foreground);
     --color-table-head: var(--table-head);
     --color-table-row-hover: var(--table-row-hover);
+    --color-text-secondary-foreground: var(--text-secondary-foreground);
+
+    --color-data-table-line: var(--data-table-line);
+    --color-uri-prefix: var(--uri-prefix);
+    --color-uri-column: var(--uri-column);
+    --color-uri-localpart: var(--uri-localpart);
+
 }
 
 html {
@@ -57,3 +70,12 @@ html * {
 }
 
 @import "./tei-mercure-galant.css";
+
+@layer components {
+    .tooltip {}
+
+    .tooltip__trigger {
+        /* Sinon le trigger prend toute la largeur de son parent et non la taille de son contenu */
+        @apply w-fit;
+    }
+}

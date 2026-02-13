@@ -1,4 +1,4 @@
-import YasguiButton from '../buttons-and-links/YasguiButton';
+import YasguiButton from '../common/YasguiButton';
 import React, { ReactElement } from 'react';
 import { tv } from 'tailwind-variants';
 

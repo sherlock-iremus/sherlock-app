@@ -1,4 +1,4 @@
-import YasguiButton from '@/components/buttons-and-links/YasguiButton'
+import YasguiButton from '@/components/common/YasguiButton'
 import { IdentityColumnContent } from '@/components/collection-search-engine/IdentityColumnContent'
 import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent'
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql'

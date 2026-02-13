@@ -1,12 +1,16 @@
-import Link from '@/components/buttons-and-links/Link'
 import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
+import { linkStyles } from '@/styles/variants/link';
 import { LRLPIndexedBindings } from '@/utils/bindingsHelpers'
 import { Tooltip } from '@heroui/react'
-import React, { JSX } from 'react'
+import React, { ReactNode } from 'react'
+import Markdown from 'react-markdown'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import { tv } from 'tailwind-variants'
-import Markdown from 'react-markdown'
+import BasicTanStackTable from '../common/BasicTanStackTable'
+import { createColumnHelper } from '@tanstack/react-table'
+import TableWrapper from '../layout/TableWrapper'
+import { Link } from '@heroui/react';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -22,7 +26,6 @@ export const humanReadable = tv({
 
 export const uriData = tv({
     base: 'font-mono'
-
 })
 
 const literal = tv({
@@ -35,69 +38,35 @@ export const rdfTypeTooltip = tv({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// TYPES
-//
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-interface BindingsTableProps {
-    bindings: SparqlQueryResultObject_Binding[],
-    slots?: object,
-    removeWrapper?: boolean,
-}
-
-interface LinkedResourcesBindingsTableProps {
-    bindings: LRLPIndexedBindings
-}
-
-type RowData = {
-    key: string
-    p?: JSX.Element
-    v?: JSX.Element
-    v_md?: JSX.Element
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//
 // HELPERS
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function makeColumns() {
-    const columns: any[] = [
-        { key: 'p', label: 'P' },
-        { key: 'v', label: 'V' },
-        { key: 'v_md', label: 'V_MD' },
-    ]
-
-    return columns
+type RowData = {
+    p: ReactNode
+    v: ReactNode
+    v_md: ReactNode
 }
 
-function makeLabel(v: SparqlQueryResultObject_Variable) {
-    if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
-        return <Link className={textSize} href={v.value} target='_blank'>{v.value}</Link>
+function makeRowFromBinding(binding: SparqlQueryResultObject_Binding) {
+    const x: RowData = { p: undefined, v: undefined, v_md: undefined }
+
+    function displayClassOrProperty(x: string): ReactNode {
+        const pu = makePrefixedUri(x)
+        const humanReadablePredicate = getReadablePredicate(pu)
+        const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
+
+        return humanReadablePredicate
+            ? <Tooltip delay={0}>
+                <Tooltip.Trigger>
+                    <span className={humanReadable()}>{humanReadablePredicate}</span>
+                </Tooltip.Trigger>
+                <Tooltip.Content className={rdfTypeTooltip()}>
+                    {rdfPredicate}
+                </Tooltip.Content>
+            </Tooltip>
+            : rdfPredicate
     }
-
-    return (
-        <span className={`${literal()}`}>
-            {v.value}
-        </span>
-    )
-}
-
-function displayClassOrProperty(x: string): JSX.Element {
-    const pu = makePrefixedUri(x)
-    const humanReadablePredicate = getReadablePredicate(pu)
-    const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
-
-    return humanReadablePredicate
-        ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-            <span className={humanReadable()}>{humanReadablePredicate}</span>
-        </Tooltip>
-        : rdfPredicate
-}
-
-function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
-    const x: RowData = { key: i.toString() }
 
     function processClass(className: string) {
         const pu = makePrefixedUri(className)
@@ -105,13 +74,36 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
         const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(pu, '')}</span>
 
         return humanReadableClass
-            ? <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-                <span className={humanReadable()}>{humanReadableClass}</span>
+            ? <Tooltip delay={0}>
+                <Tooltip.Trigger>
+                    <span className={humanReadable()}>{humanReadableClass}</span>
+                </Tooltip.Trigger>
+                <Tooltip.Content className={rdfTypeTooltip()}>
+                    {rdfPredicate}
+                </Tooltip.Content>
             </Tooltip>
             : rdfPredicate
     }
 
     function processV() {
+        function makeLabel(v: SparqlQueryResultObject_Variable) {
+            if (v.value.startsWith('http://') || v.value.startsWith('https://')) {
+                return <Link
+                    className={linkStyles({ textSize: 'sm', fontWeight: 'normal' })}
+                    href={v.value}
+                    target='_blank'
+                >
+                    {v.value}
+                </Link>
+            }
+
+            return (
+                <span className={`${literal()}`}>
+                    {v.value}
+                </span>
+            )
+        }
+
         // Cas d'un prédicat pointant sur une valeur littérale
         if (binding['label'] && !binding['r']) {
             x.v = makeLabel(binding['label'])
@@ -125,7 +117,13 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
                 {binding['r_type_type'] && binding['r_type_type_label'] &&
                     <>
                         <span className={humanReadable()}> de type </span>
-                        <Link className={textSize} href={'/?resource=' + binding['r_type_type'].value} target='_blank'>{binding['r_type_type_label'].value}</Link>
+                        <Link
+                            className={linkStyles({ textSize: 'sm', fontWeight: 'normal' })}
+                            href={'/?resource=' + binding['r_type_type'].value}
+                            target='_blank'
+                        >
+                            {binding['r_type_type_label'].value}
+                        </Link>
                     </>
                 }
             </>
@@ -144,10 +142,10 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     // Cas d'une propriété .1
     if (binding['pc0'] && binding['pc0_type'] && binding['dotOneProperty']) {
         x.p = <span className={humanReadable()}>{binding['e55_label'].value}</span>
-        x.v = binding.markdown.value == "true"
+        x.v = binding.markdown.value == 'true'
             ? <span className={literal()}><Markdown components={{
                 a: ({ node, ...props }) => (
-                    <a {...props} className="text-link hover:text-link_hover" />
+                    <a {...props} className='text-link hover:text-link_hover' />
                 )
             }}>{binding['value'].value}</Markdown></span>
             : <span className={literal()}>{binding['value'].value}</span>
@@ -170,46 +168,41 @@ function makeRow(binding: SparqlQueryResultObject_Binding, i: number): RowData {
     return x
 }
 
-function transformBindingsToHeroTableData(bindings: SparqlQueryResultObject_Binding[]): any[] {
-    const tableData: RowData[] = []
-
-    for (let i = 0; i < bindings.length; i++) {
-        const binding: SparqlQueryResultObject_Binding = bindings[i]
-        tableData.push(makeRow(binding, i))
-    }
-
-    return tableData
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // COMPONENTS
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = {}, removeWrapper = false }) => {
-    const columns = makeColumns()
-    const rows = transformBindingsToHeroTableData(bindings).filter(x => x.p && x.v)
+interface BindingsTableProps {
+    bindings: SparqlQueryResultObject_Binding[],
+    slots?: object,
+    removeWrapper?: boolean,
+}
 
-    return <Table
-        aria-label='bindings table'
-        classNames={slots}
-        hideHeader={true}
-        isCompact={true}
-        radius='none'
-        removeWrapper={removeWrapper}
-    >
-        <TableHeader columns={columns}>
-            {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-        </TableHeader>
-        <TableBody items={rows}>
-            {(item: any) => (
-                <TableRow key={item.key} className='border-b border-b-data_table_line last:border-none'>
-                    {(columnKey) => <TableCell className={`pr-3 last:pr-0 ${textSize} align-top`}>{getKeyValue(item, columnKey)}</TableCell>}
-                </TableRow>
-            )}
-        </TableBody>
-    </Table>
+export const BindingsTable: React.FC<BindingsTableProps> = ({ bindings, slots = {}, removeWrapper = false }) => {
+    const rows = bindings.map(makeRowFromBinding).filter(x => x.p && x.v)
+
+    const columnHelper = createColumnHelper<RowData>()
+    const columns = [
+        columnHelper.accessor('p', { cell: x => x.getValue() }),
+        columnHelper.accessor('v', { cell: x => x.getValue() }),
+        columnHelper.accessor('v_md', { cell: x => x.getValue() }),
+    ]
+
+    return <TableWrapper>
+        <BasicTanStackTable
+            data={rows}
+            columns={columns}
+            showHeader={false}
+            trStyle='border-b border-b-data-table-line last:border-none'
+            tdStyle={`pr-3 pl-3 pt-1 pb-1 last:pr-0 ${textSize} align-top`}
+        />
+    </TableWrapper>
+}
+
+interface LinkedResourcesBindingsTableProps {
+    bindings: LRLPIndexedBindings
 }
 
 export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTableProps> = ({ bindings }) => {
@@ -218,7 +211,8 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <>
-                <TableRow>
+                <div>🌲</div>
+                {/* <TableRow>
                     <TableCell className={uriData()}>{displayClassOrProperty(linkingPredicate)}</TableCell>
                     <TableCell className={uriData()}>{makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), textSize)}</TableCell>
                 </TableRow>
@@ -231,26 +225,27 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
                             removeWrapper={false}
                         />
                     </TableCell>
-                </TableRow>
+                </TableRow> */}
             </>
 
             content.push(x)
         }
     }
 
-    return <Table
-        aria-label='linked resource bindings table'
-        hideHeader={true}
-        isCompact={true}
-        radius='none'
-        removeWrapper={true}
-    >
-        <TableHeader>
-            <TableColumn>lr</TableColumn>
-            <TableColumn>lp</TableColumn>
-        </TableHeader>
-        <TableBody>
-            {content}
-        </TableBody>
-    </Table>
+    return <div>🌲</div>
+    // <Table
+    //     aria-label='linked resource bindings table'
+    //     hideHeader={true}
+    //     isCompact={true}
+    //     radius='none'
+    //     removeWrapper={true}
+    // >
+    //     <TableHeader>
+    //         <TableColumn>lr</TableColumn>
+    //         <TableColumn>lp</TableColumn>
+    //     </TableHeader>
+    //     <TableBody>
+    //         {content}
+    //     </TableBody>
+    // </Table>
 }

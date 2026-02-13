@@ -9,7 +9,7 @@ export default () => <footer className='flex flex-col flex-1 bg-background font-
     <SherlockBar />
     <div className='flex mt-11 text-gray-500'>
         <div className="flex-1 mx-11 text-right">
-            <Link className={linkStyles({ fontWeight: 'normal' })} href="https://musica.hypotheses.org/" target='_blank'>Musica2</Link>
+            <Link className={linkStyles({ fontWeight: 'normal' })} href="https://musica.hypotheses.org/" target='_blank'>Musica*</Link>
             <br />
             <br />
             Consortium en musicologie numérique

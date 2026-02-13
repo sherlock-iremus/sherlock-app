@@ -1,3 +1,3 @@
 export default function ({ children }) {
-    return <div className="shadow shadow-stone-300 p-4">{children}</div>;
+    return <div className="p-3 border border-text-text-secondary-foreground">{children}</div>;
 }

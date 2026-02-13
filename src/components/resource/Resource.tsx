@@ -31,7 +31,7 @@ const Resource: React.FC<Props> = ({ resourceUri, customParts }) => {
 
   return (
     <>
-      <div className='bg-background mb-6 px-6 text-foreground light'>
+      <div className='mb-6 px-6'>
         <Title idData={dataId} />
         <MediaRepresentation resourceIdentityBindings={dataId} />
         <Identity resourceIdentityBindings={dataId} resourceIdentityQuery={queryId} />
