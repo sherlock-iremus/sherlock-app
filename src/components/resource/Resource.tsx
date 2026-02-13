@@ -31,7 +31,7 @@ const Resource: React.FC<Props> = ({ resourceUri, customParts }) => {
 
   return (
     <>
-      <div className='mb-6 px-6'>
+      <div className='mb-6 px-6 light'>
         <Title idData={dataId} />
         <MediaRepresentation resourceIdentityBindings={dataId} />
         <Identity resourceIdentityBindings={dataId} resourceIdentityQuery={queryId} />

@@ -12,7 +12,9 @@ export default function () {
     const { data: resourceUriData } = useGetResourceByBusinessId(livraison || '')
     const resourceUri = resourceUriData?.results.bindings[0]['resource'].value
 
-    const livraisonContent = <LivraisonContent projectIdData={projectIdData} resourceBusinessId={livraison || ''} />
+    const livraisonContent = <LivraisonContent key="CP0" projectIdData={projectIdData} resourceBusinessId={livraison || ''} />
 
-    return <ResourceInProject resourceUri={resourceUri || ''} projectIdData={projectIdData} customParts={[livraisonContent]} />
+    return resourceUri
+        ? <ResourceInProject resourceUri={resourceUri} projectIdData={projectIdData} customParts={[livraisonContent]} />
+        : <></>
 }

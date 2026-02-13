@@ -4,54 +4,57 @@ import { PiNotebookDuotone } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
 import { useLivraisonQuery } from './hooks_sparql'
 import BasicTanStackTable from "@/components/common/BasicTanStackTable"
+import { SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
+import { createColumnHelper } from "@tanstack/react-table"
+import TableWrapper from "@/components/layout/TableWrapper"
 
 interface Props {
     projectIdData: ProjectIdData
     resourceBusinessId: string
 }
 
-const LivraisonContent: React.FC<Props> = ({ projectIdData, resourceBusinessId }) => {
+const columnHelper = createColumnHelper<SparqlQueryResultObject_Binding>()
+const columns = [
+    columnHelper.accessor('article_business_id', {
+        cell: _ => _.getValue()?.value,
+        header: _ => "Identifiant",
+    }),
+    columnHelper.accessor('livraison_subtitle', {
+        cell: _ => <div className='flex flex-col'>
+            {'title_forge' in _.row.original && <div>{_.row.original['title_forge'].value} <span className='pl-1 font-mono text-text-secondary-foreground text-xs'>[titre forgé]</span></div>}
+            {'title_courant' in _.row.original && <div>{_.row.original['title_courant'].value} <span className='pl-1 font-mono text-text-secondary-foreground text-xs'>[titre courant]</span></div>}
+            {'title_paratexte' in _.row.original && <div>{_.row.original['title_paratexte'].value} <span className='pl-1 font-mono text-text-secondary-foreground text-xs'>[titre dans le paratexte]</span></div>}
+        </div>
+        ,
+        header: _ => "Titre de l'article",
+    }),
+    columnHelper.accessor('pagination', {
+        cell: _ => _.getValue()?.value,
+        header: _ => "Pagination",
+    })
+]
+
+export default function ({ projectIdData, resourceBusinessId }: Props) {
     const navigate = useNavigate()
     const { data, query } = useLivraisonQuery(resourceBusinessId || '')
 
+    //TODO
+    // onRowAction={(key) => {
+    //     navigate('/projects/' + projectIdData.code + '/articles/' + key)
+    // }}
+
     return <>
         {makeH2(`Contenu de la livraison (${data?.results?.bindings.length} articles)`, <PiNotebookDuotone />, query)}
-        {data?.results.bindings && <BasicTanStackTable />
-            // <Table
-            //     aria-label="Livraisons du Mercure Galant"
-            //     className='font-serif'
-            //     radius='none'
-            //     onRowAction={(key) => {
-            //         navigate('/projects/' + projectIdData.code + '/articles/' + key)
-            //     }}
-
-            // >
-            //     <TableHeader>
-            //         <TableColumn>Identifiant</TableColumn>
-            //         <TableColumn>Titre de l'article</TableColumn>
-            //         <TableColumn>Pagination</TableColumn>
-            //     </TableHeader>
-            //     <TableBody items={data?.results.bindings}>
-            //         {(item) => {
-            //             return <TableRow
-            //                 className='hover:bg-gray-100'
-            //                 key={item['article_business_id'].value}
-            //             >
-            //                 <TableCell className='align-top'><span className='text-nowrap'>{item['article_business_id'].value}</span></TableCell>
-            //                 <TableCell className='align-top'>
-            //                     <div className='flex flex-col'>
-            //                         {'title_forge' in item && <div>{item['title_forge'].value} <span className='italic'>(titre forgé)</span></div>}
-            //                         {'title_courant' in item && <div>{item['title_courant'].value} <span className='italic'>(titre courant)</span></div>}
-            //                         {'title_paratexte' in item && <div>{item['title_paratexte'].value} <span className='italic'>(titre dans le paratexte)</span></div>}
-            //                     </div>
-            //                 </TableCell>
-            //                 <TableCell className='align-top'><span className='text-nowrap'>{item.hasOwnProperty('pagination') ? item['pagination'].value : ''}</span></TableCell>
-            //             </TableRow>
-            //         }}
-            //     </TableBody>
-            // </Table>
+        {
+            data?.results.bindings && <TableWrapper>
+                <BasicTanStackTable
+                    data={data.results.bindings}
+                    columns={columns}
+                    tableStyle='p-6 [&_th,&_td]:p-3 font-serif text-sm [&_th:nth-child(2)]:text-left'
+                    theadStyle='bg-table-head [&_th>span]:no-underline'
+                    trStyle='hover:bg-table-row-hover [&>td:nth-child(1)]:text-text-secondary-foreground [&>td:nth-child(1)]:text-xs [&>td:nth-child(1)]:font-mono [&>td:nth-child(1)]:text-center [&>td:nth-child(3)]:text-center [&>td:nth-child(3)]:text-nowrap'
+                />
+            </TableWrapper>
         }
     </>
 }
-
-export default LivraisonContent

@@ -38,7 +38,7 @@ const X: React.FC<Props> = ({ idData }) => {
     return titles.length > 0
         ? <>
             {makeH2('titre de la ressource', <MdTitle />)}
-            <div className="flex flex-col gap-3 p-3 border border-text-text-secondary-foreground font-serif text-2xl text-center">
+            <div className="flex flex-col gap-3 p-3 border border-text-text-secondary-foreground font-serif text-xl text-center">
                 {titles.map(t => <div key={t.type_type}>
                     <div className='font-medium'>{t.value}</div>
                     {t.type_type && <div className='font-mono text-text-secondary-foreground text-sm lowercase'>[{t.type_type}]</div>}
