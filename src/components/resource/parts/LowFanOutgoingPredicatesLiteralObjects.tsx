@@ -12,7 +12,10 @@ const X: React.FC<Props> = ({ bindings, query }) => {
 
     return bindings.length > 0 && <>
         {makeH2('Propriétés', <FaIdCard />, query)}
-        <BindingsTable bindings={bindings.map(x => ({ label: x.lr, p: x.lp }))} />
+        <BindingsTable
+            bindings={bindings.map(x => ({ label: x.lr, p: x.lp }))}
+            wrapper={true}
+        />
     </>
 }
 

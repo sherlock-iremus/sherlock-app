@@ -14,7 +14,10 @@ const X: React.FC<Props> = ({ resourceUri }) => {
 
     return e13WithLiteralP141Bindings.length > 0 && <>
         {makeH2('Propriétés', <FaPenNib />, query)}
-        <BindingsTable bindings={data?.results.bindings.sort(sortBindingsFn('p177_label')) || []} />
+        <BindingsTable
+            bindings={data?.results.bindings.sort(sortBindingsFn('p177_label')) || []}
+            wrapper={true}
+        />
     </>
 }
 

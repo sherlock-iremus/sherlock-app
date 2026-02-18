@@ -75,7 +75,7 @@ function makeRowFromBinding(binding: SparqlQueryResultObject_Binding) {
 
         return humanReadableClass
             ? <Tooltip delay={0}>
-                <Tooltip.Trigger>
+                <Tooltip.Trigger className='inline'>
                     <span className={humanReadable()}>{humanReadableClass}</span>
                 </Tooltip.Trigger>
                 <Tooltip.Content className={rdfTypeTooltip()}>
@@ -179,7 +179,7 @@ interface BindingsTableProps {
     wrapper: boolean
 }
 
-export function BindingsTable({ bindings, wrapper }: BindingsTableProps) {
+export function BindingsTable({ bindings, wrapper = false }: BindingsTableProps) {
     const rows = bindings.map(makeRowFromBinding).filter(x => x.p && x.v)
 
     const columnHelper = createColumnHelper<RowData>()
@@ -210,29 +210,19 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <>
-                <tr>
-                    <td className='pr-2 text-base'>🌐</td>
-                    <td>
+                <div>
+                    <div className='inline-block bg-data-table-line px-3 py-2'>
                         {displayClassOrProperty(linkingPredicate)} {makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), 'sm')}
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td className='p-20'>
-                        <BindingsTable
-                            bindings={bindingsList}
-                        />
-                    </td>
-                </tr>
+                    </div>
+                    <div className='border border-data-table-line'>
+                        <BindingsTable bindings={bindingsList} wrapper={false} />
+                    </div>
+                </div>
             </>
 
             content.push(x)
         }
     }
 
-    return <table className="border [&_td]:border w-full text-sm">
-        <tbody>
-            {content}
-        </tbody>
-    </table>
+    return content
 }

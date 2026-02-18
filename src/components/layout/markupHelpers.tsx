@@ -7,7 +7,7 @@ const h2 = tv({
 })
 
 export function makeH2(title: string, icon: React.ReactElement, sparqlQuery?: string, link?: ReactElement): React.ReactElement {
-    return <h2 className={h2()}>
+    return <h2 className={h2()} id={title.toLowerCase().replace(/\s+/g, '-')}>
         {icon}
         {title}
         {sparqlQuery && <YasguiButton sparqlQuery={sparqlQuery} />}

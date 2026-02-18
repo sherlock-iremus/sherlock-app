@@ -23,7 +23,10 @@ const X: React.FC<Props> = ({ resourceUri }) => {
     return dotOnePropertiesBindings.length > 0
         ? <>
             {makeH2('Propriétés', <FaPenNib />, query__dotOneProperties)}
-            <BindingsTable bindings={dotOnePropertiesBindings} />
+            <BindingsTable
+                bindings={dotOnePropertiesBindings}
+                wrapper={true}
+            />
         </> : ''
 }
 
