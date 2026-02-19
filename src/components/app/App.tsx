@@ -21,7 +21,7 @@ export default function App() {
       <Routes>
         <Route element={<Root />} path='/'>
           {/* <Route path='/' element={<GenericResourceRouter />} /> */}
-          {/* <Route path='/id/:resourceUUID' element={<GenericResourceRouter />} /> */}
+          <Route path='/id/:resourceUUID' element={<GenericResourceRouter />} />
           {/* <Route path='/projects/:projectCode' element={<Project searchEngine />} /> */}
           <Route path='/projects/mercure-galant/livraisons' element={<Livraisons />} />
           <Route path='/projects/mercure-galant/livraisons/:livraison' element={<Livraison />} />

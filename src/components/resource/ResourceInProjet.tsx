@@ -29,15 +29,16 @@ const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, custom
                 <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
                     URI de la ressource consultée :
                 </h2>
-                <div>
+                <div className='flex items-center gap-3'>
                     <h2
                         className='font-mono text-[aqua] text-link_negative'
                         style={{
                             textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
                         }}
                     >
-                        {resourceUri} <ClipboardButton content={resourceUri} />
+                        {resourceUri}
                     </h2>
+                    <ClipboardButton content={resourceUri} />
                 </div>
             </div>
         </>
