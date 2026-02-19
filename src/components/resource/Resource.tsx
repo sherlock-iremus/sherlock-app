@@ -1,5 +1,6 @@
 import { useCountObjectsOfOutgoingPredicatesQuery, useObjectsOfLowFanOutgoingPredicatesQuery, useResourceIdentityQuery } from '@/hooks/sherlockSparql'
 import { extractDataFromOutgoingPredicatesCountSparqlQueryResult } from '@/utils/bindingsHelpers'
+import { ProjectIdData } from '@/utils/project'
 import { ReactElement } from 'react'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
 import Dotone from './parts/CRMDotOneProperties'
@@ -14,9 +15,10 @@ import Title from './parts/Title'
 interface Props {
   resourceUri: string
   customParts: ReactElement[]
+  projectIdData: ProjectIdData
 }
 
-const Resource: React.FC<Props> = ({ resourceUri, customParts }) => {
+export default function ({ resourceUri, customParts, projectIdData }: Props) {
   const { data: dataId, query: queryId } = useResourceIdentityQuery(resourceUri)
   const { data: dataCountOutgoing, query: queryCount } = useCountObjectsOfOutgoingPredicatesQuery(resourceUri)
   const outgoingPredicatesCountData = extractDataFromOutgoingPredicatesCountSparqlQueryResult(dataCountOutgoing)
@@ -45,10 +47,9 @@ const Resource: React.FC<Props> = ({ resourceUri, customParts }) => {
           outgoingPredicatesCountData={outgoingPredicatesCountData}
           query={queryCount}
           resourceUri={resourceUri}
+          projectIdData={projectIdData}
         />
       </div>
     </>
   )
 }
-
-export default Resource

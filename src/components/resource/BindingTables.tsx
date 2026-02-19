@@ -1,16 +1,15 @@
-import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
+import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers';
 import { linkStyles } from '@/styles/variants/link';
-import { LRLPIndexedBindings } from '@/utils/bindingsHelpers'
-import { Tooltip } from '@heroui/react'
-import React, { ReactNode } from 'react'
-import Markdown from 'react-markdown'
-import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
-import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import { tv } from 'tailwind-variants'
-import BasicTanStackTable from '../common/BasicTanStackTable'
-import { createColumnHelper } from '@tanstack/react-table'
-import TableWrapper from '../layout/TableWrapper'
-import { Link } from '@heroui/react';
+import { LRLPIndexedBindings } from '@/utils/bindingsHelpers';
+import { Link, Tooltip } from '@heroui/react';
+import { createColumnHelper } from '@tanstack/react-table';
+import React, { ReactNode } from 'react';
+import Markdown from 'react-markdown';
+import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';
+import { SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result';
+import { tv } from 'tailwind-variants';
+import BasicTanStackTable from '../common/BasicTanStackTable';
+import TableWrapper from '../layout/TableWrapper';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -209,16 +208,17 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
 
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
-            const x = <>
-                <div>
-                    <div className='inline-block bg-data-table-line px-3 py-2'>
-                        {displayClassOrProperty(linkingPredicate)} {makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), 'sm')}
-                    </div>
-                    <div className='border border-data-table-line'>
-                        <BindingsTable bindings={bindingsList} wrapper={false} />
+            const x = <div key={linkedResource}>
+                <div className='inline-block bg-table-head px-3 py-2 border border-text-text-secondary-foreground border-b-0'>
+                    <div className='flex items-center gap-2'>
+                        {displayClassOrProperty(linkingPredicate)}
+                        {makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), 'sm')}
                     </div>
                 </div>
-            </>
+                <TableWrapper>
+                    <BindingsTable bindings={bindingsList} wrapper={false} />
+                </TableWrapper>
+            </div>
 
             content.push(x)
         }

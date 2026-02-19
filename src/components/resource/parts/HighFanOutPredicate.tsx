@@ -1,231 +1,117 @@
 import YasguiButton from "@/components/common/YasguiButton"
-import { humanReadable, rdfTypeTooltip, uriData } from "@/components/resource/BindingTables"
+import TableWrapper from "@/components/layout/TableWrapper"
 import { useListLinkedResources } from "@/hooks/sherlockSparql"
-import { Button, Input, Tooltip } from "@heroui/react"
-import { useCallback, useMemo, useState } from 'react'
-import { CiSearch } from 'react-icons/ci'
+//TODO import { CiSearch } from 'react-icons/ci'
+import { ProjectIdData } from "@/utils/project"
+import { Input } from "@heroui/react"
+import { ColumnDef, flexRender, getCoreRowModel, getFilteredRowModel, useReactTable } from '@tanstack/react-table'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes'
 import { SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result'
-import { getReadablePredicate, makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
 
-export default function HighFanOutPredicate({ n, predicateUri, resourceUri }: {
+export default function HighFanOutPredicate({ n, predicateUri, resourceUri, projectIdData }: {
   n: number
   predicateUri: string
   resourceUri: string
+  projectIdData: ProjectIdData
 }) {
-  const prefixedUri = makePrefixedUri(predicateUri)
   const navigate = useNavigate()
 
   ////////////////////////////////////////////////////////////////////////////////
-  // DATA
+  // SETUP
   ////////////////////////////////////////////////////////////////////////////////
 
   const { data, query } = useListLinkedResources(resourceUri, predicateUri)
 
-  ////////////////////////////////////////////////////////////////////////////////
-  // SEARCH
-  ////////////////////////////////////////////////////////////////////////////////
+  const [globalFilter, setGlobalFilter] = useState("")
 
-  // const [filterValue, setFilterValue] = useState('')
-  // const hasSearchFilter = Boolean(filterValue)
+  const columns: ColumnDef<SparqlQueryResultObject_Binding>[] = [
+    {
+      header: () => 'Identifiant',
+      id: 'business_id',
+      accessorKey: 'business_id.value',
+      enableGlobalFilter: true,
+    },
+    {
+      header: () => 'Label',
+      id: 'label',
+      accessorKey: 'label.value',
+      enableGlobalFilter: true,
+    },
+  ]
 
-  // const filteredItems = useMemo(() => {
-  //   let _ = data ? [...data.results.bindings] : []
-
-  //   if (hasSearchFilter) {
-  //     _ = _.filter(binding =>
-  //       binding.label.value.toLowerCase().includes(filterValue.toLowerCase())
-  //       ||
-  //       binding.business_id.value.toLowerCase().includes(filterValue.toLowerCase())
-  //     )
-  //   }
-
-  //   return _
-  // }, [data?.results.bindings, filterValue])
-
-  // const onSearchChange = useCallback((value?: string) => {
-  //   if (value) {
-  //     setFilterValue(value)
-  //     setPage(1)
-  //   } else {
-  //     setFilterValue('')
-  //   }
-  // }, [])
-
-  // const onClear = useCallback(() => {
-  //   setFilterValue('')
-  //   setPage(1)
-  // }, [])
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // SORT
-  ////////////////////////////////////////////////////////////////////////////////
-
-  // const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-  //   column: 'label',
-  //   direction: 'ascending'
-  // })
-
-  // const sortedItems = useMemo(() => {
-  //   return [...filteredItems].sort(
-  //     (
-  //       a: SparqlQueryResultObject_Binding,
-  //       b: SparqlQueryResultObject_Binding
-  //     ) => {
-  //       const first = a[sortDescriptor.column as string].value as string
-  //       const second = b[sortDescriptor.column as string].value as string
-  //       const isEmptyFirst = first === "" || first == null;
-  //       const isEmptySecond = second === "" || second == null;
-  //       if (isEmptyFirst && !isEmptySecond) return 1
-  //       if (!isEmptyFirst && isEmptySecond) return -1
-  //       if (isEmptyFirst && isEmptySecond) return 0
-  //       const cmp = first < second ? -1 : first > second ? 1 : 0
-
-  //       return sortDescriptor.direction === 'descending' ? -cmp : cmp
-  //     }
-  //   )
-  // }, [sortDescriptor, filteredItems])
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // PAGINATION
-  ////////////////////////////////////////////////////////////////////////////////
-
-  // const [page, setPage] = useState(1)
-
-  // const rowsPerPage = 20
-
-  // const pages = Math.ceil(sortedItems.length / rowsPerPage)
-
-  // const items = useMemo(() => {
-  //   const start = (page - 1) * rowsPerPage
-  //   const end = start + rowsPerPage
-  //   return sortedItems.slice(start, end)
-  // }, [page, sortedItems, rowsPerPage])
-
-  // const onNextPage = useCallback(() => {
-  //   if (page < pages) {
-  //     setPage(page + 1)
-  //   }
-  // }, [page, pages])
-
-  // const onPreviousPage = useCallback(() => {
-  //   if (page > 1) {
-  //     setPage(page - 1)
-  //   }
-  // }, [page])
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // TOP & BOTTOM CONTENT
-  ////////////////////////////////////////////////////////////////////////////////
-
-  // const topContent = useMemo(() => {
-  //   const rdfPredicate = <span className={uriData()}>{makeNonClickablePrefixedUri(prefixedUri, '')}</span>
-  //   return (
-  //     <>
-  //       <div className="flex items-center">
-  //         <Tooltip className={rdfTypeTooltip()} content={rdfPredicate}>
-  //           <span className={humanReadable()}>{getReadablePredicate(prefixedUri) || prefixedUri.prefix + ':' + prefixedUri.localPart}</span>
-  //         </Tooltip>
-  //         <span className='mx-2 font-light'>({n} ressources)</span>
-  //         <YasguiButton query={query} />
-  //       </div>
-  //       <div className='flex items-center'>
-  //         <Input
-  //           className='flex-1'
-  //           isClearable
-  //           onClear={() => onClear()}
-  //           onValueChange={onSearchChange}
-  //           placeholder='Chercher par label...'
-  //           startContent={<CiSearch />}
-  //           value={filterValue}
-  //         />
-  //         <div className='table-header ml-3'>({filteredItems.length} items)</div>
-  //       </div>
-  //     </>
-  //   )
-  // }, [
-  //   filterValue,
-  //   onSearchChange,
-  //   data?.results.bindings.length,
-  //   hasSearchFilter,
-  // ])
-
-  // const bottomContent = useMemo(() => {
-  //   return (
-  //     <div className='flex justify-between items-center'>
-  //       <Pagination
-  //         isCompact
-  //         showControls
-  //         showShadow
-  //         color='primary'
-  //         page={page}
-  //         total={pages}
-  //         onChange={setPage}
-  //       />
-  //       <div className='hidden sm:flex justify-end gap-2 w-[30%]'>
-  //         <Button
-  //           isDisabled={pages === 1}
-  //           size='sm'
-  //           variant='flat'
-  //           onPress={onPreviousPage}
-  //         >
-  //           «
-  //         </Button>
-  //         <Button
-  //           isDisabled={pages === 1}
-  //           size='sm'
-  //           variant='flat'
-  //           onPress={onNextPage}
-  //         >
-  //           »
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   )
-  // }, [items.length, page, pages, hasSearchFilter])
+  const table = useReactTable({
+    columns,
+    data: data?.results.bindings || [],
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: (row, columnId, filterValue) => {
+      const search = String(filterValue).toLowerCase()
+      return Object.values(row.original).some(value => String(value.value).toLowerCase().includes(search))
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    state: {
+      globalFilter,
+    }
+  })
 
   ////////////////////////////////////////////////////////////////////////////////
   // RENDER
   ////////////////////////////////////////////////////////////////////////////////
 
-  return <div>{JSON.stringify(data)}</div>
-
-  // return (
-  //   <div>
-  //     {data ? (
-  //       <Table
-  //         aria-label={predicateUri}
-  //         bottomContent={bottomContent}
-  //         bottomContentPlacement='inside'
-  //         onSortChange={setSortDescriptor}
-  //         sortDescriptor={sortDescriptor}
-  //         topContent={topContent}
-  //         topContentPlacement='inside'
-  //         onRowAction={(key) => navigate('/?resource=' + key)}
-  //         radius="none"
-  //       >
-  //         <TableHeader>
-  //           <TableColumn key='business_id' className="w-32" allowsSorting>Identifiant</TableColumn>
-  //           <TableColumn key='label' allowsSorting>Label</TableColumn>
-  //         </TableHeader>
-  //         <TableBody items={items}>
-  //           {item => <TableRow
-  //             key={item.linked_resource.value}
-  //             className="hover:bg-row_hover"
-  //           >
-  //             <TableCell className='py-0 font-serif align-top'>
-  //               {item.business_id.value}
-  //             </TableCell>
-  //             <TableCell className='py-0 font-serif align-top'>
-  //               {item.label.value}
-  //             </TableCell>
-  //           </TableRow>}
-  //         </TableBody>
-  //       </Table>
-  //     ) : (
-  //       '⏳'
-  //     )}
-  //   </div>
-  // )
+  return <TableWrapper>
+    <div className="">
+      <div className="flex justify-between gap-3">
+        <Input
+          isClearable
+          className="rounded-none w-full"
+          label="Email"
+          placeholder="Chercher…"
+          type="email"
+          variant="bordered"
+          onClear={() => setGlobalFilter("")}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          value={globalFilter ?? ""}
+        />
+        <YasguiButton sparqlQuery={query} />
+      </div>
+      <table className='mt-3 [&_th,&_td]:p-2 font-serif text-sm'>
+        <thead className="bg-table-head [&_th:nth-child(2)]:text-left">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="hover:bg-table-row-hover [&>td:nth-child(1)]:font-mono [&>td:nth-child(1)]:text-text-secondary-foreground [&>td:nth-child(1)]:text-xs"
+              onClick={() => {
+                navigate('/projects/' + projectIdData.code + '/articles/' + row.getValue('business_id'))
+              }}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext()
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </TableWrapper>
 }

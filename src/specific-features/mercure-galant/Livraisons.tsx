@@ -56,7 +56,7 @@ export default function () {
                     <BasicTanStackTable
                         data={data?.results.bindings}
                         columns={columns}
-                        tableStyle='p-6 [&_th,&_td]:p-3 font-serif text-sm [&_th]:text-left'
+                        tableStyle='p-6 [&_th,&_td]:p-2 font-serif text-sm [&_th]:text-left'
                         tbodyStyle='[&>tr>td:nth-child(4)]:text-center'
                         theadStyle='bg-table-head [&_th>span]:no-underline'
                         trStyle='hover:bg-table-row-hover'

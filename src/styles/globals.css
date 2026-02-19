@@ -77,4 +77,12 @@ html * {
         /* Sinon le trigger prend toute la largeur de son parent et non la taille de son contenu */
         @apply w-fit;
     }
+
+    .input {
+
+        &:focus-visible,
+        &[data-focus-visible="true"] {
+            @apply ring-link-hover;
+        }
+    }
 }
