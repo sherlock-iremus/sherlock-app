@@ -21,6 +21,7 @@ export default function ({ content }: ClipboardButtonProps) {
         variant='outline'
         onClick={() => navigator.clipboard.writeText(content)}
     >
-        {({ isHovered }) => <PiClipboardThin className={`w-5 h-5 text-link-foreground`} />}
+        {/* {({ isHovered }) => } */}
+        <PiClipboardThin className={`w-5 h-5 text-link-foreground`} />
     </Button>
 }

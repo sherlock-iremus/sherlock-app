@@ -22,6 +22,7 @@ export default function ({ sparqlQuery }: YasguiButtonProps) {
         variant='outline'
         onClick={() => window.open(makeYasguiUri(sparqlQuery), '_blank')}
     >
-        {({ isHovered }) => <PiBracketsCurlyDuotone className={`w-5 h-5 text-link-foreground`} />}
+        {/* {({ isHovered }) =>  */}
+        <PiBracketsCurlyDuotone className={`w-5 h-5 text-link-foreground`} />
     </Button>
 }

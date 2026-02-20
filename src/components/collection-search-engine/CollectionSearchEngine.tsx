@@ -117,7 +117,7 @@ export default function ({
           {groupedData.map(bindingsOfSameItem => {
             return <tr
               key={bindingsOfSameItem[0].item.value}
-              className='hover:bg-table-head'
+              className='hover:bg-table-head border-b'
               onClick={() => navigate('/?resource=' + bindingsOfSameItem[0].item.value)}
             >
               <td className='py-0 font-serif align-top'>
