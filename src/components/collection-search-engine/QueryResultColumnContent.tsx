@@ -1,4 +1,4 @@
-import Link from '@/components/common/Link'
+import { Link, TooltipContent } from '@heroui/react'
 import { DISPLAY_E13_TOOLTIP } from '@/components/collection-search-engine/CollectionSearchEngine'
 import { makeNonClickablePrefixedUri } from '@/components/resource/TriplesDisplayHelpers'
 import { groupByFields } from '@/utils/bindingsHelpers'
@@ -57,14 +57,16 @@ export const QueryResultColumnContent: React.FC<QueryResultColumnContentProps> =
     const significantE13Bindings = useMemo(() => getSignificantE13Bindings(bindingsOfSameItem), [bindingsOfSameItem])
     const queryResults = useMemo(() => uniqueDirectIndexation.concat(significantE13Bindings), [uniqueDirectIndexation, significantE13Bindings])
 
-    return <Tooltip
-        content={tooltipContent(uniqueE13Indexation)}
-        placement="top"
-        isDisabled={!DISPLAY_E13_TOOLTIP || significantE13Bindings.length === 0}
-    ><div>
-            {queryResults.map((row: SparqlQueryResultObject_Binding) =>
-                getQueryResultColumnContentRow(row)
-            )}
-        </div>
+    return <Tooltip isDisabled={!DISPLAY_E13_TOOLTIP || significantE13Bindings.length === 0}>
+        <Tooltip.Trigger>
+            <div>
+                {queryResults.map((row: SparqlQueryResultObject_Binding) =>
+                    getQueryResultColumnContentRow(row)
+                )}
+            </div>
+        </Tooltip.Trigger>
+        <TooltipContent>
+            {tooltipContent(uniqueE13Indexation)}
+        </TooltipContent>
     </Tooltip>
 }

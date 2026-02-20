@@ -1,4 +1,5 @@
-import Link from '@/components/common/Link'
+import { Link } from '@heroui/react'
+import { linkStyles } from '@/styles/variants/link';
 import SherlockBar from '@/components/deco/SherlockBar'
 import { makeH2 } from '@/components/layout/markupHelpers'
 import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'
@@ -6,26 +7,31 @@ import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsF
 import { extractProjectIdData } from '@/utils/project'
 import { FaIdCard } from 'react-icons/fa'
 import { IoDocumentAttachOutline } from 'react-icons/io5'
-import { PiGraphDuotone } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
-import { makeGroupedBindings, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import CollectionSearchEngine from '../collection-search-engine/CollectionSearchEngine'
+import { makeGroupedBindings, SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
 import ProjectHeader from '../layout/ProjectHeader'
+import BasicTanStackTable from '../common/BasicTanStackTable'
+import { createColumnHelper } from '@tanstack/react-table'
+import TableWrapper from '../layout/TableWrapper'
+import { PiGraphDuotone } from 'react-icons/pi';
+import CollectionSearchEngine from '../collection-search-engine/CollectionSearchEngine';
 
 interface ProjectProps {
     searchEngine?: boolean
 }
 
 const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
+    // Parameter
     const { projectCode } = useParams()
 
-    // Project data
+    // Hooks
     const { data: data__projectIdentity } = useGetProjectByCodeQuery(projectCode || '')
     const projectData = extractProjectIdData(data__projectIdentity)
+    const { data: data__projectFiles, query: query__projectFiles } = useGetProjectsFilesQuery(projectData.uuid || '')
+    const { data: data__projectsAndCollections } = useGetProjectsAndCollections(projectCode)
 
     // Project files data
-    const { data: data__projectFiles, query: query__projectFiles } = useGetProjectsFilesQuery(projectData.uuid || '')
     const projectFilesData = makeGroupedBindings(
         data__projectFiles?.results.bindings || [],
         'file',
@@ -35,12 +41,8 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     // Project overview file URI
     const x = data__projectFiles?.results.bindings.filter(x => x.file_type.value === SHERLOCK_E55_PROJECT_OVERVIEW_FILE)
     let overviewFileUri = ''
-    if (x && x?.length > 0) {
-        overviewFileUri = x[0].file_uri.value
-    }
+    if (x && x?.length > 0) overviewFileUri = x[0].file_uri.value
 
-    // TODO Antoine
-    const { data: data__projectsAndCollections } = useGetProjectsAndCollections(projectCode)
     const projectGraphUri = (() => {
         try {
             return data__projectsAndCollections?.results.bindings[0].graph_uri.value
@@ -55,6 +57,26 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
             }))
         } catch { return null }
     })()
+
+    // Project files table
+    const projectFilesColumnHelper = createColumnHelper<SparqlQueryResultObject_Binding>()
+    const projectFilesColumns = [
+        projectFilesColumnHelper.accessor('p1_literal.value', {
+            header: 'Nom',
+            cell: x => <span className='font-serif'>{x.getValue()}</span>
+        }),
+        projectFilesColumnHelper.accessor('file_uri.value', {
+            header: 'Lien',
+            cell: x => <Link
+                className={linkStyles({ textSize: 'sm', letterSpacing: 'normal', fontWeight: 'normal' })}
+                href={x.getValue()}
+                target='_blank'
+            >
+                {x.getValue().split('/').slice(-1)}
+            </Link>
+        }),
+    ]
+
 
     // <>
     return <div>
@@ -77,31 +99,15 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
 
             {projectFilesData.length > 0 && <>
                 {makeH2('Fichiers', <IoDocumentAttachOutline />, query__projectFiles)}
-                <div>
-                    <Table
-                        aria-label='Project files'
-                        hideHeader={false}
-                        isCompact={true}
-                        radius='none'
-                    >
-                        <TableHeader>
-                            <TableColumn>Nom</TableColumn>
-                            <TableColumn>Lien</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            {(projectFilesData || []).map(_ => <TableRow>
-                                <TableCell className='font-serif'>
-                                    {(_.p1_literal as SparqlQueryResultObject_Variable)?.value}
-                                </TableCell>
-                                <TableCell>
-                                    <Link className='text-sm' href={(_.file_uri as SparqlQueryResultObject_Variable).value} target='_blank'>
-                                        {(_.file_uri as SparqlQueryResultObject_Variable).value.split('/').slice(-1)}
-                                    </Link>
-                                </TableCell>
-                            </TableRow>)}
-                        </TableBody>
-                    </Table>
-                </div>
+                <TableWrapper>
+                    <BasicTanStackTable
+                        data={data__projectFiles?.results.bindings || []}
+                        columns={projectFilesColumns}
+                        tableStyle='[&_td]:p-1 text-sm [&_th]:px-1 [&_th]:py-2'
+                        theadStyle='bg-table-head [&_th>span]:no-underline'
+                        thStyle='text-left font-medium lowercase'
+                    />
+                </TableWrapper>
             </>
             }
 

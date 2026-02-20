@@ -81,57 +81,57 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, proj
         <div className="flex justify-between gap-3">
           <Input
             className="rounded-none w-full"
-            label="Email"
             placeholder="Chercher…"
             type="email"
-            variant="bordered"
             onChange={(e) => setGlobalFilter(e.target.value)}
             value={globalFilter ?? ""}
           />
           <YasguiButton sparqlQuery={query} />
         </div>
-        <div className="my-3">
+        <div className="flex items-center my-3">
           <Button
             className='rounded-none'
+            variant="outline"
             onClick={() => table.firstPage()}
             isDisabled={!table.getCanPreviousPage()}
           >
             {'<<'}
           </Button>
           <Button
+            className="disabled:opacity-50 rounded-none"
+            variant="outline"
             onClick={() => table.previousPage()}
             isDisabled={!table.getCanPreviousPage()}
-            className="disabled:opacity-50 rounded-none"
           >
-            Précédent
+            {'<'}
           </Button>
           <Button
+            className="disabled:opacity-50 rounded-none"
+            variant="outline"
             onClick={() => table.nextPage()}
             isDisabled={!table.getCanNextPage()}
-            className="disabled:opacity-50 rounded-none"
           >
-            Suivant
+            {'>'}
           </Button>
           <Button
             className='rounded-none'
+            variant="outline"
             onClick={() => table.lastPage()}
             isDisabled={!table.getCanNextPage()}
           >
             {'>>'}
           </Button>
-          <span>
-            Page{" "}
-            <strong>
-              {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
-            </strong>
+          <span className="ml-2 text-text-secondary-foreground text-sm">
+            page{" "}{table.getState().pagination.pageIndex + 1}/{table.getPageCount()}
           </span>
+          <div className="flex-1" />
           <select
             value={table.getState().pagination.pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
               setPageIndex(0); // reset à la première page
             }}
-            className="p-1 border rounded"
+            className="p-1 border rounded-none text-text-secondary-foreground text-sm"
           >
             {[MIN_N_LINES, MIN_N_LINES * 2, MIN_N_LINES * 5].map((size) => (
               <option key={size} value={size}>
@@ -140,7 +140,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, proj
             ))}
           </select>
         </div>
-        <table className='[&_th,&_td]:p-2 font-serif text-sm'>
+        <table className='[&_th,&_td]:p-2 w-full font-serif text-sm'>
           <thead className="bg-table-head [&_th:nth-child(2)]:text-left">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

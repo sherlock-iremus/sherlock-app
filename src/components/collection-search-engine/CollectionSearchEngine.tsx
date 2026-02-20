@@ -3,10 +3,14 @@ import { IdentityColumnContent } from '@/components/collection-search-engine/Ide
 import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent'
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql'
 import { groupByFields } from '@/utils/bindingsHelpers'
-import { Input } from '@heroui/react'
+import { Input, Link } from '@heroui/react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { f } from 'sherlock-sparql-queries/lib/collectionItems'
+import BasicTanStackTable from '../common/BasicTanStackTable'
+import TableWrapper from '../layout/TableWrapper'
+import { createColumnHelper } from '@tanstack/react-table'
+import { linkStyles } from '@/styles/variants/link'
 
 export const DISPLAY_E13_TOOLTIP = false
 
@@ -16,18 +20,15 @@ export type SingleCollectionProps = {
   collectionUri: string
 }
 
-export type CollectionSearchEngineProps = {
-  collections: SingleCollectionProps[]
-  projectCode: string
-  projectGraphUri: string
-}
-
-const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
+export default function ({
   collections,
   projectCode,
   projectGraphUri,
-}) => {
-  // TODO console.log(collections)
+}: {
+  collections: SingleCollectionProps[]
+  projectCode: string
+  projectGraphUri: string
+}) {
   const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState('')
   const [activeSearch, setActiveSearch] = useState('')
@@ -68,14 +69,12 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
       <div className='flex flex-col w-full'>
         <div className='flex flex-col items-center gap-3 w-full'>
           <div className='font-light'>
-            Recherche dans : « {collections.map(collection => collection.collectionName).join(', ')} »
+            <span className="text-text-secondary-foreground">Recherche dans : « </span><span className="">{collections.map(collection => collection.collectionName).join(', ')}</span><span className="text-text-secondary-foreground"> »</span>
           </div>
           <div className='flex items-center gap-3 w-full'>
             <Input
-              isClearable
-              onClear={onClear}
-              onValueChange={onSearchChange}
-              radius='none'
+              className='rounded-none w-full'
+              onChange={e => onSearchChange(e.target.value)}
               placeholder='📇'
               value={searchValue}
               onKeyDown={e => {
@@ -85,7 +84,7 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
               }}
             />
             {groupedData.length > 0 && <div className='font-thin text-texte_annexe text-nowrap'>{groupedData.length} items</div>}
-            <YasguiButton query={query} />
+            <YasguiButton sparqlQuery={query} />
           </div>
         </div>
         {isLoading && (
@@ -103,37 +102,37 @@ const CollectionSearchEngine: React.FC<CollectionSearchEngineProps> = ({
   ])
 
   return (
-    <Table
-      aria-label='Collection Search Engine'
-      hideHeader={groupedData.length === 0}
-      onRowAction={(key) => navigate('/?resource=' + key)}
-      radius='none'
-      topContent={topContent}
-      topContentPlacement='inside'
-    >
-      <TableHeader>
-        <TableColumn key='label' allowsSorting>Identité de la ressource</TableColumn>
-        <TableColumn key='object' allowsSorting>Résultat de recherche</TableColumn>
-        {/* <TableColumn key='collection' allowsSorting>Collection</TableColumn> */}
-      </TableHeader>
-      <TableBody items={groupedData}>
-        {bindingsOfSameItem => (
-          <TableRow key={bindingsOfSameItem[0].item.value} className='hover:bg-row_hover border-data_table_border border-b-1'>
-            <TableCell className='py-0 font-serif align-top'>
-              <IdentityColumnContent bindingsOfSameItem={bindingsOfSameItem} />
-            </TableCell>
-            <TableCell className='py-0 font-serif align-top'>
-              <QueryResultColumnContent bindingsOfSameItem={bindingsOfSameItem} />
-            </TableCell>
-            {/* <TableCell>
+    <TableWrapper>
+      {topContent}
+      {groupedData.length > 0 && <table
+        className='mt-3 [&_th]:p-2 [&_td]:px-2 [&_td]:py-1 text-xs'
+      >
+        <thead className='bg-table-head'>
+          <tr>
+            <th>Identité de la ressource</th>
+            <th>Résultat de recherche</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groupedData.map(bindingsOfSameItem => {
+            return <tr
+              key={bindingsOfSameItem[0].item.value}
+              className='hover:bg-table-head'
+              onClick={() => navigate('/?resource=' + bindingsOfSameItem[0].item.value)}
+            >
+              <td className='py-0 font-serif align-top'>
+                <IdentityColumnContent bindingsOfSameItem={bindingsOfSameItem} />
+              </td>
+              <td className='py-0 font-serif align-top'>
+                <QueryResultColumnContent bindingsOfSameItem={bindingsOfSameItem} />
+              </td>
+              {/* <TableCell>
               <CollectionColumnContent bindingsOfSameItem={bindingsOfSameItem} collections={collections} />
             </TableCell> */}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+            </tr>
+          })}
+        </tbody>
+      </table>}
+    </TableWrapper>
   )
-
 }
-
-export default CollectionSearchEngine

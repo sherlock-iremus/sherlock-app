@@ -1,4 +1,4 @@
-import LinkButton from "@/components/common/LinkButton"
+// import LinkButton from "@/components/common/LinkButton"
 import { makeH2 } from "@/components/layout/markupHelpers"
 import { extractDataFromIdentityBindings, IdentityData } from "@/utils/bindingsHelpers"
 import { guessMediaRepresentation } from "@/utils/resourceTypeAndMedia"
@@ -25,14 +25,15 @@ const X: React.FC<Props> = ({ resourceIdentityBindings }) => {
     // Media representation
     const mediaRepresentation = guessMediaRepresentation(identityData, projectId)
 
+    // TODO
     return mediaRepresentation != undefined ? <>
         {makeH2(
             mediaRepresentation.title,
             mediaRepresentation.icon,
             '',
             <>
-                <LinkButton content='URI du fichier TEI dans sa forge' href={mediaRepresentation.forgeFileUri} icon={<PiGitBranchDuotone />} />
-                <LinkButton content='URI du fichier TEI' href={mediaRepresentation.fileUri} icon={<BsFiletypeXml />} />
+                {/* <LinkButton content='URI du fichier TEI dans sa forge' href={mediaRepresentation.forgeFileUri} icon={<PiGitBranchDuotone />} />
+                <LinkButton content='URI du fichier TEI' href={mediaRepresentation.fileUri} icon={<BsFiletypeXml />} /> */}
             </>
         )}
         <div className='flex justify-center p-11 w-full text-center'>

@@ -43,13 +43,13 @@ export const useGetProjectByResourceUriQuery = (resourceURI: string) => {
 
 export const useGetProjectByCodeQuery = (projectCode: string) => {
     const query = getProjectByCode(projectCode)
-    const x = baseSherlockUseSparqlQuery(true, ['project', projectCode], query)
+    const x = baseSherlockUseSparqlQuery(projectCode != '', ['project', projectCode], query)
     return { query, ...x }
 }
 
 export const useGetProjectsFilesQuery = (projectUuid: string) => {
     const query = getProjectFiles(projectUuid)
-    const x = baseSherlockUseSparqlQuery(true, ['project', 'files', projectUuid], query)
+    const x = baseSherlockUseSparqlQuery(projectUuid != '', ['project', 'files', projectUuid], query)
     return { query, ...x }
 }
 
