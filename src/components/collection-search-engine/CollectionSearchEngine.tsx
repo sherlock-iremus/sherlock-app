@@ -1,16 +1,13 @@
-import YasguiButton from '@/components/common/YasguiButton'
 import { IdentityColumnContent } from '@/components/collection-search-engine/IdentityColumnContent'
 import { QueryResultColumnContent } from '@/components/collection-search-engine/QueryResultColumnContent'
+import YasguiButton from '@/components/common/YasguiButton'
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql'
 import { groupByFields } from '@/utils/bindingsHelpers'
-import { Input, Link } from '@heroui/react'
-import React, { useCallback, useMemo, useState } from 'react'
+import { Input } from '@heroui/react'
+import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { f } from 'sherlock-sparql-queries/lib/collectionItems'
-import BasicTanStackTable from '../common/BasicTanStackTable'
 import TableWrapper from '../layout/TableWrapper'
-import { createColumnHelper } from '@tanstack/react-table'
-import { linkStyles } from '@/styles/variants/link'
 
 export const DISPLAY_E13_TOOLTIP = false
 

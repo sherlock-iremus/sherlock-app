@@ -50,7 +50,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, proj
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    globalFilterFn: (row, columnId, filterValue) => {
+    globalFilterFn: (row, _columnId, filterValue) => {
       const search = String(filterValue).toLowerCase()
       return Object.values(row.original).some(value => String(value.value).toLowerCase().includes(search))
     },
@@ -73,7 +73,7 @@ export default function HighFanOutPredicate({ n, predicateUri, resourceUri, proj
   return <div className='mt-3 first:mt-0'>
     <div className='inline-block bg-table-head px-3 py-2 border border-text-text-secondary-foreground border-b-0 text-sm'>
       <div className='flex items-center gap-2'>
-        {displayClassOrProperty(predicateUri)}
+        {displayClassOrProperty(predicateUri)} ({n})
       </div>
     </div>
     <TableWrapper>
