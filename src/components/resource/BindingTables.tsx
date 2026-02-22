@@ -2,7 +2,7 @@ import { getReadableClass, getReadablePredicate, makeClickablePrefixedUri, makeN
 import { linkStyles } from '@/styles/variants/link';
 import { LRLPIndexedBindings } from '@/utils/bindingsHelpers';
 import { Link, Tooltip } from '@heroui/react';
-import { createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import React, { ReactNode } from 'react';
 import Markdown from 'react-markdown';
 import { makePrefixedUri } from 'sherlock-rdf/lib/rdf-prefixes';
@@ -178,22 +178,35 @@ interface BindingsTableProps {
     wrapper: boolean
 }
 
+const columns: ColumnDef<RowData>[] = [
+    {
+        accessorKey: 'p',
+        cell: info => info.getValue()
+    },
+    {
+        accessorKey: 'v',
+        cell: info => info.getValue()
+    },
+    {
+        accessorKey: 'v_md',
+        cell: info => info.getValue()
+    },
+]
+
 export function BindingsTable({ bindings, wrapper = false }: BindingsTableProps) {
     const rows = bindings.map(makeRowFromBinding).filter(x => x.p && x.v)
 
-    const columnHelper = createColumnHelper<RowData>()
-    const columns = [
-        columnHelper.accessor('p', { cell: x => x.getValue() }),
-        columnHelper.accessor('v', { cell: x => x.getValue() }),
-        columnHelper.accessor('v_md', { cell: x => x.getValue() }),
-    ]
-
     const table = <BasicTanStackTable
         data={rows}
-        columns={columns}
+        columns={columns as ColumnDef<unknown, any>[]}
         showHeader={false}
         trStyle='border-b border-b-data-table-line last:border-none'
         tdStyle={`pr-3 pl-3 pt-1 pb-1 last:pr-0 ${textSize} align-top`}
+        tableStyle={''}
+        theadStyle={''}
+        thStyle={''}
+        tbodyStyle={''}
+        trClick={() => { }}
     />
 
     return wrapper ? <TableWrapper>{table}</TableWrapper> : table

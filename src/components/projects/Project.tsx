@@ -1,21 +1,21 @@
-import { Link } from '@heroui/react'
+import SherlockBar from '@/components/deco/SherlockBar';
+import { makeH2 } from '@/components/layout/markupHelpers';
+import MarkdownFromUrl from '@/components/text/MarkdownFromUrl';
+import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql';
 import { linkStyles } from '@/styles/variants/link';
-import SherlockBar from '@/components/deco/SherlockBar'
-import { makeH2 } from '@/components/layout/markupHelpers'
-import MarkdownFromUrl from '@/components/text/MarkdownFromUrl'
-import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsFilesQuery } from '@/hooks/sherlockSparql'
-import { extractProjectIdData } from '@/utils/project'
-import { FaIdCard } from 'react-icons/fa'
-import { IoDocumentAttachOutline } from 'react-icons/io5'
-import { useParams } from 'react-router-dom'
-import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes'
-import { makeGroupedBindings, SparqlQueryResultObject_Binding, SparqlQueryResultObject_Variable } from 'sherlock-rdf/lib/sparql-result'
-import ProjectHeader from '../layout/ProjectHeader'
-import BasicTanStackTable from '../common/BasicTanStackTable'
-import { createColumnHelper } from '@tanstack/react-table'
-import TableWrapper from '../layout/TableWrapper'
+import { extractProjectIdData } from '@/utils/project';
+import { Link } from '@heroui/react';
+import { createColumnHelper } from '@tanstack/react-table';
+import { FaIdCard } from 'react-icons/fa';
+import { IoDocumentAttachOutline } from 'react-icons/io5';
 import { PiGraphDuotone } from 'react-icons/pi';
+import { useParams } from 'react-router-dom';
+import { SHERLOCK_E55_PROJECT_OVERVIEW_FILE } from 'sherlock-rdf/lib/rdf-prefixes';
+import { makeGroupedBindings, SparqlQueryResultObject_Binding } from 'sherlock-rdf/lib/sparql-result';
 import CollectionSearchEngine from '../collection-search-engine/CollectionSearchEngine';
+import BasicTanStackTable from '../common/BasicTanStackTable';
+import ProjectHeader from '../layout/ProjectHeader';
+import TableWrapper from '../layout/TableWrapper';
 
 interface ProjectProps {
     searchEngine?: boolean

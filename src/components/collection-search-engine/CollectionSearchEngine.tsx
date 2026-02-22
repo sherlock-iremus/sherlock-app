@@ -4,7 +4,7 @@ import YasguiButton from '@/components/common/YasguiButton'
 import { useGetAllProjectDataQuery } from '@/hooks/sherlockSparql'
 import { groupByFields } from '@/utils/bindingsHelpers'
 import { Input } from '@heroui/react'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { f } from 'sherlock-sparql-queries/lib/collectionItems'
 import TableWrapper from '../layout/TableWrapper'
@@ -56,10 +56,6 @@ export default function ({
       setSearchValue('')
     }
   }
-
-  const onClear = useCallback(() => {
-    setSearchValue('')
-  }, [])
 
   const topContent = useMemo(() => {
     return (
