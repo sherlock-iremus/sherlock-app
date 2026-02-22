@@ -79,10 +79,10 @@ export function extractDataFromOutgoingPredicatesCountSparqlQueryResult(sqro: Sp
 
     sqro.results.bindings.map(binding => {
         const n = parseInt(binding.c.value)
-        if (n > 20) {
+        if (n > 10) {
             x.highFanOutPredicatesBindings.push(binding)
         }
-        if (n <= 20 && !IDENTITY_PREDICATES.includes(binding.lp.value)) {
+        if (n <= 10 && !IDENTITY_PREDICATES.includes(binding.lp.value)) {
             x.lowFanOutPredicates.push(binding.lp.value)
         }
     })

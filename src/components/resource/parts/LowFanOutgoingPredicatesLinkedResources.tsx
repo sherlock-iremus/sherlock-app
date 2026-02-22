@@ -1,15 +1,13 @@
 import { makeH2 } from "@/components/layout/markupHelpers"
+import { groupByLPLR } from "@/utils/bindingsHelpers"
+import { PiGraphDuotone } from "react-icons/pi"
 import { SparqlQueryResultObject_Binding } from "sherlock-rdf/lib/sparql-result"
 import { LinkedResourcesBindingsTable } from "../BindingTables"
-import { PiGraphDuotone } from "react-icons/pi"
-import { groupByLPLR } from "@/utils/bindingsHelpers"
 
-interface Props {
+export default function ({ bindings, query }: {
     bindings: SparqlQueryResultObject_Binding[]
     query: string
-}
-
-const X: React.FC<Props> = ({ bindings, query }) => {
+}) {
     let nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR: Record<string, any> = groupByLPLR(bindings)
     return Object.keys(nonLiteralOtherOutgoingPredicatesBindingsGroupedByLPLR).length != 0
         ? <>
@@ -18,5 +16,3 @@ const X: React.FC<Props> = ({ bindings, query }) => {
         </>
         : ''
 }
-
-export default X
