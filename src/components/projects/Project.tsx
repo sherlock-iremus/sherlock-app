@@ -5,7 +5,7 @@ import { useGetProjectByCodeQuery, useGetProjectsAndCollections, useGetProjectsF
 import { linkStyles } from '@/styles/variants/link';
 import { extractProjectIdData } from '@/utils/project';
 import { Link } from '@heroui/react';
-import { createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { FaIdCard } from 'react-icons/fa';
 import { IoDocumentAttachOutline } from 'react-icons/io5';
 import { PiGraphDuotone } from 'react-icons/pi';
@@ -59,22 +59,23 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
     })()
 
     // Project files table
-    const projectFilesColumnHelper = createColumnHelper<SparqlQueryResultObject_Binding>()
-    const projectFilesColumns = [
-        projectFilesColumnHelper.accessor('p1_literal.value', {
+    const projectFilesColumns: ColumnDef<SparqlQueryResultObject_Binding>[] = [
+        {
+            accessorKey: 'p1_literal.value',
             header: 'Nom',
-            cell: x => <span className='font-serif'>{x.getValue()}</span>
-        }),
-        projectFilesColumnHelper.accessor('file_uri.value', {
+            cell: x => <span className='font-serif'>{String(x.getValue())}</span>
+        },
+        {
+            accessorKey: 'file_uri.value',
             header: 'Lien',
             cell: x => <Link
                 className={linkStyles({ textSize: 'sm', letterSpacing: 'normal', fontWeight: 'normal' })}
-                href={x.getValue()}
+                href={String(x.getValue())}
                 target='_blank'
             >
-                {x.getValue().split('/').slice(-1)}
+                {String(x.getValue()).split('/').slice(-1)}
             </Link>
-        }),
+        }
     ]
 
 
@@ -102,10 +103,15 @@ const Project: React.FC<ProjectProps> = ({ searchEngine }) => {
                 <TableWrapper>
                     <BasicTanStackTable
                         data={data__projectFiles?.results.bindings || []}
-                        columns={projectFilesColumns}
+                        columns={projectFilesColumns as ColumnDef<unknown, any>[]}
                         tableStyle='[&_td]:p-1 text-sm [&_th]:px-1 [&_th]:py-2'
                         theadStyle='bg-table-head [&_th>span]:no-underline'
                         thStyle='text-left font-medium lowercase'
+                        tbodyStyle={''}
+                        trStyle={''}
+                        tdStyle={''}
+                        showHeader={true}
+                        trClick={() => { }}
                     />
                 </TableWrapper>
             </>
