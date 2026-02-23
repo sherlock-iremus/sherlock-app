@@ -1,3 +1,3 @@
 export default function ({ children }: { children: React.ReactNode }) {
-    return <div className="p-3 border border-text-text-secondary-foreground">{children}</div>;
+    return <div className="shadow-md p-3 border border-data-section-border">{children}</div>;
 }

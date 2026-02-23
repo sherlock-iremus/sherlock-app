@@ -222,7 +222,7 @@ export const LinkedResourcesBindingsTable: React.FC<LinkedResourcesBindingsTable
     for (const [linkingPredicate, linkingPredicateData] of Object.entries(bindings)) {
         for (const [linkedResource, bindingsList] of Object.entries(linkingPredicateData)) {
             const x = <div key={linkedResource} className='mt-3 first:mt-0'>
-                <div className='inline-block bg-table-head px-3 py-2 border border-text-text-secondary-foreground border-b-0 font-medium text-sm'>
+                <div className='inline-block bg-table-head px-3 py-2 border border-data-section-border border-b-0 font-medium text-sm'>
                     <div className='flex items-center gap-2'>
                         {displayClassOrProperty(linkingPredicate)}
                         {makeClickablePrefixedUri(linkedResource, makePrefixedUri(linkedResource), 'sm')}

@@ -21,7 +21,7 @@ const columns: ColumnDef<SparqlQueryResultObject_Binding>[] = [
     },
     {
         id: 'livraison_subtitle',
-        header: "Titre de l'article",
+        header: "Titres de l'article",
         accessorFn: (x: SparqlQueryResultObject_Binding) => ({
             title_forge: x['title_forge']?.value,
             title_courant: x['title_courant']?.value,
@@ -61,7 +61,7 @@ export default function ({ projectIdData, resourceBusinessId }: Props) {
                     thStyle={""}
                     tbodyStyle={""}
                     tdStyle={""}
-                    showHeader={false}
+                    showHeader={true}
                 />
             </TableWrapper>
         }

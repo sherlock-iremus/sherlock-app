@@ -1,4 +1,5 @@
 import { makeH2 } from '@/components/layout/markupHelpers'
+import TableWrapper from '@/components/layout/TableWrapper'
 import { MdTitle } from "react-icons/md"
 import { CRM_BASE } from "sherlock-rdf/lib/rdf-prefixes"
 import { SparqlQueryResultObject } from "sherlock-rdf/lib/sparql-result"
@@ -38,12 +39,14 @@ const X: React.FC<Props> = ({ idData }) => {
     return titles.length > 0
         ? <>
             {makeH2('titre de la ressource', <MdTitle />)}
-            <div className="flex flex-col gap-3 p-3 border border-text-text-secondary-foreground font-serif text-xl text-center">
-                {titles.map(t => <div key={t.type_type}>
-                    <div className='font-medium'>{t.value}</div>
-                    {t.type_type && <div className='font-mono text-text-secondary-foreground text-sm lowercase'>[{t.type_type}]</div>}
-                </div>)}
-            </div>
+            <TableWrapper>
+                <div className="flex flex-col gap-3 font-serif text-xl text-center">
+                    {titles.map(t => <div key={t.type_type}>
+                        <div className='font-medium'>{t.value}</div>
+                        {t.type_type && <div className='font-mono text-text-secondary-foreground text-sm lowercase'>[{t.type_type}]</div>}
+                    </div>)}
+                </div>
+            </TableWrapper>
         </>
         : ''
 }
