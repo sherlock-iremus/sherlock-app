@@ -4,7 +4,7 @@ import React from 'react';
 // import { Link } from '@heroui/react'
 // import { linkStyles } from '@/styles/variants/link';
 
-const ProjectHeader: React.FC<ProjectIdData> = ({ code, emoticon, logo, name }) =>
+const ProjectHeader: React.FC<ProjectIdData> = ({ /*code,*/ emoticon, logo, name }) =>
     <div className='flex gap-6 p-6 text-foreground sbg-background light'>
         {logo && projectLogo(logo)}
         <div className='flex flex-col justify-end items-start'>

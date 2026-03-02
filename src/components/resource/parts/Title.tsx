@@ -41,7 +41,7 @@ const X: React.FC<Props> = ({ idData }) => {
             {makeH2('titre de la ressource', <MdTitle />)}
             <TableWrapper>
                 <div className="flex flex-col gap-3 font-serif text-xl text-center">
-                    {titles.map(t => <div key={t.type_type}>
+                    {titles.map(t => <div key={t.type_type + '/' + t.value}>
                         <div className='font-medium'>{t.value}</div>
                         {t.type_type && <div className='font-mono text-text-secondary-foreground text-sm lowercase'>[{t.type_type}]</div>}
                     </div>)}
