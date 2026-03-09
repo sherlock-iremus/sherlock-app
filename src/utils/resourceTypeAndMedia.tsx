@@ -36,7 +36,7 @@ export function guessMediaRepresentation(idData: IdentityData, projectId: string
     if (b.r_type_type && b.r_type_type.value === E55_FORGE_FILE_URI) forgeFileUri = b.label.value
 
     // E36 + Nakala
-    if (b.p.value === RDF_BASE + 'type' && b.r.value === CRM_BASE + 'E36_Visual_Item') {
+    if (b.p?.value === RDF_BASE + 'type' && b.r?.value === CRM_BASE + 'E36_Visual_Item') {
       isE36 = true
     }
     if (b.r_type_type?.value === DATA_IREMUS_ID_BASE + NAKALA_DOI_E42_UUID) {
