@@ -13,34 +13,39 @@ interface Props {
 }
 
 const ResourceInProject: React.FC<Props> = ({ projectIdData, resourceUri, customParts }) => {
+    const cyber = <div className='bg-background px-6 py-4 text-foreground dark'>
+        <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
+            URI de la ressource consultée :
+        </h2>
+        <div className='flex items-center gap-3'>
+            <h2
+                className='font-mono text-[aqua] text-link_negative'
+                style={{
+                    textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
+                }}
+            >
+                {resourceUri}
+            </h2>
+            <ClipboardButton content={resourceUri} />
+        </div>
+    </div>
     return (
         <>
-            {projectIdData.code && <ProjectHeader
-                code={projectIdData.code}
-                emoticon={projectIdData.emoticon}
-                logo={projectIdData.logo}
-                name={projectIdData.name}
-                uuid={projectIdData.uuid}
-            />}
+            {projectIdData.code
+                ? <ProjectHeader
+                    code={projectIdData.code}
+                    emoticon={projectIdData.emoticon}
+                    logo={projectIdData.logo}
+                    name={projectIdData.name}
+                    uuid={projectIdData.uuid}
+                />
+                : cyber}
             <SherlockBar />
             <Resource resourceUri={resourceUri} customParts={customParts} projectIdData={projectIdData} />
-            <SherlockBar />
-            <div className='bg-background px-6 py-4 text-foreground dark'>
-                <h2 className='mb-1 font-mono text-stone-300 text-xs lowercase'>
-                    URI de la ressource consultée :
-                </h2>
-                <div className='flex items-center gap-3'>
-                    <h2
-                        className='font-mono text-[aqua] text-link_negative'
-                        style={{
-                            textShadow: 'darkturquoise 0px 0px 5px, darkturquoise 0px 0px 20px, darkturquoise 0px 0px 40px, darkturquoise 0px 0px 60px'
-                        }}
-                    >
-                        {resourceUri}
-                    </h2>
-                    <ClipboardButton content={resourceUri} />
-                </div>
-            </div>
+            {projectIdData.code && <>
+                <SherlockBar />
+                {cyber}
+            </>}
         </>
     )
 }
