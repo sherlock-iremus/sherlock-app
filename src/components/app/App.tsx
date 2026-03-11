@@ -1,12 +1,10 @@
 import Root from '@/components/app/Root'
 import Project from '@/components/projects/Project'
 import GenericResourceRouter from '@/components/resource/GenericResourceRouter'
-import Article from '@/specific-features/mercure-galant/Article'
-import Livraison from '@/specific-features/mercure-galant/Livraison'
-import Livraisons from '@/specific-features/mercure-galant/Livraisons'
 import { RouterProvider } from "@heroui/react"
 import type { NavigateOptions } from 'react-router-dom'
 import { Route, Routes, useNavigate } from 'react-router-dom'
+import { routes as mercure_galant_routes } from '@/specific-features/mercure-galant/routes'
 
 declare module '@react-types/shared' {
   interface RouterConfig {
@@ -23,9 +21,7 @@ export default function App() {
           <Route path='/' element={<GenericResourceRouter />} />
           <Route path='/id/:resourceUUID' element={<GenericResourceRouter />} />
           <Route path='/projects/:projectCode' element={<Project searchEngine />} />
-          <Route path='/projects/mercure-galant/livraisons' element={<Livraisons />} />
-          <Route path='/projects/mercure-galant/livraisons/:livraison' element={<Livraison />} />
-          <Route path='/projects/mercure-galant/articles/:article' element={<Article />} />
+          {...mercure_galant_routes}
         </Route>
       </Routes>
     </RouterProvider>
