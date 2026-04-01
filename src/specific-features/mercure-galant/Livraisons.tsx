@@ -18,14 +18,9 @@ const columns: ColumnDef<SparqlQueryResultObject_Binding>[] = [
         accessorFn: (x: SparqlQueryResultObject_Binding) => x['livraison_business_id'].value,
     },
     {
-        id: 'livraison_title',
+        id: 'livraison_title_source',
         header: "Titre",
-        accessorFn: (x: SparqlQueryResultObject_Binding) => x['livraison_title'].value,
-    },
-    {
-        id: 'livraison_subtitle',
-        header: "Sous-titre",
-        accessorFn: (x: SparqlQueryResultObject_Binding) => x['livraison_subtitle']?.value,
+        accessorFn: (x: SparqlQueryResultObject_Binding) => x['livraison_title_source'].value,
     },
     {
         id: 'livraison_n_articles',

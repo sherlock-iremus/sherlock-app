@@ -15,7 +15,7 @@
     "@react-aria/visually-hidden": "3.8.31",
     "@react-types/shared": "3.33.1",
     "@tailwindcss/vite": "^4.2.2",
-    "@tanstack/react-query": "^5.95.0",
+    "@tanstack/react-query": "^5.95.2",
     "@tanstack/react-table": "^8.21.3",
     "colorizr": "^4.0.1",
     "openseadragon": "^6.0.2",
@@ -23,7 +23,7 @@
     "react-dom": "19.2.4",
     "react-icons": "^5.6.0",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.13.1",
+    "react-router-dom": "^7.13.2",
     "rehype-sanitize": "^6.0.0",
     "sherlock-rdf": "link:../sherlock-rdf",
     "sherlock-sparql-queries": "link:../sherlock-sparql-queries",
@@ -36,8 +36,8 @@
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@typescript-eslint/eslint-plugin": "8.57.1",
-    "@typescript-eslint/parser": "8.57.1",
+    "@typescript-eslint/eslint-plugin": "8.58.0",
+    "@typescript-eslint/parser": "8.58.0",
     "@vitejs/plugin-react": "^6.0.1",
     "culori": "^4.0.2",
     "eslint": "^10.1.0",
@@ -50,9 +50,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unused-imports": "4.4.1",
     "prettier": "3.8.1",
-    "typescript": "5.9.3",
-    "vite": "^8.0.2",
+    "typescript": "6.0.2",
+    "vite": "^8.0.3",
     "vite-tsconfig-paths": "^6.1.1"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.33.0"
 }
