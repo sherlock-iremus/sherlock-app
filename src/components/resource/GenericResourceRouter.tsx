@@ -6,7 +6,7 @@ import ResourceInProject from './ResourceInProjet'
 export default function () {
     const { resourceUUID } = useParams()
     const [searchParams] = useSearchParams()
-    let resourceUri = searchParams.get('resource') || ''
+    let resourceUri = decodeURIComponent(searchParams.toString().replace("resource=", "")) || ''
     if (!resourceUri && resourceUUID) resourceUri = 'http://data-iremus.huma-num.fr/id/' + resourceUUID
 
     const { data: data_project } = useGetProjectByResourceUriQuery(resourceUri)
